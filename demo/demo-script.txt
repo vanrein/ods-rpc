@@ -1,0 +1,726 @@
+Script started on Wed 25 Feb 2015 11:19:15 CET
+]0;root@adleman:/home/vanrein/ods-webapi/src[?1034h[root@adleman src]# ./ods-webapi &[K&
+[1] 5437
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Connections welcomed
+
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ods-client sign_t[Kstart orvelte.nep arpa2.net surfnet.nl proo[Klo .net
+bash: ods-client: command not found
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client sign_start orvelte.nep arpa2.net surfnet.nl prolo..net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C.ods-client sign_start orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C/ods-client sign_start orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: sign_start
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep arpa2.net surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NTg2LjU3NDAxOSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il0sICJjb21tYW5kIjogInNpZ25fc3RhcnQifQ.oaTS2Z1YrwsRo7cXyOfV829R8hbH8NHtNQBFnohPh_0
+localhost.localdomain - - [25/Feb/2015 11:19:46] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NTg2LjU3Nzk3LCAiYWxnIjogIkhTMjU2IiwgImN0eSI6ICJhcHBsaWNhdGlvbi9qc29uIiwgImtpZCI6ICJwb3J0YWwra2V5MUBleGFtcGxlLmNvbSJ9.eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19.-IMS2lrOQJ-mqSBt73qQvKpACCUJ99miuCbwjLNfmdo
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NTg2LjU3Nzk3LCAiYWxnIjogIkhTMjU2IiwgImN0eSI6ICJhcHBsaWNhdGlvbi9qc29uIiwgImtpZCI6ICJwb3J0YWwra2V5MUBleGFtcGxlLmNvbSJ9
+JOSE payload: eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19
+JOSE signature: -IMS2lrOQJ-mqSBt73qQvKpACCUJ99miuCbwjLNfmdo
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NTg2LjU3Nzk3LCAiYWxnIjogIkhTMjU2IiwgImN0eSI6ICJhcHBsaWNhdGlvbi9qc29uIiwgImtpZCI6ICJwb3J0YWwra2V5MUBleGFtcGxlLmNvbSJ9', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='-IMS2lrOQJ-mqSBt73qQvKpACCUJ99miuCbwjLNfmdo')
+Headers: {u'timestamp': 1424859586.57797, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.0020580291748
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NTg2LjU3Nzk3LCAiYWxnIjogIkhTMjU2IiwgImN0eSI6ICJhcHBsaWNhdGlvbi9qc29uIiwgImtpZCI6ICJwb3J0YWwra2V5MUBleGFtcGxlLmNvbSJ9', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='-IMS2lrOQJ-mqSBt73qQvKpACCUJ99miuCbwjLNfmdo')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859586.57797, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']})
+Respons: {u'ok': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client sign_start orvelte.nep arpa2.net surfnet.nl prollo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo[1P.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.[1Pnet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.n[1Pet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.ne[1Pt[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.net[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ca orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cp orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cp orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cr orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Co orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cv orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ce orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: sign_approve
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep arpa2.net surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NTk2LjA4OTQ4NDksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il0sICJjb21tYW5kIjogInNpZ25fYXBwcm92ZSJ9.q5Z6aFqPPnZO_wPnY8QU-XFWhGRG7XxfGRVYGRAXVHo
+localhost.localdomain - - [25/Feb/2015 11:19:56] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NTk2LjA5MjU3ODksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19.F6r7-iW3CraVJ2iSjGNevyZM7gk7GQDUdJHlS1ZRngU
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NTk2LjA5MjU3ODksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0
+JOSE payload: eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19
+JOSE signature: F6r7-iW3CraVJ2iSjGNevyZM7gk7GQDUdJHlS1ZRngU
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NTk2LjA5MjU3ODksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='F6r7-iW3CraVJ2iSjGNevyZM7gk7GQDUdJHlS1ZRngU')
+Headers: {u'timestamp': 1424859596.0925789, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00196003913879
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NTk2LjA5MjU3ODksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='F6r7-iW3CraVJ2iSjGNevyZM7gk7GQDUdJHlS1ZRngU')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859596.0925789, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']})
+Respons: {u'ok': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client sign_approve orvelte.nep arpa2.net surfnet.nl prrolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl pro[1Plo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prol[1Po.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo[1P.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.[1Pnet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.n[1Pet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.ne[1Pt[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.net[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.net [K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P[1P[1P[1@a[1@s[1@se orvelte.nep arpa2.net surfnet.nl prolo.net [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cw orvelte.nep arpa2.net surfnet.nl prolo.nett[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cr orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ct orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.ne[1Pt[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.net[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.net [K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cr orvelte.nep arpa2.net surfnet.nl prolo.nett[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ct orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C_ orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cs orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ci orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cn orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ce orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cd orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_signed
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep arpa2.net surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjA4LjEwNjIzNiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il0sICJjb21tYW5kIjogImFzc2VydF9zaWduZWQifQ.d111XT0Oq7eYtu1gUfJ0RIDGR8USFEb05wm46uTd-fY
+localhost.localdomain - - [25/Feb/2015 11:20:08] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjA4LjEwOTU3NDEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJvayI6IFsiYXJwYTIubmV0Il0sICJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0.gAL9aT-YqTVZKGjn8ntcO9wUQA690MTOLn8f8AsbeZo
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjA4LjEwOTU3NDEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0
+JOSE payload: eyJvayI6IFsiYXJwYTIubmV0Il0sICJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0
+JOSE signature: gAL9aT-YqTVZKGjn8ntcO9wUQA690MTOLn8f8AsbeZo
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjA4LjEwOTU3NDEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsiYXJwYTIubmV0Il0sICJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0', signature='gAL9aT-YqTVZKGjn8ntcO9wUQA690MTOLn8f8AsbeZo')
+Headers: {u'timestamp': 1424859608.1095741, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00166583061218
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjA4LjEwOTU3NDEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsiYXJwYTIubmV0Il0sICJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0', signature='gAL9aT-YqTVZKGjn8ntcO9wUQA690MTOLn8f8AsbeZo')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859608.1095741, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'arpa2.net'], u'error': [u'orvelte.nep', u'surfnet.nl', u'prolo.net']})
+Respons: {u'ok': [u'arpa2.net'], u'error': [u'orvelte.nep', u'surfnet.nl', u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_signed orvelte.nep arpa2.net surfnet.nl pprolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csurfnet.nl pr[1Polo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csurfnet.nl pro[1Plo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csurfnet.nl prol[1Po.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csurfnet.nl prolo[1P.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csurfnet.nl prolo.[1Pnet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csurfnet.nl prolo.n[1Pet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csurfnet.nl prolo.ne[1Pt[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csurfnet.nl prolo.net[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csurfnet.nl prolo.net [K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P[1@ 
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_signed
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjE2LjczNzU4NzksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXSwgImNvbW1hbmQiOiAiYXNzZXJ0X3NpZ25lZCJ9.UNlAiKLTeoYIcQQvMDqkcbpest1l0kGBamw0vNiqYM0
+localhost.localdomain - - [25/Feb/2015 11:20:16] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjE2Ljc0MDg5LCAiYWxnIjogIkhTMjU2IiwgImN0eSI6ICJhcHBsaWNhdGlvbi9qc29uIiwgImtpZCI6ICJwb3J0YWwra2V5MUBleGFtcGxlLmNvbSJ9.eyJvayI6IFsib3J2ZWx0ZS5uZXAiXSwgImVycm9yIjogWyJzdXJmbmV0Lm5sIiwgInByb2xvLm5ldCJdfQ.Xqg40zYWtN2nLKYIVtzPKKVjaEwpo_bznLV1lNkcHZc
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjE2Ljc0MDg5LCAiYWxnIjogIkhTMjU2IiwgImN0eSI6ICJhcHBsaWNhdGlvbi9qc29uIiwgImtpZCI6ICJwb3J0YWwra2V5MUBleGFtcGxlLmNvbSJ9
+JOSE payload: eyJvayI6IFsib3J2ZWx0ZS5uZXAiXSwgImVycm9yIjogWyJzdXJmbmV0Lm5sIiwgInByb2xvLm5ldCJdfQ
+JOSE signature: Xqg40zYWtN2nLKYIVtzPKKVjaEwpo_bznLV1lNkcHZc
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjE2Ljc0MDg5LCAiYWxnIjogIkhTMjU2IiwgImN0eSI6ICJhcHBsaWNhdGlvbi9qc29uIiwgImtpZCI6ICJwb3J0YWwra2V5MUBleGFtcGxlLmNvbSJ9', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiXSwgImVycm9yIjogWyJzdXJmbmV0Lm5sIiwgInByb2xvLm5ldCJdfQ', signature='Xqg40zYWtN2nLKYIVtzPKKVjaEwpo_bznLV1lNkcHZc')
+Headers: {u'timestamp': 1424859616.74089, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00183486938477
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjE2Ljc0MDg5LCAiYWxnIjogIkhTMjU2IiwgImN0eSI6ICJhcHBsaWNhdGlvbi9qc29uIiwgImtpZCI6ICJwb3J0YWwra2V5MUBleGFtcGxlLmNvbSJ9', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiXSwgImVycm9yIjogWyJzdXJmbmV0Lm5sIiwgInByb2xvLm5ldCJdfQ', signature='Xqg40zYWtN2nLKYIVtzPKKVjaEwpo_bznLV1lNkcHZc')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859616.74089, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'orvelte.nep'], u'error': [u'surfnet.nl', u'prolo.net']})
+Respons: {u'ok': [u'orvelte.nep'], u'error': [u'surfnet.nl', u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_signed orvelte.nep surfnet.nl prolo.net[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_signed
+Key id:  portal+key1@example.com
+Zones:   surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjIzLjM5OTU1NzEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXSwgImNvbW1hbmQiOiAiYXNzZXJ0X3NpZ25lZCJ9.Pnd-iDoQfllZ9e1x_df_73LDfCneqHXkhp6C0AkIQ6o
+localhost.localdomain - - [25/Feb/2015 11:20:23] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjIzLjQwMzUyNywgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJlcnJvciI6IFsic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0.IZg_s9dpVb-4_zs9g0cde_jShwZwCZjn2zsie_-inZs
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjIzLjQwMzUyNywgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ
+JOSE payload: eyJlcnJvciI6IFsic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0
+JOSE signature: IZg_s9dpVb-4_zs9g0cde_jShwZwCZjn2zsie_-inZs
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjIzLjQwMzUyNywgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJlcnJvciI6IFsic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0', signature='IZg_s9dpVb-4_zs9g0cde_jShwZwCZjn2zsie_-inZs')
+Headers: {u'timestamp': 1424859623.403527, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00185608863831
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjIzLjQwMzUyNywgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJlcnJvciI6IFsic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0', signature='IZg_s9dpVb-4_zs9g0cde_jShwZwCZjn2zsie_-inZs')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859623.403527, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'error': [u'surfnet.nl', u'prolo.net']})
+Respons: {u'error': [u'surfnet.nl', u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_signed surfnet.nl prolo.net
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_signed
+Key id:  portal+key1@example.com
+Zones:   surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjI1LjM0NTE0MTksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXSwgImNvbW1hbmQiOiAiYXNzZXJ0X3NpZ25lZCJ9.FfHkseJe_JYBiT9rtTggYnKI1BmdSOBaCCBpKokEpXc
+localhost.localdomain - - [25/Feb/2015 11:20:25] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjI1LjM0ODMwMzEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJlcnJvciI6IFsic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0.HUCsSmakzw615VMapUtYwoSwcgHC88IpO29TeMAZVzY
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjI1LjM0ODMwMzEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0
+JOSE payload: eyJlcnJvciI6IFsic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0
+JOSE signature: HUCsSmakzw615VMapUtYwoSwcgHC88IpO29TeMAZVzY
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjI1LjM0ODMwMzEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJlcnJvciI6IFsic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0', signature='HUCsSmakzw615VMapUtYwoSwcgHC88IpO29TeMAZVzY')
+Headers: {u'timestamp': 1424859625.3483031, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00175881385803
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjI1LjM0ODMwMzEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJlcnJvciI6IFsic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0', signature='HUCsSmakzw615VMapUtYwoSwcgHC88IpO29TeMAZVzY')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859625.3483031, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'error': [u'surfnet.nl', u'prolo.net']})
+Respons: {u'error': [u'surfnet.nl', u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_signed surfnet.nl prolo.net
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_signed
+Key id:  portal+key1@example.com
+Zones:   surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjI2Ljc5MTgyNDEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXSwgImNvbW1hbmQiOiAiYXNzZXJ0X3NpZ25lZCJ9.7SZTuV2R7gnrxwKDzCx1ftWqYY_CC61I6tIUfTZu8Xc
+localhost.localdomain - - [25/Feb/2015 11:20:26] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjI2Ljc5NDY1MiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJvayI6IFsic3VyZm5ldC5ubCJdLCAiZXJyb3IiOiBbInByb2xvLm5ldCJdfQ.xJdaokPbszGw2K1DPQ8Yk8kxV1H3oGKALqjGVxj6TvI
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjI2Ljc5NDY1MiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ
+JOSE payload: eyJvayI6IFsic3VyZm5ldC5ubCJdLCAiZXJyb3IiOiBbInByb2xvLm5ldCJdfQ
+JOSE signature: xJdaokPbszGw2K1DPQ8Yk8kxV1H3oGKALqjGVxj6TvI
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjI2Ljc5NDY1MiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsic3VyZm5ldC5ubCJdLCAiZXJyb3IiOiBbInByb2xvLm5ldCJdfQ', signature='xJdaokPbszGw2K1DPQ8Yk8kxV1H3oGKALqjGVxj6TvI')
+Headers: {u'timestamp': 1424859626.794652, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00173711776733
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjI2Ljc5NDY1MiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsic3VyZm5ldC5ubCJdLCAiZXJyb3IiOiBbInByb2xvLm5ldCJdfQ', signature='xJdaokPbszGw2K1DPQ8Yk8kxV1H3oGKALqjGVxj6TvI')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859626.794652, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'surfnet.nl'], u'error': [u'prolo.net']})
+Respons: {u'ok': [u'surfnet.nl'], u'error': [u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_signed surfnet.nl prolo.net[1Pprolo.net[1Pprolo.net[1Pprolo.net[1Pprolo.net[1Pprolo.net[1Pprolo.net[1Pprolo.net[1Pprolo.net[1Pprolo.net[1Pprolo.net[1Pprolo.net
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_signed
+Key id:  portal+key1@example.com
+Zones:   prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjMyLjYzODMwMDksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsicHJvbG8ubmV0Il0sICJjb21tYW5kIjogImFzc2VydF9zaWduZWQifQ.WytJm4oczgKaGKqlvA38j_7Gq3ah-MS5KGG0x8mr-Co
+localhost.localdomain - - [25/Feb/2015 11:20:32] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjMyLjY0MDMyMiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJvayI6IFsicHJvbG8ubmV0Il19.xiAUS-a5cDaLBlv1K4px6mRnV5PkGUXd4ZZgiOKLihg
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjMyLjY0MDMyMiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ
+JOSE payload: eyJvayI6IFsicHJvbG8ubmV0Il19
+JOSE signature: xiAUS-a5cDaLBlv1K4px6mRnV5PkGUXd4ZZgiOKLihg
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjMyLjY0MDMyMiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsicHJvbG8ubmV0Il19', signature='xiAUS-a5cDaLBlv1K4px6mRnV5PkGUXd4ZZgiOKLihg')
+Headers: {u'timestamp': 1424859632.640322, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.0011670589447
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjMyLjY0MDMyMiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsicHJvbG8ubmV0Il19', signature='xiAUS-a5cDaLBlv1K4px6mRnV5PkGUXd4ZZgiOKLihg')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859632.640322, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'prolo.net']})
+Respons: {u'ok': [u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_signed prolo.net[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K./ods-client assert_signed prolo.netsurfnet.nl prolo.net[12@orvelte.nep [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Carpa2.net surfnet.nl pprolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csign_approve orvelte.nep arpa2.net surfnet.nl pr[1Polo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl pro[1Plo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prol[1Po.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo[1P.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.[1Pnet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.n[1Pet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.ne[1Pt[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.net[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.net [K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P[1P[1P[1@c[1@h[1@ai orvelte.nep arpa2.net surfnet.nl prolo.net [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cn orvelte.nep arpa2.net surfnet.nl prolo.nett[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C_ orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cs orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ct orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ca orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cr orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ct orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: chain_start
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep arpa2.net surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjUwLjQ5MzI1NDksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il0sICJjb21tYW5kIjogImNoYWluX3N0YXJ0In0.ktY-fgHBhB1XOHf_RAuvGnMw8WzH_UMcmIZW0l1eUJ8
+localhost.localdomain - - [25/Feb/2015 11:20:50] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjUwLjQ5NjI3MjEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19.F9cotrLRuYASpsLWAXDkjZ2OajogOX5S2P-Uf0OpVqk
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjUwLjQ5NjI3MjEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0
+JOSE payload: eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19
+JOSE signature: F9cotrLRuYASpsLWAXDkjZ2OajogOX5S2P-Uf0OpVqk
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjUwLjQ5NjI3MjEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='F9cotrLRuYASpsLWAXDkjZ2OajogOX5S2P-Uf0OpVqk')
+Headers: {u'timestamp': 1424859650.4962721, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00177097320557
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjUwLjQ5NjI3MjEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='F9cotrLRuYASpsLWAXDkjZ2OajogOX5S2P-Uf0OpVqk')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859650.4962721, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']})
+Respons: {u'ok': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client chain_start orvelte.nep arpa2.net surfnet.nl proolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[24Passert_signed prolo.net
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cchain_start orvelte.nep arpa2.net surfnet.nl proolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cachain_start orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cschain_start orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cschain_start orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cechain_start orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Crchain_start orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ctchain_start orvelte.nep arpa2.net surfnet.[1@n[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C_chain_start orvelte.nep arpa2.net surfnet[1@.[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.[1P[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.n[1P[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl[1P prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl [1Pprolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl p[1Prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl pr[1Polo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ce orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cd orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_chained
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep arpa2.net surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjYzLjMxNjI4NjEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il0sICJjb21tYW5kIjogImFzc2VydF9jaGFpbmVkIn0.k0cgufULp7H_gSDVP5fY08IT2cE8lcsD1wz5_em52VY
+localhost.localdomain - - [25/Feb/2015 11:21:03] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjYzLjMxOTYxNDksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInByb2xvLm5ldCJdLCAiZXJyb3IiOiBbInN1cmZuZXQubmwiXX0.781Ks3NrkhDgMirAhjsttr_IfSTIo6Tp-p6JEw02oBA
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjYzLjMxOTYxNDksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0
+JOSE payload: eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInByb2xvLm5ldCJdLCAiZXJyb3IiOiBbInN1cmZuZXQubmwiXX0
+JOSE signature: 781Ks3NrkhDgMirAhjsttr_IfSTIo6Tp-p6JEw02oBA
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjYzLjMxOTYxNDksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInByb2xvLm5ldCJdLCAiZXJyb3IiOiBbInN1cmZuZXQubmwiXX0', signature='781Ks3NrkhDgMirAhjsttr_IfSTIo6Tp-p6JEw02oBA')
+Headers: {u'timestamp': 1424859663.3196149, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00167608261108
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjYzLjMxOTYxNDksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInByb2xvLm5ldCJdLCAiZXJyb3IiOiBbInN1cmZuZXQubmwiXX0', signature='781Ks3NrkhDgMirAhjsttr_IfSTIo6Tp-p6JEw02oBA')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859663.3196149, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'orvelte.nep', u'arpa2.net', u'prolo.net'], u'error': [u'surfnet.nl']})
+Respons: {u'ok': [u'orvelte.nep', u'arpa2.net', u'prolo.net'], u'error': [u'surfnet.nl']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_chained orvelte.nep arpa2.net surfnet.nl  prolo.net[C[C[C[C[C[K[K[K[K[K[K[K[K[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csurfnet.nl  [K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_chained
+Key id:  portal+key1@example.com
+Zones:   surfnet.nl
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njc2LjI3MjAyODksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsic3VyZm5ldC5ubCJdLCAiY29tbWFuZCI6ICJhc3NlcnRfY2hhaW5lZCJ9.3j8RL2ZfQmpjy85TFj_LZctTYNN4jyXTtX4RP8QoSaQ
+localhost.localdomain - - [25/Feb/2015 11:21:16] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njc2LjI3NTA0OSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJlcnJvciI6IFsic3VyZm5ldC5ubCJdfQ.ndNt7V-bS35f2AmwvVSTwERCD0wGuYkrwIgZglXDMFI
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njc2LjI3NTA0OSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ
+JOSE payload: eyJlcnJvciI6IFsic3VyZm5ldC5ubCJdfQ
+JOSE signature: ndNt7V-bS35f2AmwvVSTwERCD0wGuYkrwIgZglXDMFI
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njc2LjI3NTA0OSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJlcnJvciI6IFsic3VyZm5ldC5ubCJdfQ', signature='ndNt7V-bS35f2AmwvVSTwERCD0wGuYkrwIgZglXDMFI')
+Headers: {u'timestamp': 1424859676.275049, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00160908699036
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njc2LjI3NTA0OSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJlcnJvciI6IFsic3VyZm5ldC5ubCJdfQ', signature='ndNt7V-bS35f2AmwvVSTwERCD0wGuYkrwIgZglXDMFI')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859676.275049, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'error': [u'surfnet.nl']})
+Respons: {u'error': [u'surfnet.nl']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_chained surfnet.nl 
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_chained
+Key id:  portal+key1@example.com
+Zones:   surfnet.nl
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njc4LjAyODgzMiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJ6b25lcyI6IFsic3VyZm5ldC5ubCJdLCAiY29tbWFuZCI6ICJhc3NlcnRfY2hhaW5lZCJ9.s7FTf0sHSazP97kozIJ398kQIarqQ_jrT0GyBuG8Kac
+localhost.localdomain - - [25/Feb/2015 11:21:18] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njc4LjAzMTY0NTEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJlcnJvciI6IFsic3VyZm5ldC5ubCJdfQ.FKG-5LMSjF0xbdMf9vnxEYqINNCdKwsRf-b9DmYrjHw
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njc4LjAzMTY0NTEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0
+JOSE payload: eyJlcnJvciI6IFsic3VyZm5ldC5ubCJdfQ
+JOSE signature: FKG-5LMSjF0xbdMf9vnxEYqINNCdKwsRf-b9DmYrjHw
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njc4LjAzMTY0NTEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJlcnJvciI6IFsic3VyZm5ldC5ubCJdfQ', signature='FKG-5LMSjF0xbdMf9vnxEYqINNCdKwsRf-b9DmYrjHw')
+Headers: {u'timestamp': 1424859678.0316451, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00165104866028
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njc4LjAzMTY0NTEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJlcnJvciI6IFsic3VyZm5ldC5ubCJdfQ', signature='FKG-5LMSjF0xbdMf9vnxEYqINNCdKwsRf-b9DmYrjHw')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859678.0316451, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'error': [u'surfnet.nl']})
+Respons: {u'error': [u'surfnet.nl']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_chained surfnet.nl 
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_chained
+Key id:  portal+key1@example.com
+Zones:   surfnet.nl
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njc5LjQ4MTM4OSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJ6b25lcyI6IFsic3VyZm5ldC5ubCJdLCAiY29tbWFuZCI6ICJhc3NlcnRfY2hhaW5lZCJ9.JpIKb71SgR-EaKAyhmpWxpppdqlD-fvkTahOF36OO8w
+localhost.localdomain - - [25/Feb/2015 11:21:19] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njc5LjQ4NDQzMjksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJlcnJvciI6IFsic3VyZm5ldC5ubCJdfQ.bCksfDgIXsA4BRTFpAqpko5Gt3d53ALoTyDxfo-U6D4
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njc5LjQ4NDQzMjksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0
+JOSE payload: eyJlcnJvciI6IFsic3VyZm5ldC5ubCJdfQ
+JOSE signature: bCksfDgIXsA4BRTFpAqpko5Gt3d53ALoTyDxfo-U6D4
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njc5LjQ4NDQzMjksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJlcnJvciI6IFsic3VyZm5ldC5ubCJdfQ', signature='bCksfDgIXsA4BRTFpAqpko5Gt3d53ALoTyDxfo-U6D4')
+Headers: {u'timestamp': 1424859679.4844329, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00175404548645
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njc5LjQ4NDQzMjksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJlcnJvciI6IFsic3VyZm5ldC5ubCJdfQ', signature='bCksfDgIXsA4BRTFpAqpko5Gt3d53ALoTyDxfo-U6D4')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859679.4844329, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'error': [u'surfnet.nl']})
+Respons: {u'error': [u'surfnet.nl']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_chained surfnet.nl 
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_chained
+Key id:  portal+key1@example.com
+Zones:   surfnet.nl
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjgxLjIwNTIzNiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJ6b25lcyI6IFsic3VyZm5ldC5ubCJdLCAiY29tbWFuZCI6ICJhc3NlcnRfY2hhaW5lZCJ9.Saw0gyYGL4UHMp73Sc8q-TluI4zYHqD39o1IDdI5dSU
+localhost.localdomain - - [25/Feb/2015 11:21:21] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjgxLjIwOTMxMiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJvayI6IFsic3VyZm5ldC5ubCJdfQ.1BvtOyUX8KvC8qL9uDx_lX7gVAu8IYZ7UjyROBMWq70
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjgxLjIwOTMxMiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ
+JOSE payload: eyJvayI6IFsic3VyZm5ldC5ubCJdfQ
+JOSE signature: 1BvtOyUX8KvC8qL9uDx_lX7gVAu8IYZ7UjyROBMWq70
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjgxLjIwOTMxMiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsic3VyZm5ldC5ubCJdfQ', signature='1BvtOyUX8KvC8qL9uDx_lX7gVAu8IYZ7UjyROBMWq70')
+Headers: {u'timestamp': 1424859681.209312, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00184202194214
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NjgxLjIwOTMxMiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsic3VyZm5ldC5ubCJdfQ', signature='1BvtOyUX8KvC8qL9uDx_lX7gVAu8IYZ7UjyROBMWq70')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859681.209312, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'surfnet.nl']})
+Respons: {u'ok': [u'surfnet.nl']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_chained surfnet.nl orvelte.nep arpa2.net surfnet.nl  prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cchain_start orvelte.nep arpa2.net surfnet.nl pro[3Plo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Corvelte.nep arpa2.net surfnet.nl prol[1Po.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Corvelte.nep arpa2.net surfnet.nl prolo[1P.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Corvelte.nep arpa2.net surfnet.nl prolo.[1Pnet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Corvelte.nep arpa2.net surfnet.nl prolo.n[1Pet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Corvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cporvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: chain_stop
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep arpa2.net surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njk1LjMzMTg3MjksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il0sICJjb21tYW5kIjogImNoYWluX3N0b3AifQ.mO0bVJ4eSiVqskn9m66iDIF-4Jxe21_7dyyMGPLBEw0
+localhost.localdomain - - [25/Feb/2015 11:21:35] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njk1LjMzNTU4NjEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19.HVx44NaUP_qm4x-zTGEqmZwApwjrSmHAc89GMoCW6ts
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njk1LjMzNTU4NjEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0
+JOSE payload: eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19
+JOSE signature: HVx44NaUP_qm4x-zTGEqmZwApwjrSmHAc89GMoCW6ts
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njk1LjMzNTU4NjEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='HVx44NaUP_qm4x-zTGEqmZwApwjrSmHAc89GMoCW6ts')
+Headers: {u'timestamp': 1424859695.3355861, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00186800956726
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Njk1LjMzNTU4NjEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='HVx44NaUP_qm4x-zTGEqmZwApwjrSmHAc89GMoCW6ts')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859695.3355861, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']})
+Respons: {u'ok': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client chain_stop orvelte.nep arpa2.net surfnet.nl prollo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[21Passert_chained surfnet.nl 
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cchain_stop orvelte.nep arpa2.net surfnet.nl prollo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cachain_stop orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cschain_stop orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cschain_stop orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cechain_stop orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Crchain_stop orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ctchain_stop orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C_chain_stop orvelte.nep arpa2.net surfnet.[1@n[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cuchain_stop orvelte.nep arpa2.net surfnet[1@.[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cnchain_stop orvelte.nep arpa2.net surfne[1@t[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet[1P[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.[1P[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.n[1P[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl[1P prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl [1Pprolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ce orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cd orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_unchained
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep arpa2.net surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzA4LjMyNDczNCwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il0sICJjb21tYW5kIjogImFzc2VydF91bmNoYWluZWQifQ.Tx7ZjXcWLbVBUCMFX8Flv9lh3PWn1Zcbz-IJZSit0YM
+localhost.localdomain - - [25/Feb/2015 11:21:48] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzA4LjMyODQ4NiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJvayI6IFsiYXJwYTIubmV0Il0sICJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0.hv9sQ4HNvnwG6_0IwlwPreaDfbAYKucs-g8MDVJtlp4
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzA4LjMyODQ4NiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ
+JOSE payload: eyJvayI6IFsiYXJwYTIubmV0Il0sICJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0
+JOSE signature: hv9sQ4HNvnwG6_0IwlwPreaDfbAYKucs-g8MDVJtlp4
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzA4LjMyODQ4NiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsiYXJwYTIubmV0Il0sICJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0', signature='hv9sQ4HNvnwG6_0IwlwPreaDfbAYKucs-g8MDVJtlp4')
+Headers: {u'timestamp': 1424859708.328486, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00180602073669
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzA4LjMyODQ4NiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsiYXJwYTIubmV0Il0sICJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0', signature='hv9sQ4HNvnwG6_0IwlwPreaDfbAYKucs-g8MDVJtlp4')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859708.328486, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'arpa2.net'], u'error': [u'orvelte.nep', u'surfnet.nl', u'prolo.net']})
+Respons: {u'ok': [u'arpa2.net'], u'error': [u'orvelte.nep', u'surfnet.nl', u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_unchained orvelte.nep arpa2.net surfnet.nnl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C surfnet.nl[1P prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C surfnet.nl [1Pprolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C surfnet.nl p[1Prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C surfnet.nl pr[1Polo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C surfnet.nl pro[1Plo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C surfnet.nl prol[1Po.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C surfnet.nl prolo[1P.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C surfnet.nl prolo.[1Pnet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C surfnet.nl prolo.n[1Pet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csurfnet.nl prolo.ne[1Pt[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_unchained
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzE2Ljg3MDUxNywgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXSwgImNvbW1hbmQiOiAiYXNzZXJ0X3VuY2hhaW5lZCJ9.rFuQNERXNvzQxhZ1tmemmqGg3bMdiZ-w0RTwyOU4kVA
+localhost.localdomain - - [25/Feb/2015 11:21:56] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzE2Ljg3MzYwNSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0.exFdtqbbd-xpxjUWzS6DfliQG4wDahxMcslQZz2tLQc
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzE2Ljg3MzYwNSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ
+JOSE payload: eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0
+JOSE signature: exFdtqbbd-xpxjUWzS6DfliQG4wDahxMcslQZz2tLQc
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzE2Ljg3MzYwNSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0', signature='exFdtqbbd-xpxjUWzS6DfliQG4wDahxMcslQZz2tLQc')
+Headers: {u'timestamp': 1424859716.873605, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00173807144165
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzE2Ljg3MzYwNSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXX0', signature='exFdtqbbd-xpxjUWzS6DfliQG4wDahxMcslQZz2tLQc')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859716.873605, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'error': [u'orvelte.nep', u'surfnet.nl', u'prolo.net']})
+Respons: {u'error': [u'orvelte.nep', u'surfnet.nl', u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_unchained orvelte.nep surfnet.nl prolo.neet
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_unchained
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzIwLjc0ODU1NTksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCIsICJwcm9sby5uZXQiXSwgImNvbW1hbmQiOiAiYXNzZXJ0X3VuY2hhaW5lZCJ9.GR757LB6IJ521TqZlB4UDRpnR1QkVm-YtzQbr4p-5-I
+localhost.localdomain - - [25/Feb/2015 11:22:00] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzIwLjc1MTgzMTEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJvayI6IFsicHJvbG8ubmV0Il0sICJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ.wEkSADgwgANecTpJGDqnNYXmjzqL0MMlAjb2pfKGjVw
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzIwLjc1MTgzMTEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0
+JOSE payload: eyJvayI6IFsicHJvbG8ubmV0Il0sICJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ
+JOSE signature: wEkSADgwgANecTpJGDqnNYXmjzqL0MMlAjb2pfKGjVw
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzIwLjc1MTgzMTEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsicHJvbG8ubmV0Il0sICJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ', signature='wEkSADgwgANecTpJGDqnNYXmjzqL0MMlAjb2pfKGjVw')
+Headers: {u'timestamp': 1424859720.7518311, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.0016930103302
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzIwLjc1MTgzMTEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsicHJvbG8ubmV0Il0sICJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ', signature='wEkSADgwgANecTpJGDqnNYXmjzqL0MMlAjb2pfKGjVw')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859720.7518311, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'prolo.net'], u'error': [u'orvelte.nep', u'surfnet.nl']})
+Respons: {u'ok': [u'prolo.net'], u'error': [u'orvelte.nep', u'surfnet.nl']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_unchained orvelte.nep surfnet.nl prolo.neet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+[C[C[K[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[K[K[K
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_unchained
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep surfnet.nl
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzI4LjgwNjMxNzEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdLCAiY29tbWFuZCI6ICJhc3NlcnRfdW5jaGFpbmVkIn0.lKJSr7mmQHW-5lXLx6sV8RELNPZP7h7TglkD9mdsJD8
+localhost.localdomain - - [25/Feb/2015 11:22:08] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzI4LjgwOTU5MiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ.dcO2O-HePxnxWFGSX5_RZjj_-2lk7zNDJB3otCIjsg0
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzI4LjgwOTU5MiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ
+JOSE payload: eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ
+JOSE signature: dcO2O-HePxnxWFGSX5_RZjj_-2lk7zNDJB3otCIjsg0
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzI4LjgwOTU5MiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ', signature='dcO2O-HePxnxWFGSX5_RZjj_-2lk7zNDJB3otCIjsg0')
+Headers: {u'timestamp': 1424859728.809592, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00181293487549
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzI4LjgwOTU5MiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ', signature='dcO2O-HePxnxWFGSX5_RZjj_-2lk7zNDJB3otCIjsg0')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859728.809592, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'error': [u'orvelte.nep', u'surfnet.nl']})
+Respons: {u'error': [u'orvelte.nep', u'surfnet.nl']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_unchained orvelte.nep surfnet.nl
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_unchained
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep surfnet.nl
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzMwLjc5MDY3NjEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdLCAiY29tbWFuZCI6ICJhc3NlcnRfdW5jaGFpbmVkIn0.X-JvWnZKhRu81xuD7AnTe5V8rh2ZBaT4___DAppSzwY
+localhost.localdomain - - [25/Feb/2015 11:22:10] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzMwLjc5Mzc0NjksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ.ARDMaB19YXDvugOF_XXZsZOEtmbMFJ3xuIFEuH5tsdI
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzMwLjc5Mzc0NjksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0
+JOSE payload: eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ
+JOSE signature: ARDMaB19YXDvugOF_XXZsZOEtmbMFJ3xuIFEuH5tsdI
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzMwLjc5Mzc0NjksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ', signature='ARDMaB19YXDvugOF_XXZsZOEtmbMFJ3xuIFEuH5tsdI')
+Headers: {u'timestamp': 1424859730.7937469, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00179815292358
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzMwLjc5Mzc0NjksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ', signature='ARDMaB19YXDvugOF_XXZsZOEtmbMFJ3xuIFEuH5tsdI')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859730.7937469, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'error': [u'orvelte.nep', u'surfnet.nl']})
+Respons: {u'error': [u'orvelte.nep', u'surfnet.nl']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_unchained orvelte.nep surfnet.nl
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_unchained
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep surfnet.nl
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzMyLjI5MTE3NDksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdLCAiY29tbWFuZCI6ICJhc3NlcnRfdW5jaGFpbmVkIn0.z0nd7l6MBY-zm_GiJlPQwy678UBFlDeAqislmUasViE
+localhost.localdomain - - [25/Feb/2015 11:22:12] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzMyLjI5NDIwNCwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ.RHcNMu_njwIFEESnrGVINDqrEGDeLgGKznl9J8LX3Lc
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzMyLjI5NDIwNCwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ
+JOSE payload: eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ
+JOSE signature: RHcNMu_njwIFEESnrGVINDqrEGDeLgGKznl9J8LX3Lc
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzMyLjI5NDIwNCwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ', signature='RHcNMu_njwIFEESnrGVINDqrEGDeLgGKznl9J8LX3Lc')
+Headers: {u'timestamp': 1424859732.294204, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00181698799133
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzMyLjI5NDIwNCwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAic3VyZm5ldC5ubCJdfQ', signature='RHcNMu_njwIFEESnrGVINDqrEGDeLgGKznl9J8LX3Lc')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859732.294204, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'orvelte.nep', u'surfnet.nl']})
+Respons: {u'ok': [u'orvelte.nep', u'surfnet.nl']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_unchained orvelte.nep surfnet.nl prolo.neet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Carpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cchain_stop orvelte.nep arpa2.net surfnet.nl prol[6Po.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[21Passert_chained surfnet.nl 
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cchain_stop orvelte.nep arpa2.net surfnet.nl prollo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo[1P.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.[1Pnet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.n[1Pet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.ne[1Pt[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.net[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.net [K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P[1P[1P[1@s[1@i[1@gn orvelte.nep arpa2.net surfnet.nl prolo.net [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C_ orvelte.nep arpa2.net surfnet.nl prolo.nett[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ci orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cn orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Co orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cr orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ce orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: sign_ignore
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep arpa2.net surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzUxLjc0MTM1OTksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il0sICJjb21tYW5kIjogInNpZ25faWdub3JlIn0.c5dSsj0UVh1D1Xm9Iyp3X7uGKDO2YzJXq-PKZZaGd1E
+localhost.localdomain - - [25/Feb/2015 11:22:31] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzUxLjc0MzYzOSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19.mXszVATQUqRZ8JEZ0hUsEaLhyh5JkTF0dIMNXOv1SBY
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzUxLjc0MzYzOSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ
+JOSE payload: eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19
+JOSE signature: mXszVATQUqRZ8JEZ0hUsEaLhyh5JkTF0dIMNXOv1SBY
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzUxLjc0MzYzOSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='mXszVATQUqRZ8JEZ0hUsEaLhyh5JkTF0dIMNXOv1SBY')
+Headers: {u'timestamp': 1424859751.743639, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00110507011414
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzUxLjc0MzYzOSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='mXszVATQUqRZ8JEZ0hUsEaLhyh5JkTF0dIMNXOv1SBY')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859751.743639, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']})
+Respons: {u'ok': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client sign_ignore orvelte.nep arpa2.net surfnet.nl proolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prol[1Po.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo[1P.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.[1Pnet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.n[1Pet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.ne[1Pt[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.net[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cs orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ct orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Co orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cp orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: sign_stop
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep arpa2.net surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzU4LjUzNDcxMDksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il0sICJjb21tYW5kIjogInNpZ25fc3RvcCJ9.NtOeCQsI_ABjOOcFlQnyXS8zNVGf4TjwYj7Uc8L6Cc0
+localhost.localdomain - - [25/Feb/2015 11:22:38] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzU4LjUzODE5OTksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19.Dzy9tKnbGLu7DEyAPZvsGtH7aK34oHfHQ9uq8bni08s
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzU4LjUzODE5OTksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0
+JOSE payload: eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19
+JOSE signature: Dzy9tKnbGLu7DEyAPZvsGtH7aK34oHfHQ9uq8bni08s
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzU4LjUzODE5OTksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='Dzy9tKnbGLu7DEyAPZvsGtH7aK34oHfHQ9uq8bni08s')
+Headers: {u'timestamp': 1424859758.5381999, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00179600715637
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzU4LjUzODE5OTksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='Dzy9tKnbGLu7DEyAPZvsGtH7aK34oHfHQ9uq8bni08s')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859758.5381999, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']})
+Respons: {u'ok': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client sign_stop orvelte.nep arpa2.net surfnet.nl proloo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.[1Pnet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.n[1Pet[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.ne[1Pt[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.net[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prolo.net [K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P[1P[1P[1@a[1@s[1@se orvelte.nep arpa2.net surfnet.nl prolo.net [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cr orvelte.nep arpa2.net surfnet.nl prolo.nett[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ct orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C_ orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cu orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cn orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cs orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C orvelte.nep arpa2.net surfnet.nl prol[1Po.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ci orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cg orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cn orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ce orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cd orvelte.nep arpa2.net surfnet.nl prolo.net[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_unsigned
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep arpa2.net surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzcxLjkwMzk2NSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il0sICJjb21tYW5kIjogImFzc2VydF91bnNpZ25lZCJ9.0VvXqDUf2U85UHDhhuEHeKJFmAUsshXe4fEk0g3Ob34
+localhost.localdomain - - [25/Feb/2015 11:22:51] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzcxLjkwNzQ4MSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19.3FfJ0J5QzkjEOPG1s6aV83nz-yOaZBLHveDm6T21rYM
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzcxLjkwNzQ4MSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ
+JOSE payload: eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19
+JOSE signature: 3FfJ0J5QzkjEOPG1s6aV83nz-yOaZBLHveDm6T21rYM
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzcxLjkwNzQ4MSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='3FfJ0J5QzkjEOPG1s6aV83nz-yOaZBLHveDm6T21rYM')
+Headers: {u'timestamp': 1424859771.907481, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00174307823181
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzcxLjkwNzQ4MSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='3FfJ0J5QzkjEOPG1s6aV83nz-yOaZBLHveDm6T21rYM')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859771.907481, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'error': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']})
+Respons: {u'error': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_unsigned orvelte.nep arpa2.net surfnet.nll prolo.net
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_unsigned
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep arpa2.net surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzc0Ljk4ODIyMzEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il0sICJjb21tYW5kIjogImFzc2VydF91bnNpZ25lZCJ9.6PRwF14cqWf83C36RfdLwmocUyfGJdjLYv0xaTgstb0
+localhost.localdomain - - [25/Feb/2015 11:22:54] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzc0Ljk5MDM4MiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19.FYjsSoXbZRSYJ8Gf9_-OTIYrWP7jr5aT2hWSqNIMNFg
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzc0Ljk5MDM4MiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ
+JOSE payload: eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19
+JOSE signature: FYjsSoXbZRSYJ8Gf9_-OTIYrWP7jr5aT2hWSqNIMNFg
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzc0Ljk5MDM4MiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='FYjsSoXbZRSYJ8Gf9_-OTIYrWP7jr5aT2hWSqNIMNFg')
+Headers: {u'timestamp': 1424859774.990382, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00112700462341
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzc0Ljk5MDM4MiwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJlcnJvciI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il19', signature='FYjsSoXbZRSYJ8Gf9_-OTIYrWP7jr5aT2hWSqNIMNFg')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859774.990382, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'error': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']})
+Respons: {u'error': [u'orvelte.nep', u'arpa2.net', u'surfnet.nl', u'prolo.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_unsigned orvelte.nep arpa2.net surfnet.nll prolo.net
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_unsigned
+Key id:  portal+key1@example.com
+Zones:   orvelte.nep arpa2.net surfnet.nl prolo.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzc3LjAwNTgyNSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJ6b25lcyI6IFsib3J2ZWx0ZS5uZXAiLCAiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiLCAicHJvbG8ubmV0Il0sICJjb21tYW5kIjogImFzc2VydF91bnNpZ25lZCJ9.CJjFD8P0-bCWiuRji_eb7fQyDaH_GT6DlWxQIpOluKo
+localhost.localdomain - - [25/Feb/2015 11:22:57] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzc3LjAwOTI3NSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAicHJvbG8ubmV0Il0sICJlcnJvciI6IFsiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiXX0.YbaeWg5iRSgIerZzxZUjiHIBTTmMu-zN-BZH_Lqq9lk
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzc3LjAwOTI3NSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ
+JOSE payload: eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAicHJvbG8ubmV0Il0sICJlcnJvciI6IFsiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiXX0
+JOSE signature: YbaeWg5iRSgIerZzxZUjiHIBTTmMu-zN-BZH_Lqq9lk
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzc3LjAwOTI3NSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAicHJvbG8ubmV0Il0sICJlcnJvciI6IFsiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiXX0', signature='YbaeWg5iRSgIerZzxZUjiHIBTTmMu-zN-BZH_Lqq9lk')
+Headers: {u'timestamp': 1424859777.009275, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00179314613342
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzc3LjAwOTI3NSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsib3J2ZWx0ZS5uZXAiLCAicHJvbG8ubmV0Il0sICJlcnJvciI6IFsiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiXX0', signature='YbaeWg5iRSgIerZzxZUjiHIBTTmMu-zN-BZH_Lqq9lk')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859777.009275, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'orvelte.nep', u'prolo.net'], u'error': [u'arpa2.net', u'surfnet.nl']})
+Respons: {u'ok': [u'orvelte.nep', u'prolo.net'], u'error': [u'arpa2.net', u'surfnet.nl']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_unsigned orvelte.nep arpa2.net surfnet.nll prolo.net[K[K[K[K[K[K[K[K[K[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Carpa2.net surfnet.nl [K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1@ 
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_unsigned
+Key id:  portal+key1@example.com
+Zones:   arpa2.net surfnet.nl
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzg2LjcxNjM1NzksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJ6b25lcyI6IFsiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiXSwgImNvbW1hbmQiOiAiYXNzZXJ0X3Vuc2lnbmVkIn0.WSvnsNbtLXIknrGRyE-Hu9jD2JvExuTDaT-O-n8fZeI
+localhost.localdomain - - [25/Feb/2015 11:23:06] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzg2LjcxOTU3MTEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJlcnJvciI6IFsiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiXX0.nzLp-YP5eNGVSxI6M29KjBN6Oo-n0SS4PTARSgJ6dgU
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzg2LjcxOTU3MTEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0
+JOSE payload: eyJlcnJvciI6IFsiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiXX0
+JOSE signature: nzLp-YP5eNGVSxI6M29KjBN6Oo-n0SS4PTARSgJ6dgU
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzg2LjcxOTU3MTEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJlcnJvciI6IFsiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiXX0', signature='nzLp-YP5eNGVSxI6M29KjBN6Oo-n0SS4PTARSgJ6dgU')
+Headers: {u'timestamp': 1424859786.7195711, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.0017409324646
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzg2LjcxOTU3MTEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJlcnJvciI6IFsiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiXX0', signature='nzLp-YP5eNGVSxI6M29KjBN6Oo-n0SS4PTARSgJ6dgU')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859786.7195711, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'error': [u'arpa2.net', u'surfnet.nl']})
+Respons: {u'error': [u'arpa2.net', u'surfnet.nl']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_unsigned arpa2.net surfnet.nl
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_unsigned
+Key id:  portal+key1@example.com
+Zones:   arpa2.net surfnet.nl
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzg5LjEwNTA3NywgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJ6b25lcyI6IFsiYXJwYTIubmV0IiwgInN1cmZuZXQubmwiXSwgImNvbW1hbmQiOiAiYXNzZXJ0X3Vuc2lnbmVkIn0.V-cK-A9kpW6OV09SrHWnzVc10n8BkI7AcMA8SyHRoTU
+localhost.localdomain - - [25/Feb/2015 11:23:09] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzg5LjEwODE3MSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJvayI6IFsic3VyZm5ldC5ubCJdLCAiZXJyb3IiOiBbImFycGEyLm5ldCJdfQ.PxIxIjZ6proJnt7RGcUooGS0RjkSY9iryTSueZWK1sQ
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzg5LjEwODE3MSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ
+JOSE payload: eyJvayI6IFsic3VyZm5ldC5ubCJdLCAiZXJyb3IiOiBbImFycGEyLm5ldCJdfQ
+JOSE signature: PxIxIjZ6proJnt7RGcUooGS0RjkSY9iryTSueZWK1sQ
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzg5LjEwODE3MSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsic3VyZm5ldC5ubCJdLCAiZXJyb3IiOiBbImFycGEyLm5ldCJdfQ', signature='PxIxIjZ6proJnt7RGcUooGS0RjkSY9iryTSueZWK1sQ')
+Headers: {u'timestamp': 1424859789.108171, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.0017569065094
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzg5LjEwODE3MSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ', payload='eyJvayI6IFsic3VyZm5ldC5ubCJdLCAiZXJyb3IiOiBbImFycGEyLm5ldCJdfQ', signature='PxIxIjZ6proJnt7RGcUooGS0RjkSY9iryTSueZWK1sQ')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859789.108171, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'surfnet.nl'], u'error': [u'arpa2.net']})
+Respons: {u'ok': [u'surfnet.nl'], u'error': [u'arpa2.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_unsigned arpa2.net surfnet.nl[K[K[K[K[K[K[K[K[K[K[K
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_unsigned
+Key id:  portal+key1@example.com
+Zones:   arpa2.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzkzLjAxMTU1MywgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJ6b25lcyI6IFsiYXJwYTIubmV0Il0sICJjb21tYW5kIjogImFzc2VydF91bnNpZ25lZCJ9.lHu8yEy-KxjjvXdVfsNzaPahmv8_0dN5s0mc165_peo
+localhost.localdomain - - [25/Feb/2015 11:23:13] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzkzLjAxNDQ5OTksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJlcnJvciI6IFsiYXJwYTIubmV0Il19.8IdL5sdUa4C-dhfvTud4VYkTOjpKI_hU9z1Fggp6T-A
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzkzLjAxNDQ5OTksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0
+JOSE payload: eyJlcnJvciI6IFsiYXJwYTIubmV0Il19
+JOSE signature: 8IdL5sdUa4C-dhfvTud4VYkTOjpKI_hU9z1Fggp6T-A
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzkzLjAxNDQ5OTksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJlcnJvciI6IFsiYXJwYTIubmV0Il19', signature='8IdL5sdUa4C-dhfvTud4VYkTOjpKI_hU9z1Fggp6T-A')
+Headers: {u'timestamp': 1424859793.0144999, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00164103507996
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5NzkzLjAxNDQ5OTksICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJlcnJvciI6IFsiYXJwYTIubmV0Il19', signature='8IdL5sdUa4C-dhfvTud4VYkTOjpKI_hU9z1Fggp6T-A')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859793.0144999, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'error': [u'arpa2.net']})
+Respons: {u'error': [u'arpa2.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# ./ods-client assert_unsigned arpa2.net
+No handlers could be found for logger "jose"
+/usr/lib64/python2.6/site-packages/Crypto/Util/number.py:57: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.
+  _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsecureWarning)
+Command: assert_unsigned
+Key id:  portal+key1@example.com
+Zones:   arpa2.net
+Content: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzk0LjU1Njk4OSwgImFsZyI6ICJIUzI1NiIsICJjdHkiOiAiYXBwbGljYXRpb24vanNvbiIsICJraWQiOiAicG9ydGFsK2tleTFAZXhhbXBsZS5jb20ifQ.eyJ6b25lcyI6IFsiYXJwYTIubmV0Il0sICJjb21tYW5kIjogImFzc2VydF91bnNpZ25lZCJ9.-bv5LdlCtuQe6Mq2qm8kYi6yViBHWPJdIvpjtXQJ-I0
+localhost.localdomain - - [25/Feb/2015 11:23:14] "POST / HTTP/1.1" 200 -
+Status:  200 OK
+Receivd: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzk0LjU2MDIzNDEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0.eyJvayI6IFsiYXJwYTIubmV0Il19.pT7VYkWra-sCltoSZZgzmlQkPJDPBL1j1upQFj9BC1k
+JOSE header: eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzk0LjU2MDIzNDEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0
+JOSE payload: eyJvayI6IFsiYXJwYTIubmV0Il19
+JOSE signature: pT7VYkWra-sCltoSZZgzmlQkPJDPBL1j1upQFj9BC1k
+Signed data: JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzk0LjU2MDIzNDEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsiYXJwYTIubmV0Il19', signature='pT7VYkWra-sCltoSZZgzmlQkPJDPBL1j1upQFj9BC1k')
+Headers: {u'timestamp': 1424859794.5602341, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}
+Keys: [{'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}]
+age: 0.00182604789734
+VERIFICATION:
+signeddata = JWS(header='eyJ0aW1lc3RhbXAiOiAxNDI0ODU5Nzk0LjU2MDIzNDEsICJhbGciOiAiSFMyNTYiLCAiY3R5IjogImFwcGxpY2F0aW9uL2pzb24iLCAia2lkIjogInBvcnRhbCtrZXkxQGV4YW1wbGUuY29tIn0', payload='eyJvayI6IFsiYXJwYTIubmV0Il19', signature='pT7VYkWra-sCltoSZZgzmlQkPJDPBL1j1upQFj9BC1k')
+jwk = {'alg': 'HS256', 'k': '3jW0FJjW6noL2Ue0sMpAh1O1VD5qB3yUiE7T83AfPUg', 'kty': 'oct', 'kid': 'portal+key1@example.com'}
+DONE / JWT = JWT(header={u'timestamp': 1424859794.5602341, u'kid': u'portal+key1@example.com', u'cty': u'application/json', u'alg': u'HS256'}, claims={u'ok': [u'arpa2.net']})
+Respons: {u'ok': [u'arpa2.net']}
+]0;root@adleman:/home/vanrein/ods-webapi/src[root@adleman src]# # DONE[K[K[K[KTHANK YOU FOR WATCHING[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kexit
+
+Script done on Wed 25 Feb 2015 11:23:26 CET

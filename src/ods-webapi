@@ -1,0 +1,144 @@
+#!/usr/bin/env python
+#
+# ods-wepapi -- A HTTP wrapper around a management interface for OpenDNSSEC.
+#
+# From: Rick van Rein <rick@openfortress.nl>
+
+
+import sys
+import time
+
+import base64
+import json
+import jose
+
+import BaseHTTPServer
+import SocketServer
+
+
+from genericapi import run_command
+from keyconfig import keys
+
+
+#
+# Unpack the application/jose transmission format (one element)
+#
+def b64pad (b64):
+	return b64 + '=' * (4 - (len(b64) % 4))
+
+def b64bin (b64):
+	return base64.urlsafe_b64decode (b64pad (b64))
+
+def b64json (b64):
+	return json.loads (b64bin (b64))
+
+
+#
+# The web server that accepts commands and relays them to the generic API.
+#
+class WebAPI (BaseHTTPServer.BaseHTTPRequestHandler):
+ 
+	def do_POST (self):
+		ok = True
+		try:
+			#DEBUG# print 'Received POST'
+			#DEBUG# print 'Content-type:', self.headers ['Content-type']
+			ok = ok and self.headers ['Content-type'] == 'application/jose'
+			#DEBUG# print 'Content-length:', self.headers ['Content-length']
+			contlen = int (self.headers ['Content-length'])
+			content = self.rfile.read (contlen)
+			#DEBUG# print 'Content:', content
+			(header,payload,signature) = content.split ('.')
+			#DEBUG# print 'JOSE header:', header
+			#DEBUG# print 'JOSE payload:', payload
+			#DEBUG# print 'JOSE signature:', signature
+			signeddata = {
+				'header'   : b64pad (header   ),
+				'payload'  : b64pad (payload  ),
+				'signature': b64pad (signature),
+			}
+			signeddata = jose.JWS (
+				header,
+				payload,
+				signature,
+			)
+			#DEBUG# print 'Signed data:', signeddata
+			josehdrs = b64json (header)
+			#DEBUG# print 'Headers:', josehdrs
+			#DEBUG# print 'Header ["kid"]:', josehdrs ['kid']
+			jwks = [ keys [k]
+				for k in keys.keys ()
+				if k == josehdrs ['kid']
+			]
+			#DEBUG# print 'Keys:', jwks
+			age = time.time () - float (josehdrs ['timestamp'])
+			#DEBUG# print 'age:', age
+			ok = ok and -50 < age < 60
+		except Exception, e:
+			print 'EXCEPTION:', e
+		if ok:
+			ok = False
+			for jwk in jwks:
+				try:
+					#DEBUG# print 'VERIFICATION:'
+					#DEBUG# print 'signeddata =', signeddata
+					#DEBUG# print 'jwk =', jwk
+					jwt = jose.verify (signeddata, jwk)
+					#DEBUG# print 'DONE / JWT =', jwt
+					ok = True
+				except Exception, e:
+					print 'VERIFICATION EXCEPTION:', e
+					ok = False
+		# at this point, "ok" signifies correct verification
+		resp = None
+		if ok:
+			resp = run_command (jwt.claims, josehdrs ['kid'])
+			#DEBUG# print 'RESPONSE =', resp
+		ok = ok and resp is not None
+		if ok:
+			# JWS signing with header ['kid']
+			# Note that this assumes symmetric keys; would need to
+			# configure peer2key mappings for asymmetric keys.
+			reqhdr = {
+				'cty': 'application/json',
+				'kid': josehdrs ['kid'],   #TODO# SYMMETRIC
+				'timestamp': time.time ()
+			}
+			req = jose.sign (resp,
+				jwks [0],		   #TODO# SYMMETRIC
+				add_header = reqhdr)
+			response = '.'.join (req)
+			#DEBUG# print 'Content:', content
+			
+		if ok:
+			self.send_response (200)
+			self.end_headers ()
+			self.wfile.write (response)
+		else:
+			self.send_response (400)
+
+
+#
+# The HTTP service main loop
+#
+retry = time.time () + 60
+srv = None
+while True:
+	try:
+		srv = SocketServer.TCPServer (('', 8000), WebAPI)
+		print 'Connections welcomed'
+		srv.serve_forever ()
+	except IOError, ioe:
+		if time.time () < retry:
+			if ioe.errno in [48,98]:
+				sys.stdout.write ('Found socket locked...')
+				sys.stdout.flush ()
+				time.sleep (5)
+				sys.stdout.write (' retrying\n')
+				sys.stdout.flush ()
+				continue
+		raise
+	break
+if srv:
+	srv.server_close ()
+
