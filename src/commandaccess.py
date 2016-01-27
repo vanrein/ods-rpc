@@ -4,6 +4,11 @@
 # doing this separately for each command, there is a possibility of some
 # refinement; some actions may be reserved to staff, for instance.
 #
+# The ACL '*' is a wildcard.  Granting access to a kid in this ACL applies
+# to all the commands, irrespective of any additions in the command-named
+# ACLs.  Mentioning a kid in a command-named ACL only applies access to
+# the command named by the ACL.
+#
 # From: Rick van Rein <rick@openfortress.nl>
 
 

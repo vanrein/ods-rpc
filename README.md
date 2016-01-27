@@ -1,5 +1,8 @@
 # A web-based API for OpenDNSSEC
 
+This document describes an implementation of the careful zone life cycle
+as shown in the separate document
+[ZONE-LIFECYCLE.PDF](ZONE-LIFECYCLE.PDF).
 
 ## Design
 
@@ -9,7 +12,7 @@ A zone has a number of flags attached:
 * `chaining` indicates that the intention exists to maintain a chain from the parent;
 * `error` indicates that something is wrong with the zone.
 
-These flags are stored in /var/opendnssec/webapi/<zonename>.<flagname> where
+These flags are stored in `/var/opendnssec/webapi/<zonename>.<flagname>` where
 the presence of the file indicates `True` and absense signifies `False`.
 
 These flags cannot be changed arbitrarily; they must occur in the right places
@@ -40,16 +43,17 @@ its key and its host are all variables that help towards flexible access.
 The `ods-webapi` can limit access to individual functions to any desired
 set of such `kid`s.
 
-As a sidenote, it is unclear what web-specifics it
+On a sidenote, it is unclear what web-specifics the JWS framework
 provides; as far as the underlying mechanism is concerned, other transport
-mechanisms would be just as valid as the thin HTTP frontend; other possible
-transports would be SMTP, MSRP, SIP, XMPP and many more.  HTTP just happens to
-be friendly to the frontend that is currently most popular.
+mechanisms would be just as usable as HTTP; other possible
+transports would be SMTP, CoAP, MSRP, SIP, XMPP and many more.  HTTP just
+happens to be friendly to the frontend that is currently most popular.
 
-The reason for using JOSE is that this adds a simple signature; simple
+The reason for using JOSE is that this just adds a signature; simple
 HMAC signatures based on shared secrets are supported, as well as the more
 advanced public key systems.  The transport format is a matter of standard
-implementation, and the JSON before it is signed is defined below.
+implementation, and the JSON format that it is going to be signed is defined
+below.
 
 During the interaction, a so-called *DNSSEC Request* in JSON format is sent
 to the `ods-webapi` using JWS, and a *DNSSEC Response* formulates a reply
@@ -75,28 +79,29 @@ A DNSSEC Request is a dictionary with a `command` string and a `zones`
 attribute to which it is applied.  For instance,
 
     {
-        "command": "sign_request",
+        "command": "sign_start",
         "zones": [
             "example.com",
             "john.example.org"
         ]
     }
 
-This is a request to execute the command `sign_request`, defined below, to the
+This is a request to execute the command `sign_start`, defined below, on the
 zones `example.com` and `john.example.org`.
 
 ## JSON format of DNSSEC Responses
 
 A DNSSEC Respsonse is a dictionary with a number of zone lists, where
-the list name indicates how processing faired.  The `ok` list indicates
+the list name indicates how processing went.  The `ok` list indicates
 those changes that went through fine, the `invalid` list indicates zones
 that have their `error` flag raised, the `badstate` list indicates zones
 that are in an unsuitable state for the requested command, `error`
-indicates other errors with the requested zone action.  The lists may
-be absent, which is equivalent to an empty list.
+indicates other errors with the requested zone action.  Any of these lists may
+be absent, which is equivalent to an empty list.  All zones listed in the
+corresponding DNSSEC Request occur in precisely one list.
 
     {
-	"ok": [
+        "ok": [
             "example.com"
         ],
         "badstate": [
