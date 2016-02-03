@@ -8,12 +8,18 @@ as shown in the separate document
 
 A zone has a number of flags attached:
 
-* `signing` indicates that the intention exists to sign the zone;
-* `chaining` indicates that the intention exists to maintain a chain from the parent;
-* `error` indicates that something is wrong with the zone.
+* `signing` indicates that the intention exists to sign the zone; set during `sign_approve` and cleared when `assert_unsigned` returns success;
+* `signed` is the starting time from which the zone is signed; setup during `assert_signed` and cleared during `sign_stop`;
+* `chaining` indicates that the intention exists to maintain a chain from the parent; set during `chain_start` and cleared during `chain_stop`;
+* `chained` is the starting time from which the zone is chained from the parent; setup during `assert_chained` and cleared during `chain_stop`;
+* `dsttl` is the DS TTL found in parent zone; setup just before the chain is broken in `chain_stop` and cleared during `assert_unsigned`;
+* `dnskeyttl` is the DNSKEY TTL found in the signed zone; setup just before stopping DNSSEC during `sign_stop` and cleared during `assert_unsigned`;
+* `invalid` describes what is wrong with the zone that blocks its further processing; raised whenever something unexpected happens to the zone and only cleared through operator intervention.
 
 These flags are stored in `/var/opendnssec/webapi/<zonename>.<flagname>` where
-the presence of the file indicates `True` and absense signifies `False`.
+the presence of the file indicates `True` and absense signifies `False`.  Some
+files are set to a timestamp or TTL value that supports the phases described
+below.
 
 These flags cannot be changed arbitrarily; they must occur in the right places
 of the management process.  This process is guarded by `ods-webapi`.  A frontend
@@ -22,7 +28,7 @@ are wrong.  The `ods-webapi` will ensure that everything in OpenDNSSEC is setup
 properly for the requested changes to take place.
 
 In extreme conditions, such as something that would invalidate transactional
-semantics, the `error` flag is raised.  This calls for operator intervention,
+semantics, the `invalid` flag is raised.  This calls for operator intervention,
 and should not normally occur.  In other words, it is a very suitable aspect
 of zone validity monitoring.  The flag will cause `ods-webapi` to refuse any
 further actions on the zone. 
@@ -94,7 +100,7 @@ zones `example.com` and `john.example.org`.
 A DNSSEC Respsonse is a dictionary with a number of zone lists, where
 the list name indicates how processing went.  The `ok` list indicates
 those changes that went through fine, the `invalid` list indicates zones
-that have their `error` flag raised, the `badstate` list indicates zones
+that have their `invalid` flag raised, the `badstate` list indicates zones
 that are in an unsuitable state for the requested command, `error`
 indicates other errors with the requested zone action.  Any of these lists may
 be absent, which is equivalent to an empty list.  All zones listed in the
@@ -138,10 +144,23 @@ Postcondition: The `signing` flag is set; OpenDNSSEC has the zone setup.
 Use `assert_signed` to ensure that signing has been setup completely.
 The command will return `error` until the zone is properly signed.
 
+When at least one signed DNSKEYs is found in all authoritative name servers,
+the `signed` flag will be checked.  If it was not set yet, it will be set
+(thus storing the timestamp at which it is set).  The `signed` flag file will be
+filled with its creation time plus the negative caching TTL; this value must be
+passed before this function returns `ok`; until that time, this function returns
+`error` to indicate that the assertion cannot be delivered yet.
+
+Note that the negative caching TTL is defined by
+[Section 5 of RFC 2308](https://tools.ietf.org/html/rfc2308#section-5)
+as the minimum of the zone's SOA TTL and the SOA.MINIMUM field.
+
 Precondition: The `signing` flag is set; OpenDNSSEC has the zone setup; it
 appears in all authoritative name servers.
 
-Postcondition: Dito.
+Postcondition: The `signing` and `signed` flags are set; the latter has been
+created at least the TTL of TODO ago; OpenDNSSEC has the zone setup and it
+appears in all authoritative name servers.
 
 ### chain_start
 

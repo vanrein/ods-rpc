@@ -12,6 +12,8 @@ import base64
 import json
 import jose
 
+import syslog
+
 import BaseHTTPServer
 import SocketServer
 
@@ -117,6 +119,13 @@ class WebAPI (BaseHTTPServer.BaseHTTPRequestHandler):
 		else:
 			self.send_response (400)
 
+
+#
+# Open the syslog interface with our program name
+#
+syslog.openlog ('ods-webapi',
+		syslog.LOG_PID | syslog.LOG_PERROR,
+		syslog.LOG_DAEMON)
 
 #
 # The HTTP service main loop
