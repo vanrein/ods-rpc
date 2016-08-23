@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# fast-forward-timers -- look for zone timers and make them expire (before) now
+#
+# Invoke this script with the zone name(s) that you want to fast-forward.
+#
+# This script totally frustrates any checks and certainties that are so
+# painstakingly maintained by ods-rpc.  It will break your zones' liveliness
+# and is absolutely not usable in a real-life setting; but during tests,
+# it may prove to be useful for avoiding long waits.
+#
+# From: Rick van Rein <rick@openfortress.nl>
+
+
+RPCDIR="/var/opendnssec/rpc"
+TIMERS="signed chained unchained"
+
+if test $# -eq 0 ; then
+	echo >&2 "Usage: $0 zone..."
+	exit 1
+fi
+ZONES="$@"
+
+for z in $ZONES ; do
+	for t in $TIMERS ; do
+		f="$RPCDIR/$z.$t"
+		if test -r "$f" ; then
+			e=`cat "$f"`
+			c=`date +%s`
+			if test $e -gt $c ; then
+				echo $c > "$f"
+				echo "Fast-forwarded $z.$t from $e to $c"
+			fi
+		fi
+	done
+done

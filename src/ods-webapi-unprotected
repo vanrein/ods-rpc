@@ -1,0 +1,88 @@
+#!/usr/bin/env python
+#
+# ods-wepapi -- A HTTP wrapper around a management interface for OpenDNSSEC.
+#
+# From: Rick van Rein <rick@openfortress.nl>
+
+
+import sys
+import time
+
+import syslog
+
+import json
+
+import BaseHTTPServer
+import SocketServer
+
+
+from genericapi import run_command
+from keyconfig import keys
+
+
+#
+# The web server that accepts commands and relays them to the generic API.
+#
+class WebAPI (BaseHTTPServer.BaseHTTPRequestHandler):
+ 
+	def do_POST (self):
+		ok = True
+		try:
+			#DEBUG# print 'Received POST'
+			#DEBUG# print 'Content-type:', self.headers ['Content-type']
+			ok = ok and self.headers ['Content-type'] == 'application/json'
+			#DEBUG# print 'Content-length:', self.headers ['Content-length']
+			contlen = int (self.headers ['Content-length'])
+			content = self.rfile.read (contlen)
+		except Exception, e:
+			print 'EXCEPTION:', e
+		# at this point, "ok" signifies correct reception w/o validation
+		resp = None
+		print 'CONTENT =', content
+		cmd = json.loads (content)
+		if ok:
+			print 'COMMAND =', cmd
+			resp = run_command (cmd, 'nobody')
+			print 'RESPONSE =', resp
+		ok = ok and resp is not None
+		if ok:
+			response = json.dumps (resp)
+		if ok:
+			self.send_response (200)
+			self.end_headers ()
+			self.wfile.write (response)
+		else:
+			self.send_response (400)
+
+
+#
+# Open the syslog interface with our program name
+#
+syslog.openlog ('ods-webapi-unprotected',
+		syslog.LOG_PID | syslog.LOG_PERROR,
+		syslog.LOG_DAEMON)
+
+#
+# The HTTP service main loop
+#
+retry = time.time () + 60
+srv = None
+while True:
+	try:
+		srv = SocketServer.TCPServer (('adleman.surfdomeinen.nl', 8998), WebAPI)
+		print 'Connections welcomed'
+		srv.serve_forever ()
+	except IOError, ioe:
+		if time.time () < retry:
+			if ioe.errno in [48,98]:
+				sys.stdout.write ('Found socket locked...')
+				sys.stdout.flush ()
+				time.sleep (5)
+				sys.stdout.write (' retrying\n')
+				sys.stdout.flush ()
+				continue
+		raise
+	break
+if srv:
+	srv.server_close ()
+

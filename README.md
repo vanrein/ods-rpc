@@ -4,6 +4,20 @@ This document describes an implementation of the careful zone life cycle
 as shown in the separate document
 [ZONE-LIFECYCLE.PDF](ZONE-LIFECYCLE.PDF).
 
+In addition to this cautiously overviewed life cycle, there are a few
+pragmatic extensions that permit more jumpy clients:
+
+* There is a possible short-cut route from "signed zone on signer" to
+  "DS removed", where a signed zone decides to "bypass DS chaining".
+* Clients may request moving to a desired state as quickly as possible.
+  When this state has not been reached, the command responds with not having
+  had success, and the client should poll until this improves.  Upon each
+  polling event, a new attempt is made to move forward.
+* Clients may request a "drop dead" operation on a zone; this means that
+  the zone will be removed completely and irrevocably from management,
+  presumably because something disruptive happened to the zone, such as
+  a domain name expiration or it being taken out from our management.
+
 ## Design
 
 A zone has a number of flags attached:
@@ -32,6 +46,31 @@ semantics, the `invalid` flag is raised.  This calls for operator intervention,
 and should not normally occur.  In other words, it is a very suitable aspect
 of zone validity monitoring.  The flag will cause `ods-webapi` to refuse any
 further actions on the zone. 
+
+## Switchable Backends
+
+The backend module can easily be switched between alternative implementations.
+There are two backends in place:
+
+  * The "normal" one is to add and remove zones from signing through
+    `ods-ksmutil` to the `ods-enforcer`.
+  * An alternative backend replaces the Enforcer under the assumption
+    that key rollover and the KSK/ZSK distinction can be dropped.  In this
+    situation, the backend addresses PKCS #11 directly and generates a
+    key as well as a `.signconf` file and an updated `zones.list` for the
+    `ods-signer`.  The database will be replaced with PKCS #11 storage in
+    this backend.  This backend requires access to `conf.xml`, to gain
+    access to the PKCS #11 repository configuration.
+
+Note that switching between backends is not supposed to be done lightly.
+You are currently assumed to make a choice before you start signing
+anything.
+
+We do not advise the alternative backend unless you are using ECDSA
+for which we believe key rollovers are less of a necessity [ref:Roland:curvedDNS].
+In a setup with a replicated HSM, the use of only PKCS #11 and no
+database may simplify management somewhat.
+
 
 ## Signed Communication
 
@@ -162,13 +201,41 @@ Postcondition: The `signing` and `signed` flags are set; the latter has been
 created at least the TTL of TODO ago; OpenDNSSEC has the zone setup and it
 appears in all authoritative name servers.
 
+### goto_signed
+
+Aim for state changes until `assert_signed` holds.  This command is used
+in a polling fashion, and the server will each time attempt to make the
+necessary state changes.  Until it validates, this command returns
+error conditions.
+
+Precondition: True
+
+Postcondition: The `signing` and `signed` flags are set;
+the latter has been created at least the TTL of TODO ago;
+OpenDNSSEC has the zone setup and it appears in all authoritative name servers;
+implicitly, the postcondition to `assert_signed` holds.
+
+### bypass_chaining
+
+Use `bypass_chaining` to avoid publishing DS records in the parent, and instead
+move to the state where unsigning of the zone can commence at any future
+moment.
+
+This bypass can be used internally by the `goto_` commands, but only if
+it does not violate the valid order of progression of zone states.
+
+Precondition: The `signing` flag is set; the `chaining` flag is not set;
+OpenDNSSEC has the zone setup; it appears in all authoritative name servers.
+
+Postcondition: The `signing` flag is set; the `chaining` flag is not set.
+
 ### chain_start
 
 Use `chain_start` to setup the chaining link to parent zones.
 This initiaties background processing between OpenDNSSEC and parent zones.
 
-Precondition: The `signing` flag is set; OpenDNSSEC has the zone setup;
-it appears in all authoritative name servers.
+Precondition: The `signing` flag is set; the `chaining` flag is not set;
+OpenDNSSEC has the zone setup; it appears in all authoritative name servers.
 
 Postcondition: The `signing` and `chaining` flags are set.
 
@@ -183,6 +250,18 @@ reached.
 Precondition: The `signing` and `chaining` flags are set.
 
 Postcondition: Dito; the zone can now be notified as "signed" to the user.
+
+### goto_chained
+
+Aim for state changes until `assert_chained` holds.  This command is used
+in a polling fashion, and the server will each time attempt to make the
+necessary state changes.  Until it validates, this command returns
+error conditions.
+
+Precondition: True
+
+Postcondition: The `signing` and `chaining` flags are set;
+implicitly, the postcondition to `assert_chained` holds.
 
 ### chain_stop
 
@@ -208,6 +287,18 @@ Precondition: The `signing` flag is set, `chained` is not.
 
 Postcondition: Dito.  Plus, nobody has reason to require that the zone is signed.
 
+### goto_unchained
+
+Aim for state changes until `assert_unchained` holds.  This command is used
+in a polling fashion, and the server will each time attempt to make the
+necessary state changes.  Until it validates, this command returns
+error conditions.
+
+Precondition: True
+
+Postcondition: The `signing` flag is set, and `chaining` is cleared;
+implicitly, the postcondition to `assert_unchained` holds.
+
 ### sign_ignore
 
 Use `sign_ignore` to indicate to OpenDNSSEC that its signing will henceforth
@@ -226,7 +317,7 @@ Precondition: The `signing` flag is set, `chaining` is not.
 
 Postcondition: The `signing` flag is undefined, the `chaining` flag is cleared.
 
-#### assert_unsigned
+### assert_unsigned
 
 Use `assert_unsigned` to assure that a zone is no longer being signed.
 The user can now be told that the zone is unsigned, with no traces left,
@@ -238,5 +329,32 @@ Precondition: The `signing` flag is as it was left after `sign_stop`, and `chain
 
 Postcondition: The `signing` flag is cleared, as is `chaining`.
 
+### goto_unsigned
 
+Aim for state changes until `assert_unsigned` holds.  This command is used
+in a polling fashion, and the server will each time attempt to make the
+necessary state changes.  Until it validates, this command returns
+error conditions.
 
+Precondition: True
+
+Postcondition: The `signing` flag is cleared, as is `chaining`;
+implicitly, the postcondition to `assert_unsigned` holds.
+
+### update_signed
+
+Use `update_signed` to run a local script on a signed zone.  The script can
+be setup in `localrules.py` and would normally cause the re-signing of the
+indicated zones.
+
+### drop_dead
+
+Use `drop_dead` to instantly, unconditionally and irrevocably remove all
+traces of a zone from the system.  The only reason that this might fail
+is if the zone is invalid to start with, which blocks the RPC system
+altogether, so as to ensure that errors will not go undetected.
+
+Precondition: True.
+
+Postcondition: The `signing` and `chaining` flags are cleared, as are the
+`signed` and `chained` flags.  The zone has been removed from the system.

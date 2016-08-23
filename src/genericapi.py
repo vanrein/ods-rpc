@@ -21,6 +21,7 @@ import time
 from commandaccess import acls
 import localrules
 import dnslogic
+import backend
 
 
 # The directory under which the flags are made
@@ -85,8 +86,8 @@ def flagged_chaining (zone, value=None):
 def flagged_chained (zone, value=None):
 	return flagged (zone, 'chained', value)
 
-def flagged_unchaining (zone, value=None):
-	return flagged (zone, 'unchaining', value)
+def flagged_unchained (zone, value=None):
+	return flagged (zone, 'unchained', value)
 
 def flagged_unsigning (zone, value=None):
 	return flagged (zone, 'unsigning', value)
@@ -141,9 +142,7 @@ def do_sign_approve (zone, kid):
 		return RES_INVALID
 	if not localrules.sign_approve (zone):
 		return RES_ERROR
-	#TODO# Make less local -- where the input files come from
-	cmd = 'ods-ksmutil zone add --zone "' + zone + '" -i "/var/opendnssec/unsigned/' + zone + '.axfr" -o "/var/named/chroot/var/named/opendnssec/' + zone + '" -p SURFdomeinen'
-	if os.system (cmd) != 0:
+	if backend.manage_zone (zone) != 0:
 		syslog.syslog (syslog.LOG_ERR, 'Failed to add zone ' + zone + ' to OpenDNSSEC')
 		return RES_ERROR
 	if flagged_signing (zone, value=True):
@@ -315,15 +314,15 @@ def do_assert_unchained (zone, kid):
 	# already, we check the clock time to see if it expired already.
 	#
 	try:
-		dsttlend = int (flagged_unchaining (zone))
+		dsttlend = int (flagged_unchained (zone))
 	except:
 		dsttlend = dnslogic.ttl2endtime (dsttl)
-		flagged_unchaining (zone, value=dsttlend)
+		flagged_unchained (zone, value=dsttlend)
 	if time.time () < dsttlend:
 		# We need to wait somewhat longer
 		return RES_ERROR
 	else:
-		# The flagged_unchaining time has passed
+		# The flagged_unchained time has passed
 		return RES_OK
 
 def do_sign_ignore (zone, kid):
@@ -346,8 +345,7 @@ def do_sign_stop (zone, kid):
 		return RES_INVALID
 	if not localrules.sign_stop (zone):
 		return RES_ERROR
-	cmd = 'ods-ksmutil zone delete --zone "' + zone + '"'
-	if os.system (cmd) != 0:
+	if backend.unmanage_zone (zone) != 0:
 		syslog.syslog (syslog.LOG_ERR, 'Failed to remove zone ' + zone + ' from OpenDNSSEC')
 		return RES_ERROR
 	# Retract the basis of certainty for assert_signed()
@@ -405,6 +403,136 @@ def do_assert_unsigned (zone, kid):
 		flagged_unsigning (zone, value=False)
 		return RES_OK
 
+#
+# The goto_xxx commands jump around the state diagram until a desired state
+# is reached.  They may need to be called multiple times, so through polling,
+# until they can return a positive response.  They add nothing but simplicity
+# of operation to the foregoing commands.
+#
+
+def do_goto_signed (zone, kid):
+	rv = RES_OK
+	print 'goto_signed', zone
+	if rv == RES_OK and flagged_signed (zone):
+		if flagged_chaining (zone):
+			print 'goto_signed --> gosub_unchained'
+			rv = do_goto_unchained (zone)
+		else:
+			print 'goto_signed --> assert_unchained'
+			rv = do_assert_unchained (zone)
+	if rv == RES_OK and not flagged_signing (zone) and not flagged_signed (zone):
+		#USELESS# print 'goto_signed --> sign_start'
+		#USELESS# rv = do_sign_start (zone, kid)
+		print 'goto_signed --> sign_approve'
+		rv = do_sign_approve (zone, kid)
+	if rv == RES_OK:
+		print 'goto_signed --> assert_signed'
+		rv = do_assert_signed (zone, kid)
+	print 'goto_signed :=', rv
+	return rv
+
+def do_goto_chained (zone, kid):
+	rv = RES_OK
+	print 'goto_chained', zone
+	if rv == RES_OK:
+		if not flagged_signed (zone):
+			print 'goto_chained --> gosub_signed'
+			rv = do_goto_signed (zone, kid)
+		else:
+			print 'goto_chained --> assert_signed'
+			rv = do_assert_signed (zone, kid)
+	if rv == RES_OK and flagged_signing (zone) and not flagged_chaining (zone):
+		print 'goto_chained --> chain_start'
+		rv = do_chain_start (zone, kid)
+	if rv == RES_OK:
+		print 'goto_chained --> assert_chained'
+		rv = do_assert_chained (zone, kid)
+	print 'goto_chained :=', rv
+	return rv
+
+def do_goto_unchained (zone, kid):
+	rv = RES_OK
+	print 'goto_unchained', zone
+	if rv == RES_OK and flagged_chaining (zone):
+		if not flagged_chained (zone):
+			print 'goto_unchained --> gosub_chained'
+			rv = do_goto_chained (zone, kid)
+		else:
+			print 'goto_unchained --> assert_chained'
+			rv = do_assert_chained (zone, kid)
+	if rv == RES_OK and flagged_chaining (zone) and flagged_chained (zone):
+		print 'goto_unchained --> chain_stop'
+		rv = do_chain_stop (zone, kid)
+	if rv == RES_OK and not flagged_chaining (zone):
+		print 'goto_unchained --> assert_unchained'
+		rv = do_assert_unchained (zone, kid)
+	print 'goto_unchained :=', rv
+	return rv
+
+def do_goto_unsigned (zone, kid):
+	rv = RES_OK
+	print 'goto_unsigned', zone
+	if rv == RES_OK and flagged_signed (zone):
+		if flagged_chained (zone):
+			print 'goto_unsigned --> gosub_unchained'
+			rv = do_goto_unchained (zone, kid)
+		else:
+			print 'goto_unsigned --> assert_unchained'
+			rv = do_assert_unchained (zone, kid)
+	if rv == RES_OK and flagged_signed (zone) and not flagged_chained (zone):
+		#USELESS# rv = do_sign_ignore (zone, kid)
+		print 'goto_unsigned --> sign_stop'
+		rv = do_sign_stop (zone, kid)
+	if rv == RES_OK and not flagged_signed (zone):
+		print 'goto_unsigned --> assert_unsigned'
+		rv = do_assert_unsigned (zone, kid)
+	print 'goto_unsigned :=', rv
+	return rv
+
+#
+# The drop_dead command serves a practical use of removing a zone here and now,
+# with no questions asked.  Normally, when the zone is present, its removal
+# should be instant and positive.  A later retry will fail, of course.
+#
+# Note that this is a disruptive command; you are willingly and knowingly
+# destroying your zone, and risk outages of DNS data because the care of
+# the other commands is deliberately bypassed in drop_dead.
+#
+
+def do_drop_dead (zone, kid):
+	print 'drop_dead', zone
+	if backend.unmanage_zone (zone) != 0:
+		syslog.syslog (syslog.LOG_ERR, 'Failed to delete zone ' + zone + ' from OpenDNSSEC')
+		print 'drop_dead :=', RES_ERROR
+		return RES_ERROR
+	flagged_signing   (zone, value=False)
+	flagged_signed    (zone, value=False)
+	flagged_chaining  (zone, value=False)
+	flagged_chained   (zone, value=False)
+	flagged_dsttl     (zone, value=False)
+	flagged_dnskeyttl (zone, value=False)
+	flagged_unchained (zone, value=False)
+	flagged_unsigning (zone, value=False)
+	print 'drop_dead :=', RES_OK
+	return RES_OK
+
+#
+# The update_signed command can be called on any zone which is being signed.
+# Use it to invoke the command of the same name in the localrules module, where
+# you can set it up to do anything you like.  A default action that is suggested
+# to incorporate (at least) is to have the zone signed freshly, with
+#
+#   ods-signer sign <zone>
+#
+
+def do_update_signed (zone, kid):
+	if not flagged_signed (zone):
+		return RES_BADSTATE
+	if not localrules.update_signed (zone):
+		return RES_ERROR
+	else:
+		return RES_OK
+
 
 #
 # Map command names to the procedures that apply them to individual zones
@@ -420,6 +548,12 @@ handler ['assert_unchained'] = do_assert_unchained
 handler ['sign_ignore'     ] = do_sign_ignore
 handler ['sign_stop'       ] = do_sign_stop
 handler ['assert_unsigned' ] = do_assert_unsigned
+handler ['goto_signed'     ] = do_goto_signed
+handler ['goto_chained'    ] = do_goto_chained
+handler ['goto_unchained'  ] = do_goto_unchained
+handler ['goto_unsigned'   ] = do_goto_unsigned
+handler ['drop_dead'       ] = do_drop_dead
+handler ['update_signed'   ] = do_update_signed
 
 
 #
@@ -435,12 +569,14 @@ def run_command (cmd, kid):
 	zones   = cmd ['zones'  ]
 	if not handler.has_key (command):
 		# Unrecognised command
+		print 'Unrecognised command', command
 		return None
 	welcome = False
 	welcome = welcome or (acls.has_key (  '*'  ) and kid in acls [  '*'  ])
 	welcome = welcome or (acls.has_key (command) and kid in acls [command])
 	if not welcome:
 		# Refused by ACLs
+		print 'Refused by ACLs'
 		return None
 	#
 	# Invoke command-specific handler without further restraint
@@ -453,6 +589,8 @@ def run_command (cmd, kid):
 	hdl = handler [command]
 	for zone in zones:
 		zone = zone.lower ()
+		if zone [-1:] == '.':
+			zone = zone [:-1]
 		if not dnsre.match (zone):
 			result = RES_ERROR
 		elif flagged_invalid (zone):

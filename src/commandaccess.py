@@ -4,6 +4,9 @@
 # doing this separately for each command, there is a possibility of some
 # refinement; some actions may be reserved to staff, for instance.
 #
+# The special "key identifier" value 'nobody' is used by unprotected ods-rpc
+# interfaces, to indicate lack of knowledge about remote user credentials.
+#
 # The ACL '*' is a wildcard.  Granting access to a kid in this ACL applies
 # to all the commands, irrespective of any additions in the command-named
 # ACLs.  Mentioning a kid in a command-named ACL only applies access to
@@ -15,6 +18,7 @@
 acls = { }
 
 acls ['*'] = [ 'portal+key1@example.com' ]
+acls ['*'].append ('nobody')
 
 acls ['sign_start'] = [ ]
 acls ['sign_approve'] = [ ]

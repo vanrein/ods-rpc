@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+#
+# ods-webclient -- Perform an action on a zone through an API
+#
+# The default API is the Web API.  The keys are loaded from the same place
+# as used by the ods-webapi frontend.
+#
+# From: Rick van Rein <rick@openfortress.nl>
+
+
+import sys
+import time
+
+import json
+import httplib
+
+from keyconfig import keys
+
+
+#
+# Commandline check
+#
+if len (sys.argv) < 3:
+	sys.stderr.write ('Usage: ' + sys.argv [0] + ' <command> <zone>...\n')
+	sys.exit (1)
+command = sys.argv [1]
+zones = sys.argv [2:]
+print 'Command:', command
+print 'Zones:  ', ' '.join (zones)
+
+
+#
+# Construct RPC command
+#
+cmd = {
+	'command': command,
+	'zones': zones,
+}
+content = json.dumps (cmd)
+print 'Content:', content
+
+#
+# Send the request over HTTP, method POST, and harvest the response
+#
+http = httplib.HTTPConnection ('adleman.surfdomeinen.nl', 8998)
+http.request ('POST', '/', content, { 'Content-type': 'application/json' })
+htresp = http.getresponse ()
+print 'Status: ', htresp.status, htresp.reason
+if htresp.status == 200:
+	resp = htresp.read ()
+	print 'Receivd:', resp
+else:
+	sys.exit (1)
+
+#
+# Extract the response, without verification
+#
+ok = True
+payload = resp
+# at this point, "ok" signifies correct reception, but without verification
+if ok:
+	print 'Response:', payload
