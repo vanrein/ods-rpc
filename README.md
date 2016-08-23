@@ -1,4 +1,4 @@
-# A web-based API for OpenDNSSEC
+# A Remote Procedure Call API for OpenDNSSEC
 
 This document describes an implementation of the careful zone life cycle
 as shown in the separate document
@@ -16,7 +16,7 @@ A zone has a number of flags attached:
 * `dnskeyttl` is the DNSKEY TTL found in the signed zone; setup just before stopping DNSSEC during `sign_stop` and cleared during `assert_unsigned`;
 * `invalid` describes what is wrong with the zone that blocks its further processing; raised whenever something unexpected happens to the zone and only cleared through operator intervention.
 
-These flags are stored in `/var/opendnssec/webapi/<zonename>.<flagname>` where
+These flags are stored in `/var/opendnssec/rpc/<zonename>.<flagname>` where
 the presence of the file indicates `True` and absense signifies `False`.  Some
 files are set to a timestamp or TTL value that supports the phases described
 below.

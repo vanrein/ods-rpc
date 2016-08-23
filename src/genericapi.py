@@ -15,6 +15,8 @@ import sys
 import re
 import os
 import os.path
+import syslog
+import time
 
 from commandaccess import acls
 import localrules
@@ -22,13 +24,13 @@ import dnslogic
 
 
 # The directory under which the flags are made
-flagdir = '/var/opendnssec/webapi'
+flagdir = '/var/opendnssec/rpc'
 
 if not os.path.isdir (flagdir):
 	syslog.syslog (syslog.LOG_ERR, 'Missing control directory: ' + flagdir + ' (FATAL)')
 	sys.exit (1)
 
-# The flagging system; zone name plus flag name; file existence signals True
+# The flagging system; zone name plus flag name; file absense is False
 def flagged (zone, flagname, value=None):
 	error = False
 	flagfile = flagdir + os.sep + zone + os.extsep + flagname
@@ -36,7 +38,11 @@ def flagged (zone, flagname, value=None):
 		if value is not False:
 			try:
 				fh = open (flagfile, 'w')
-				fh.write (str (value) + '\n')
+				if value is True:
+					valstr = ''
+				else:
+					valstr = str (value) + '\n'
+				fh.write (valstr)
 				fh.close ()
 			except:
 				# Check below
@@ -53,35 +59,46 @@ def flagged (zone, flagname, value=None):
 		fh.close ()
 		if retval [-1:] == '\n':
 			retval = retval [:-1]
+		if retval == '':
+			retval = True
 	except:
-		retval = None
+		retval = False
 	if value is not None and retval != value:
+		print 'FLAG', flagname, 'IS', retval, '::', type (retval), 'AND SHOULD BE', value, '::', type (value)
 		# It is abnormal for this to happen
 		syslog.syslog (syslog.LOG_ERR, 'Failed to set ' + flagname + ' flag to ' + str (value))
-		if not flagged (zone, 'invalid', value='Failed to set ' + flagname + 'to ' + str (value)):
+		if not flagged (zone, 'invalid', value='Failed to set ' + flagname + ' flag to ' + str (value)):
 			syslog.syslog (syslog.LOG_ERR, 'In addition, failed to set error flag to True (FATAL)')
 			sys.exit (1)
+	print 'RETURNING', retval, 'FOR', flagname
+	return retval
 
 def flagged_signing (zone, value=None):
-	flagged (zone, 'signing', value)
+	return flagged (zone, 'signing', value)
 
 def flagged_signed (zone, value=None):
-	flagged (zone, 'signed', value)
+	return flagged (zone, 'signed', value)
 
 def flagged_chaining (zone, value=None):
-	flagged (zone, 'chaining', value)
+	return flagged (zone, 'chaining', value)
 
 def flagged_chained (zone, value=None):
-	flagged (zone, 'chained', value)
+	return flagged (zone, 'chained', value)
+
+def flagged_unchaining (zone, value=None):
+	return flagged (zone, 'unchaining', value)
+
+def flagged_unsigning (zone, value=None):
+	return flagged (zone, 'unsigning', value)
 
 def flagged_invalid (zone, value=None):
-	flagged (zone, 'invalid', value)
+	return flagged (zone, 'invalid', value)
 
-def flagged_dnskeyttl (zoen, value=None):
-	flagged (zone, 'dsttl', value)
+def flagged_dnskeyttl (zone, value=None):
+	return flagged (zone, 'dnskeyttl', value)
 
-def flagged_dsttl (zoen, value=None):
-	flagged (zone, 'dsttl', value)
+def flagged_dsttl (zone, value=None):
+	return flagged (zone, 'dsttl', value)
 
 
 # Symbolic names for result lists of zones
@@ -124,7 +141,8 @@ def do_sign_approve (zone, kid):
 		return RES_INVALID
 	if not localrules.sign_approve (zone):
 		return RES_ERROR
-	cmd = 'ods-ksmutil zone add --zone "' + zone + '"'
+	#TODO# Make less local -- where the input files come from
+	cmd = 'ods-ksmutil zone add --zone "' + zone + '" -i "/var/opendnssec/unsigned/' + zone + '.axfr" -o "/var/named/chroot/var/named/opendnssec/' + zone + '" -p SURFdomeinen'
 	if os.system (cmd) != 0:
 		syslog.syslog (syslog.LOG_ERR, 'Failed to add zone ' + zone + ' to OpenDNSSEC')
 		return RES_ERROR
@@ -144,37 +162,46 @@ def do_assert_signed (zone, kid):
 	#
 	# Find if we already set the 'signed' flag to a desired endtime
 	try:
-		asserted_fromtm = int (flagged_signed (zone))
+		asserted_fromtm = int (flagged_signed (zone) or 'NOTANINT')
+		print 'LOADED ASSERTED-FROM TIME', asserted_fromtm
 	except:
-		flagged_invalid (zone, value='Flag signed failed to load as an integer')
+		# flagged_invalid (zone, value='Flag signed failed to load as an integer')
+		# return RES_INVALID
+		asserted_fromtm = None
+		print 'NO ASSERTED-FROM TIME IS signed FLAG YET'
 	#
 	# Consider the case that no signatures may have been found before;
 	# this will check DNS and store a now-plus-TTL in the 'signed' flag
 	if asserted_fromtm is None:
 		if dnslogic.test_for_signed_dnskey (
 				zone,
-				dnslogic.PUBLISHER_AUTHORITATIVE |
+				dnslogic.PUBLISHER_AUTHORITATIVES |
 				dnslogic.PUBLISHER_ALL):
 			ass1ttl = dnslogic.dnskey_ttl (
 					zone,
 					dnslogic.PUBLISHER_OPENDNSSEC)
-			ass1ttl = dnslogic.negative_caching_ttl (
+			ass2ttl = dnslogic.negative_caching_ttl (
 					zone,
 					dnslogic.PUBLISHER_OPENDNSSEC)
 			asserted_fromtm = dnslogic.ttl2endtime (
 					max (ass1ttl, ass2ttl))
+			print 'COMPUTED ASSERTED-FROM TIME TO BE', asserted_fromtm, 'BASED ON', ass1ttl, 'AND', ass2ttl
 			if asserted_fromtm is not None:
-				flagged_signed (zone, value=asserted_fromtm)
+				flagged_signed (zone, value=str (asserted_fromtm))
 			else:
 				syslog.syslog (syslog.LOG_ERR, 'Failed to determine endtime in OpenDNSSEC during assert_signed on ' + zone)
 				return RES_ERROR
 		else:
+			print 'STILL FOUND NO DNSKEY RECORDS'
+			syslog.syslog (syslog.LOG_INFO, 'Failed to assert that zone ' + zone + ' is published-signed')
 			return RES_ERROR
 	#
 	# Now test the asserted_fromtm value
 	if time.time () >= asserted_fromtm:
+		print 'ENDED COUNTDOWN UNTIL', asserted_fromtm
 		return RES_OK
 	else:
+		print 'STILL DOING COUNTDOWN UNTIL', asserted_fromtm
 		return RES_ERROR
 
 def do_chain_start (zone, kid):
@@ -182,10 +209,13 @@ def do_chain_start (zone, kid):
 	assn = do_assert_signed (zone, kid)
 	if assn != RES_OK:
 		return assn
-	# Assertion that there is no 'chained' flag yet
+	# Assertion that there is no 'chained' flag yet...
 	if flagged_chained (zone):
-		flagged_invalid (zone, value='During chain_start() of ' + zone + ' the chained flag was already set')
+		flagged_invalid (zone, value='The chained flag was already set during chain_start()')
 		return RES_INVALID
+	# ...and that there are no DS records yet...
+	if dnslogic.have_ds (zone):
+		flagged_invalid (zone, value='DS TTL already found in parent')
 	# ... then, continue into the actions for starting the chain
 	if localrules.chain_start (zone):
 		if flagged_chaining (zone, value=True):
@@ -204,9 +234,18 @@ def do_assert_chained (zone, kid):
 	#
 	# Find if we already set the 'chained' flag to a desired endtime
 	try:
-		asserted_fromtm = int (flagged_chained (zone))
+		asserted_fromtm = int (flagged_chained (zone) or 'NOTANINT')
+		print 'LOADED CHAINED ASSERTED-FROM TIME', asserted_fromtm
 	except:
-		flagged_invalid (zone, value='Flag chained failed to load as an integer')
+		# flagged_invalid (zone, value='Flag chained failed to load as an integer')
+		print 'NO CHAINED ASSERTED-FROM TIME YET'
+		asserted_fromtm = None
+	#
+	# The DS records may be absent, which is a sign that we need to
+	# back off and retry later; this can happen when another process
+	# handles the submission of DS with delays
+	if not dnslogic.have_ds (zone):
+		return RES_ERROR
 	#
 	# Consider the case that no chaining records may have been found yet;
 	# this will check DNS and store a now-plus-TTL in the 'signed' flag
@@ -215,13 +254,14 @@ def do_assert_chained (zone, kid):
 			ass1tm = dnslogic.ds_ttl (
 					zone,
 					dnslogic.PUBLISHER_PARENTS)
-			ass1tm = negative_caching_ttl (
+			ass2tm = dnslogic.negative_caching_ttl (
 					zone,
 					dnslogic.PUBLISHER_PARENTS)
 			asserted_fromtm = dnslogic.ttl2endtime (
 					max (ass1tm, ass2tm))
+			print 'COMPUTED CHAINED ASSERTED-FROM TIME', asserted_fromtm, 'FROM', ass1tm, 'AND', ass2tm
 			if asserted_fromtm is not None:
-				flagged_chained (zone, value=asserted_fromtm)
+				flagged_chained (zone, value=str (asserted_fromtm))
 			else:
 				return RES_ERROR
 		else:
@@ -229,8 +269,10 @@ def do_assert_chained (zone, kid):
 	#
 	# Now test the asserted_fromtm value
 	if time.time () >= asserted_fromtm:
+		print 'PASSED ACROSS THE CHAINED ASSERTED-FROM TIME', asserted_fromtm
 		return RES_OK
 	else:
+		print 'COUNTING DOWN TO THE CHAINED ASSERTED-FROM TIME', asserted_fromtm
 		return RES_ERROR
 
 def do_chain_stop (zone, kid):
@@ -251,10 +293,11 @@ def do_chain_stop (zone, kid):
 			syslog.syslog (syslog.LOG_ERR, 'Failed to clear chained/chaining flags on zone ' + zone)
 			return RES_INVALID
 	else:
+		syslog.syslog (syslog.LOG_ERR, 'Failed in localrules.chain_stop() on zone ' + zone)
 		return RES_ERROR
 
 def do_assert_unchained (zone, kid):
-	if (not flagged_signed (zone)) or flagged_chained (zone):
+	if (not flagged_signed (zone)) or flagged_chaining (zone) or flagged_chained (zone):
 		return RES_BADSTATE
 	try:
 		dsttl = flagged_dsttl (zone)
@@ -284,7 +327,7 @@ def do_assert_unchained (zone, kid):
 		return RES_OK
 
 def do_sign_ignore (zone, kid):
-	if (not flagged_signing (zone)) or flagged_chained (zone):
+	if (not flagged_signed (zone)) or flagged_chained (zone):
 		return RES_BADSTATE
 	if localrules.sign_ignore (zone):
 		# Name servers reconfigured to no longer serve the zone
@@ -293,12 +336,14 @@ def do_sign_ignore (zone, kid):
 		return RES_ERROR
 
 def do_sign_stop (zone, kid):
-	if (not flagged_signing (zone)) or flagged_chained (zone):
+	if (not flagged_signed (zone)) or flagged_chained (zone):
+		print 'FLAGS ARE OFF -- BADSTATE'
 		return RES_BADSTATE
 	dnskeyttl = dnslogic.dnskey_ttl (
 				zone,
 				dnslogic.PUBLISHER_OPENDNSSEC)
-	flagged_dnskeyttl (zone, value=str (dnskeyttl))
+	if flagged_dnskeyttl (zone, value=str (dnskeyttl)) != str (dnskeyttl):
+		return RES_INVALID
 	if not localrules.sign_stop (zone):
 		return RES_ERROR
 	cmd = 'ods-ksmutil zone delete --zone "' + zone + '"'
@@ -324,11 +369,13 @@ def do_assert_unsigned (zone, kid):
 	except:
 		# The DNSKEY TTL was not saved by sign_stop() as expected
 		return RES_BADSTATE
-	if not dnslogic.test_for_signed_dnskey (
+	unsigning = flagged_unsigning (zone)
+	if unsigning is None and not dnslogic.test_for_signed_dnskey (
 			zone,
-			dnslogic.PUBLISHER_AUTHORITATIVES | dnssec.PUBLISHER_NONE):
+			dnslogic.PUBLISHER_AUTHORITATIVES |
+			dnslogic.PUBLISHER_NONE):
 		syslog.syslog (syslog.LOG_INFO, 'Failed to assert that zone ' + zone + ' is published-unsigned')
-		return RES_BADSTATE
+		return RES_ERROR
 	if not localrules.assert_unsigned (zone):
 		return RES_ERROR
 	#
@@ -336,17 +383,21 @@ def do_assert_unsigned (zone, kid):
 	# returned True once.  This may be used to investigate various local
 	# aspects before assuming that the DNSKEY may disappear.
 	#
-	try:
-		dnskeyttlend = int (flagged_unsigning (zone))
-	except:
+	if unsigning is False:
 		# The countdown has not started yet, so start it now
 		dnskeyttlend = dnslogic.ttl2endtime (dnskeyttl)
+		print 'CREATED TTLEND FOR DNSKEY:', dnskeyttlend
 		flagged_unsigning (zone, value=str (dnskeyttlend))
-	if time.time () < dnskeyttlend ():
+	else:
+		dnskeyttlend = int (unsigning)
+		print 'GOT TTLEND FOR DNSKEY:', dnskeyttlend
+	if time.time () < dnskeyttlend:
 		# The countdown has not yet completed, so tick a little more
+		print 'AWAITING COUNTDOWN UNTIL:', dnskeyttlend
 		return RES_ERROR
 	else:
 		# The countdown is complete, so cleanup flags and report success
+		print 'COMPLETED COUNTDOWN UNTIL:', dnskeyttlend
 		if flagged_signing (zone, value=False):
 			return RES_INVALID
 		flagged_dsttl (zone, value=False)

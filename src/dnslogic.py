@@ -91,10 +91,13 @@ def list_name_servers (zone, publisher):
 		if not '.' in zone:
 			return None
 		(child,parent) = zone.split ('.', 1)
-		rrs = local_resolver.query (
-				name.from_text (parent),
-				rdtype=rdatatype.NS).rrset
-		return [ str (rs) for rs in rss ]
+		try:
+			rrs = local_resolver.query (
+					name.from_text (parent),
+					rdtype=rdatatype.NS).rrset
+			return [ str (rs) for rs in rrs ]
+		except resolver.NXDOMAIN:
+			return None
 	else:
 		return None
 
@@ -231,8 +234,8 @@ def dnskey_ttl (zone, publisher):
 #
 def have_ds (zone, publisher=PUBLISHER_PARENTS|PUBLISHER_ALL):
 	nss = list_name_servers (zone, publisher)
-	rrs = collective_query (zone, rdatatype.DNSKEY, nss, rrset_is_nonempty_signed)
-	return combine_individual_outcomes (rrs)
+	rrs = collective_query (zone, rdatatype.DS, nss, rrset_is_nonempty_signed)
+	return combine_individual_outcomes (rrs, publisher)
 
 #
 # Determine the endtime of the TTL of the DS RRset in a zone.
@@ -246,7 +249,10 @@ def ds_ttl (zone, publisher=PUBLISHER_PARENTS):
 			return 86400
 	nss = list_name_servers (zone, publisher)
 	rrs = collective_query (zone, rdatatype.DS, nss, ttl_of_rrset)
-	return max (rrs)
+	if rrs is not None:
+		return max (rrs)
+	else:
+		return None
 
 
 #

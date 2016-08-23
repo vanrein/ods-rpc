@@ -134,7 +134,7 @@ retry = time.time () + 60
 srv = None
 while True:
 	try:
-		srv = SocketServer.TCPServer (('', 8000), WebAPI)
+		srv = SocketServer.TCPServer (('localhost', 8000), WebAPI)
 		print 'Connections welcomed'
 		srv.serve_forever ()
 	except IOError, ioe:

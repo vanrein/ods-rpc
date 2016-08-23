@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# ods-client -- Perform an action on a zone through an API
+# ods-webclient -- Perform an action on a zone through an API
 #
 # The default API is the Web API.  The keys are loaded from the same place
 # as used by the ods-webapi frontend.
@@ -74,6 +74,8 @@ print 'Status: ', htresp.status, htresp.reason
 if htresp.status == 200:
 	resp = htresp.read ()
 	print 'Receivd:', resp
+else:
+	sys.exit (1)
 
 #
 # Verify and extract the response
@@ -118,4 +120,4 @@ if ok:
 			print 'VERIFICATION EXCEPTION:', e
 # at this point, "ok" signifies correct verification
 if ok:
-	print 'Respons:', jwt.claims
+	print 'Response:', jwt.claims
