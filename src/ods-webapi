@@ -5,6 +5,7 @@
 # From: Rick van Rein <rick@openfortress.nl>
 
 
+import os
 import sys
 import time
 
@@ -12,7 +13,8 @@ import base64
 import json
 import jose
 
-import syslog
+from syslog import *
+import signal
 
 import BaseHTTPServer
 import SocketServer
@@ -43,17 +45,17 @@ class WebAPI (BaseHTTPServer.BaseHTTPRequestHandler):
 	def do_POST (self):
 		ok = True
 		try:
-			#DEBUG# print 'Received POST'
-			#DEBUG# print 'Content-type:', self.headers ['Content-type']
+			syslog (LOG_DEBUG, 'Received POST')
+			syslog (LOG_DEBUG, 'Content-type: ' + str (self.headers ['Content-type']))
 			ok = ok and self.headers ['Content-type'] == 'application/jose'
-			#DEBUG# print 'Content-length:', self.headers ['Content-length']
+			syslog (LOG_DEBUG, 'Content-length: ' + str (self.headers ['Content-length']))
 			contlen = int (self.headers ['Content-length'])
 			content = self.rfile.read (contlen)
-			#DEBUG# print 'Content:', content
+			syslog (LOG_DEBUG, 'Content: ' + str (content))
 			(header,payload,signature) = content.split ('.')
-			#DEBUG# print 'JOSE header:', header
-			#DEBUG# print 'JOSE payload:', payload
-			#DEBUG# print 'JOSE signature:', signature
+			syslog (LOG_DEBUG, 'JOSE header: ' + str (header))
+			syslog (LOG_DEBUG, 'JOSE payload: ' + str (payload))
+			syslog ('JOSE signature: ' + str (signature))
 			signeddata = {
 				'header'   : b64pad (header   ),
 				'payload'  : b64pad (payload  ),
@@ -64,38 +66,39 @@ class WebAPI (BaseHTTPServer.BaseHTTPRequestHandler):
 				payload,
 				signature,
 			)
-			#DEBUG# print 'Signed data:', signeddata
+			syslog (LOG_DEBUG, 'Signed data: ' + str (signeddata))
 			josehdrs = b64json (header)
-			#DEBUG# print 'Headers:', josehdrs
-			#DEBUG# print 'Header ["kid"]:', josehdrs ['kid']
+			syslog (LOG_DEBUG, 'Headers: ' + str (josehdrs))
+			syslog (LOG_DEBUG, 'Header ["kid"]: ' + str (josehdrs ['kid']))
 			jwks = [ keys [k]
 				for k in keys.keys ()
 				if k == josehdrs ['kid']
 			]
-			#DEBUG# print 'Keys:', jwks
+			syslog (LOG_DEBUG, 'Keys: ' + str (jwks))
 			age = time.time () - float (josehdrs ['timestamp'])
-			#DEBUG# print 'age:', age
+			syslog (LOG_DEBUG, 'age: ' + str (age))
 			ok = ok and -50 < age < 60
 		except Exception, e:
-			print 'EXCEPTION:', e
+			syslog (LOG_ERR, 'EXCEPTION: ' + str (e))
 		if ok:
 			ok = False
 			for jwk in jwks:
 				try:
-					#DEBUG# print 'VERIFICATION:'
-					#DEBUG# print 'signeddata =', signeddata
-					#DEBUG# print 'jwk =', jwk
+					syslog (LOG_DEBUG, 'VERIFICATION:')
+					syslog (LOG_DEBUG, 'signeddata = ' + str (signeddata))
+					syslog (LOG_DEBUG, 'jwk = ' + str (jwk))
 					jwt = jose.verify (signeddata, jwk)
-					#DEBUG# print 'DONE / JWT =', jwt
+					syslog (LOG_DEBUG, 'DONE / JWT = ' + str (jwt))
 					ok = True
 				except Exception, e:
-					print 'VERIFICATION EXCEPTION:', e
+					syslog (LOG_INFO, 'VERIFICATION EXCEPTION: ' + str (e))
 					ok = False
 		# at this point, "ok" signifies correct verification
 		resp = None
 		if ok:
+			syslog (LOG_INFO, 'COMMAND = ' + str (cmd))
 			resp = run_command (jwt.claims, josehdrs ['kid'])
-			#DEBUG# print 'RESPONSE =', resp
+			syslog (LOG_INFO, 'RESPONSE = ' + str (resp))
 		ok = ok and resp is not None
 		if ok:
 			# JWS signing with header ['kid']
@@ -110,7 +113,7 @@ class WebAPI (BaseHTTPServer.BaseHTTPRequestHandler):
 				jwks [0],		   #TODO# SYMMETRIC
 				add_header = reqhdr)
 			response = '.'.join (req)
-			#DEBUG# print 'Content:', content
+			syslog (LOG_DEBUG, 'Content: ' + str (content))
 			
 		if ok:
 			self.send_response (200)
@@ -119,32 +122,54 @@ class WebAPI (BaseHTTPServer.BaseHTTPRequestHandler):
 		else:
 			self.send_response (400)
 
+#
+# Fork to the background
+#
+pid = os.fork ()
+if pid == -1:
+	syslog (LOG_ERR, 'ERROR: Failed to fork background process')
+	sys.exit (1)
+elif pid != 0:
+	open ('/var/run/ods-webapi.pid', 'w').write (str (pid))
+	sys.exit (0)
+os.setsid ()
+
+#
+# Capture KILL responses
+#
+loop_forever = True
+def handle_SIGTERM (kill_signum, frame):
+	global loop_forever
+	loop_forever = False
+	if srv:
+		srv.server_close ()
+	syslog (LOG_INFO, 'Terminating service')
+	sys.exit (0)
+signal.signal (signal.SIGTERM, handle_SIGTERM)
 
 #
 # Open the syslog interface with our program name
 #
-syslog.openlog ('ods-webapi',
-		syslog.LOG_PID | syslog.LOG_PERROR,
-		syslog.LOG_DAEMON)
+openlog ('ods-webapi',
+		# LOG_PID | LOG_PERROR,
+		LOG_PID,
+		LOG_DAEMON)
 
 #
 # The HTTP service main loop
 #
 retry = time.time () + 60
 srv = None
-while True:
+while loop_forever:
 	try:
 		srv = SocketServer.TCPServer (('localhost', 8000), WebAPI)
-		print 'Connections welcomed'
+		syslog (LOG_INFO, 'Connections welcomed')
 		srv.serve_forever ()
 	except IOError, ioe:
 		if time.time () < retry:
 			if ioe.errno in [48,98]:
-				sys.stdout.write ('Found socket locked...')
-				sys.stdout.flush ()
+				syslog (LOG_WARNING, 'Found socket locked...')
 				time.sleep (5)
-				sys.stdout.write (' retrying\n')
-				sys.stdout.flush ()
 				continue
 		raise
 	break

@@ -1,0 +1,116 @@
+#!/bin/bash
+#
+# ods-webapi	Start up the OpenDNSSEC RPC service daemon
+#
+# chkconfig: 2345 85 10
+# description: ods-webapi is a web interface for OpenDNSSEC zone management.
+#              This services starts up the (web) server daemon.
+#
+# processname: ods-webapi
+# pidfile: /var/run/ods-wepapi.pid
+
+### BEGIN INIT INFO
+# Provides: ods-webapi
+# Required-Start: $local_fs $network $syslog
+# Required-Stop: $local_fs $syslog
+# Should-Start: $syslog
+# Should-Stop: $network $syslog
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: Start up the OpenDNSSEC RPC service daemon
+# Description:       ods-webapi is a web interface for OpenDNSSEC zone management.
+#                    This services starts up the (web) server daemon.
+### END INIT INFO
+
+# source function library
+. /etc/rc.d/init.d/functions
+
+PROG=ods-webapi
+LOCK_FILE=/var/lock/subsys/$PROG
+PROG_FILE=/usr/local/bin/ods-webapi
+PID_FILE=/var/run/ods-webapi.pid
+
+start() {
+	echo -n "Starting $PROG: "
+	$PROG_FILE && success || failure
+	RETVAL=$?
+	if [ $RETVAL ] ; then success ; else failure ; fi
+	if [ $RETVAL -eq 0 ]; then
+		touch $LOCK_FILE
+	fi
+	echo
+	return $RETVAL
+}
+
+stop() {
+	echo -n "Stopping $PROG: "
+	killproc -p $PID_FILE $PROG
+	RETVAL=$?
+	[ $RETVAL -eq 0 ] && rm -f $LOCK_FILE $PID_FILE
+	echo
+	return $RETVAL
+}
+
+restart() {
+	stop
+	start
+}
+
+reload() {
+	restart
+}
+
+force_reload() {
+	restart
+}
+
+rh_status() {
+	status -p $PID_FILE $PROG
+}
+
+rh_status_q() {
+	rh_status >/dev/null 2>&1
+}
+
+
+RETVAL=0
+
+case "$1" in
+	start)
+		rh_status_q && exit 0
+		start
+		;;
+	stop)
+		if ! rh_status_q; then
+			rm -f $LOCK_FILE
+			exit 0
+		fi
+		stop
+		;;
+	restart)
+		restart
+		;;
+	reload)
+		rh_status_q || exit 7
+		reload
+		;;
+	force-reload)
+		force_reload
+		;;
+	condrestart|try-restart)
+		rh_status_q || exit 0
+		restart
+		;;
+	status)
+		rh_status
+		RETVAL=$?
+		if [ $RETVAL -eq 3 -a -f $LOCK_FILE ] ; then
+			RETVAL=2
+		fi
+		;;
+	*)
+		echo $"Usage: $0 {start|stop|restart|reload|force-reload|condrestart|try-restart|status}"
+		RETVAL=2
+esac
+
+exit $RETVAL

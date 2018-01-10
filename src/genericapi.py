@@ -15,8 +15,9 @@ import sys
 import re
 import os
 import os.path
-import syslog
 import time
+
+from syslog import *
 
 from commandaccess import acls
 import localrules
@@ -28,7 +29,7 @@ import backend
 flagdir = '/var/opendnssec/rpc'
 
 if not os.path.isdir (flagdir):
-	syslog.syslog (syslog.LOG_ERR, 'Missing control directory: ' + flagdir + ' (FATAL)')
+	syslog (LOG_CRIT, 'Missing control directory: ' + str (flagdir) + ' (FATAL)')
 	sys.exit (1)
 
 # The flagging system; zone name plus flag name; file absense is False
@@ -65,13 +66,13 @@ def flagged (zone, flagname, value=None):
 	except:
 		retval = False
 	if value is not None and retval != value:
-		print 'FLAG', flagname, 'IS', retval, '::', type (retval), 'AND SHOULD BE', value, '::', type (value)
+		syslog (LOG_INFO, 'FLAG ' + flagname + ' IS ' + str (retval) + ' :: ' + str (type (retval)) + ' AND SHOULD BE ' + str (value) + ' :: ' + str (type (value)))
 		# It is abnormal for this to happen
-		syslog.syslog (syslog.LOG_ERR, 'Failed to set ' + flagname + ' flag to ' + str (value))
+		syslog (LOG_ERR, 'Failed to set ' + flagname + ' flag to ' + str (value))
 		if not flagged (zone, 'invalid', value='Failed to set ' + flagname + ' flag to ' + str (value)):
-			syslog.syslog (syslog.LOG_ERR, 'In addition, failed to set error flag to True (FATAL)')
+			syslog (LOG_CRIT, 'In addition, failed to set error flag to True (FATAL)')
 			sys.exit (1)
-	print 'RETURNING', retval, 'FOR', flagname
+	syslog (LOG_INFO, 'RETURNING ' + str (retval) + ' FOR ' + flagname)
 	return retval
 
 def flagged_signing (zone, value=None):
@@ -143,7 +144,7 @@ def do_sign_approve (zone, kid):
 	if not localrules.sign_approve (zone):
 		return RES_ERROR
 	if backend.manage_zone (zone) != 0:
-		syslog.syslog (syslog.LOG_ERR, 'Failed to add zone ' + zone + ' to OpenDNSSEC')
+		syslog (LOG_ERR, 'Failed to add zone ' + zone + ' to OpenDNSSEC')
 		return RES_ERROR
 	if flagged_signing (zone, value=True):
 		return RES_OK
@@ -162,12 +163,12 @@ def do_assert_signed (zone, kid):
 	# Find if we already set the 'signed' flag to a desired endtime
 	try:
 		asserted_fromtm = int (flagged_signed (zone) or 'NOTANINT')
-		print 'LOADED ASSERTED-FROM TIME', asserted_fromtm
+		syslog (LOG_INFO, 'LOADED ASSERTED-FROM TIME ' + str (asserted_fromtm) + ' FOR ' + zone)
 	except:
 		# flagged_invalid (zone, value='Flag signed failed to load as an integer')
 		# return RES_INVALID
 		asserted_fromtm = None
-		print 'NO ASSERTED-FROM TIME IS signed FLAG YET'
+		syslog (LOG_INFO, 'NO ASSERTED-FROM TIME IS signed FLAG FOR ' + zone + 'YET')
 	#
 	# Consider the case that no signatures may have been found before;
 	# this will check DNS and store a now-plus-TTL in the 'signed' flag
@@ -184,23 +185,23 @@ def do_assert_signed (zone, kid):
 					dnslogic.PUBLISHER_OPENDNSSEC)
 			asserted_fromtm = dnslogic.ttl2endtime (
 					max (ass1ttl, ass2ttl))
-			print 'COMPUTED ASSERTED-FROM TIME TO BE', asserted_fromtm, 'BASED ON', ass1ttl, 'AND', ass2ttl
+			syslog (LOG_INFO, 'COMPUTED ASSERTED-FROM TIME TO BE ' + str (asserted_fromtm) + ' BASED ON ', str (ass1ttl) + ' AND ' + str (ass2ttl) + ' FOR ' + zone)
 			if asserted_fromtm is not None:
 				flagged_signed (zone, value=str (asserted_fromtm))
 			else:
-				syslog.syslog (syslog.LOG_ERR, 'Failed to determine endtime in OpenDNSSEC during assert_signed on ' + zone)
+				syslog (LOG_ERR, 'Failed to determine endtime in OpenDNSSEC during assert_signed on ' + zone)
 				return RES_ERROR
 		else:
-			print 'STILL FOUND NO DNSKEY RECORDS'
-			syslog.syslog (syslog.LOG_INFO, 'Failed to assert that zone ' + zone + ' is published-signed')
+			syslog (LOG_INFO, 'STILL FOUND NO DNSKEY RECORDS FOR ' + zone)
+			syslog (LOG_INFO, 'Failed to assert that zone ' + zone + ' is published-signed')
 			return RES_ERROR
 	#
 	# Now test the asserted_fromtm value
 	if time.time () >= asserted_fromtm:
-		print 'ENDED COUNTDOWN UNTIL', asserted_fromtm
+		syslog (LOG_INFO, 'ENDED COUNTDOWN FOR ' + zone + ' UNTIL ' + str (asserted_fromtm))
 		return RES_OK
 	else:
-		print 'STILL DOING COUNTDOWN UNTIL', asserted_fromtm
+		syslog (LOG_INFO, 'STILL DOING COUNTDOWN FOR ' + zone + ' UNTIL ' + str (asserted_fromtm))
 		return RES_ERROR
 
 def do_chain_start (zone, kid):
@@ -220,7 +221,7 @@ def do_chain_start (zone, kid):
 		if flagged_chaining (zone, value=True):
 			return RES_OK
 		else:
-			syslog.syslog (syslog.LOG_ERR, 'Failed to set chaining flag on zone ' + zone)
+			syslog (LOG_ERR, 'Failed to set chaining flag on zone ' + zone)
 			return RES_INVALID
 	else:
 		return RES_ERROR
@@ -234,10 +235,10 @@ def do_assert_chained (zone, kid):
 	# Find if we already set the 'chained' flag to a desired endtime
 	try:
 		asserted_fromtm = int (flagged_chained (zone) or 'NOTANINT')
-		print 'LOADED CHAINED ASSERTED-FROM TIME', asserted_fromtm
+		syslog (LOG_INFO, 'LOADED CHAINED ASSERTED-FROM TIME ' + str (asserted_fromtm))
 	except:
 		# flagged_invalid (zone, value='Flag chained failed to load as an integer')
-		print 'NO CHAINED ASSERTED-FROM TIME YET'
+		syslog (LOG_INFO, 'NO CHAINED ASSERTED-FROM TIME YET')
 		asserted_fromtm = None
 	#
 	# The DS records may be absent, which is a sign that we need to
@@ -258,7 +259,7 @@ def do_assert_chained (zone, kid):
 					dnslogic.PUBLISHER_PARENTS)
 			asserted_fromtm = dnslogic.ttl2endtime (
 					max (ass1tm, ass2tm))
-			print 'COMPUTED CHAINED ASSERTED-FROM TIME', asserted_fromtm, 'FROM', ass1tm, 'AND', ass2tm
+			syslog (LOG_INFO, 'COMPUTED CHAINED ASSERTED-FROM TIME ' + str (asserted_fromtm) + ' FROM ' + str (ass1tm) + ' AND ' + str (ass2tm))
 			if asserted_fromtm is not None:
 				flagged_chained (zone, value=str (asserted_fromtm))
 			else:
@@ -268,10 +269,10 @@ def do_assert_chained (zone, kid):
 	#
 	# Now test the asserted_fromtm value
 	if time.time () >= asserted_fromtm:
-		print 'PASSED ACROSS THE CHAINED ASSERTED-FROM TIME', asserted_fromtm
+		syslog (LOG_INFO, 'PASSED ACROSS THE CHAINED ASSERTED-FROM TIME ' + str (asserted_fromtm))
 		return RES_OK
 	else:
-		print 'COUNTING DOWN TO THE CHAINED ASSERTED-FROM TIME', asserted_fromtm
+		syslog (LOG_INFO, 'COUNTING DOWN TO THE CHAINED ASSERTED-FROM TIME ' + str (asserted_fromtm))
 		return RES_ERROR
 
 def do_chain_stop (zone, kid):
@@ -289,10 +290,10 @@ def do_chain_stop (zone, kid):
 		if (not flagged_chaining (zone, value=False)) and (not flagged_chained (zone, value=False)):
 			return RES_OK
 		else:
-			syslog.syslog (syslog.LOG_ERR, 'Failed to clear chained/chaining flags on zone ' + zone)
+			syslog (LOG_ERR, 'Failed to clear chained/chaining flags on zone ' + zone)
 			return RES_INVALID
 	else:
-		syslog.syslog (syslog.LOG_ERR, 'Failed in localrules.chain_stop() on zone ' + zone)
+		syslog (LOG_ERR, 'Failed in localrules.chain_stop() on zone ' + zone)
 		return RES_ERROR
 
 def do_assert_unchained (zone, kid):
@@ -336,7 +337,7 @@ def do_sign_ignore (zone, kid):
 
 def do_sign_stop (zone, kid):
 	if (not flagged_signed (zone)) or flagged_chained (zone):
-		print 'FLAGS ARE OFF -- BADSTATE'
+		syslog (LOG_INFO, 'FLAGS ARE OFF -- BADSTATE')
 		return RES_BADSTATE
 	dnskeyttl = dnslogic.dnskey_ttl (
 				zone,
@@ -346,7 +347,7 @@ def do_sign_stop (zone, kid):
 	if not localrules.sign_stop (zone):
 		return RES_ERROR
 	if backend.unmanage_zone (zone) != 0:
-		syslog.syslog (syslog.LOG_ERR, 'Failed to remove zone ' + zone + ' from OpenDNSSEC')
+		syslog (LOG_ERR, 'Failed to remove zone ' + zone + ' from OpenDNSSEC')
 		return RES_ERROR
 	# Retract the basis of certainty for assert_signed()
 	if not flagged_signed (zone, value=False):
@@ -372,7 +373,7 @@ def do_assert_unsigned (zone, kid):
 			zone,
 			dnslogic.PUBLISHER_AUTHORITATIVES |
 			dnslogic.PUBLISHER_NONE):
-		syslog.syslog (syslog.LOG_INFO, 'Failed to assert that zone ' + zone + ' is published-unsigned')
+		syslog (LOG_INFO, 'Failed to assert that zone ' + zone + ' is published-unsigned')
 		return RES_ERROR
 	if not localrules.assert_unsigned (zone):
 		return RES_ERROR
@@ -384,18 +385,18 @@ def do_assert_unsigned (zone, kid):
 	if unsigning is False:
 		# The countdown has not started yet, so start it now
 		dnskeyttlend = dnslogic.ttl2endtime (dnskeyttl)
-		print 'CREATED TTLEND FOR DNSKEY:', dnskeyttlend
+		syslog (LOG_INFO, 'CREATED TTLEND FOR DNSKEY: ' + str (dnskeyttlend))
 		flagged_unsigning (zone, value=str (dnskeyttlend))
 	else:
 		dnskeyttlend = int (unsigning)
-		print 'GOT TTLEND FOR DNSKEY:', dnskeyttlend
+		syslog (LOG_INFO, 'GOT TTLEND FOR DNSKEY: ' + str (dnskeyttlend))
 	if time.time () < dnskeyttlend:
 		# The countdown has not yet completed, so tick a little more
-		print 'AWAITING COUNTDOWN UNTIL:', dnskeyttlend
+		syslog (LOG_INFO, 'AWAITING COUNTDOWN UNTIL: ' + str (dnskeyttlend))
 		return RES_ERROR
 	else:
 		# The countdown is complete, so cleanup flags and report success
-		print 'COMPLETED COUNTDOWN UNTIL:', dnskeyttlend
+		syslog (LOG_INFO, 'COMPLETED COUNTDOWN UNTIL: ' + str (dnskeyttlend))
 		if flagged_signing (zone, value=False):
 			return RES_INVALID
 		flagged_dsttl (zone, value=False)
@@ -412,81 +413,81 @@ def do_assert_unsigned (zone, kid):
 
 def do_goto_signed (zone, kid):
 	rv = RES_OK
-	print 'goto_signed', zone
+	syslog (LOG_INFO, 'goto_signed ' + zone)
 	if rv == RES_OK and flagged_signed (zone):
 		if flagged_chaining (zone):
-			print 'goto_signed --> gosub_unchained'
+			syslog (LOG_INFO, 'goto_signed --> gosub_unchained')
 			rv = do_goto_unchained (zone)
 		else:
-			print 'goto_signed --> assert_unchained'
+			syslog (LOG_INFO, 'goto_signed --> assert_unchained')
 			rv = do_assert_unchained (zone)
 	if rv == RES_OK and not flagged_signing (zone) and not flagged_signed (zone):
-		#USELESS# print 'goto_signed --> sign_start'
+		#USELESS# syslog (LOG_INFO, 'goto_signed --> sign_start')
 		#USELESS# rv = do_sign_start (zone, kid)
-		print 'goto_signed --> sign_approve'
+		syslog (LOG_INFO, 'goto_signed --> sign_approve')
 		rv = do_sign_approve (zone, kid)
 	if rv == RES_OK:
-		print 'goto_signed --> assert_signed'
+		syslog (LOG_INFO, 'goto_signed --> assert_signed')
 		rv = do_assert_signed (zone, kid)
-	print 'goto_signed :=', rv
+	syslog (LOG_INFO, 'goto_signed := ' + str (rv))
 	return rv
 
 def do_goto_chained (zone, kid):
 	rv = RES_OK
-	print 'goto_chained', zone
+	syslog (LOG_INFO, 'goto_chained ' + zone)
 	if rv == RES_OK:
 		if not flagged_signed (zone):
-			print 'goto_chained --> gosub_signed'
+			syslog (LOG_INFO, 'goto_chained --> gosub_signed')
 			rv = do_goto_signed (zone, kid)
 		else:
-			print 'goto_chained --> assert_signed'
+			syslog (LOG_INFO, 'goto_chained --> assert_signed')
 			rv = do_assert_signed (zone, kid)
 	if rv == RES_OK and flagged_signing (zone) and not flagged_chaining (zone):
-		print 'goto_chained --> chain_start'
+		syslog (LOG_INFO, 'goto_chained --> chain_start')
 		rv = do_chain_start (zone, kid)
 	if rv == RES_OK:
-		print 'goto_chained --> assert_chained'
+		syslog (LOG_INFO, 'goto_chained --> assert_chained')
 		rv = do_assert_chained (zone, kid)
-	print 'goto_chained :=', rv
+	syslog (LOG_INFO, 'goto_chained := ' + str (rv))
 	return rv
 
 def do_goto_unchained (zone, kid):
 	rv = RES_OK
-	print 'goto_unchained', zone
+	syslog (LOG_INFO, 'goto_unchained ' + zone)
 	if rv == RES_OK and flagged_chaining (zone):
 		if not flagged_chained (zone):
-			print 'goto_unchained --> gosub_chained'
+			syslog (LOG_INFO, 'goto_unchained --> gosub_chained')
 			rv = do_goto_chained (zone, kid)
 		else:
-			print 'goto_unchained --> assert_chained'
+			syslog (LOG_INFO, 'goto_unchained --> assert_chained')
 			rv = do_assert_chained (zone, kid)
 	if rv == RES_OK and flagged_chaining (zone) and flagged_chained (zone):
-		print 'goto_unchained --> chain_stop'
+		syslog (LOG_INFO, 'goto_unchained --> chain_stop')
 		rv = do_chain_stop (zone, kid)
 	if rv == RES_OK and not flagged_chaining (zone):
-		print 'goto_unchained --> assert_unchained'
+		syslog (LOG_INFO, 'goto_unchained --> assert_unchained')
 		rv = do_assert_unchained (zone, kid)
-	print 'goto_unchained :=', rv
+	syslog (LOG_INFO, 'goto_unchained := ' + str (rv))
 	return rv
 
 def do_goto_unsigned (zone, kid):
 	rv = RES_OK
-	print 'goto_unsigned', zone
+	syslog (LOG_INFO, 'goto_unsigned ' + zone)
 	if rv == RES_OK and flagged_signed (zone):
 		if flagged_chained (zone):
-			print 'goto_unsigned --> gosub_unchained'
+			syslog (LOG_INFO, 'goto_unsigned --> gosub_unchained')
 			rv = do_goto_unchained (zone, kid)
 		else:
-			print 'goto_unsigned --> assert_unchained'
+			syslog (LOG_INFO, 'goto_unsigned --> assert_unchained')
 			rv = do_assert_unchained (zone, kid)
 	if rv == RES_OK and flagged_signed (zone) and not flagged_chained (zone):
 		#USELESS# rv = do_sign_ignore (zone, kid)
-		print 'goto_unsigned --> sign_stop'
+		syslog (LOG_INFO, 'goto_unsigned --> sign_stop')
 		rv = do_sign_stop (zone, kid)
 	if rv == RES_OK and not flagged_signed (zone):
-		print 'goto_unsigned --> assert_unsigned'
+		syslog (LOG_INFO, 'goto_unsigned --> assert_unsigned')
 		rv = do_assert_unsigned (zone, kid)
-	print 'goto_unsigned :=', rv
+	syslog (LOG_INFO, 'goto_unsigned := ' + str (rv))
 	return rv
 
 #
@@ -500,10 +501,10 @@ def do_goto_unsigned (zone, kid):
 #
 
 def do_drop_dead (zone, kid):
-	print 'drop_dead', zone
+	syslog (LOG_INFO, 'drop_dead ' + zone)
 	if backend.unmanage_zone (zone) != 0:
-		syslog.syslog (syslog.LOG_ERR, 'Failed to delete zone ' + zone + ' from OpenDNSSEC')
-		print 'drop_dead :=', RES_ERROR
+		syslog (LOG_ERR, 'Failed to delete zone ' + zone + ' from OpenDNSSEC')
+		syslog (LOG_INFO, 'drop_dead := RES_ERROR')
 		return RES_ERROR
 	flagged_signing   (zone, value=False)
 	flagged_signed    (zone, value=False)
@@ -513,7 +514,7 @@ def do_drop_dead (zone, kid):
 	flagged_dnskeyttl (zone, value=False)
 	flagged_unchained (zone, value=False)
 	flagged_unsigning (zone, value=False)
-	print 'drop_dead :=', RES_OK
+	syslog (LOG_INFO, 'drop_dead := RES_OK')
 	return RES_OK
 
 #
@@ -567,16 +568,17 @@ def run_command (cmd, kid):
 	# Per-command access control
 	command = cmd ['command']
 	zones   = cmd ['zones'  ]
+	syslog (LOG_DEBUG, 'ZONES IN CMD: ' + str (zones))
 	if not handler.has_key (command):
 		# Unrecognised command
-		print 'Unrecognised command', command
+		syslog (LOG_INFO, 'Unrecognised command: ' + command)
 		return None
 	welcome = False
 	welcome = welcome or (acls.has_key (  '*'  ) and kid in acls [  '*'  ])
 	welcome = welcome or (acls.has_key (command) and kid in acls [command])
 	if not welcome:
 		# Refused by ACLs
-		print 'Refused by ACLs'
+		syslog (LOG_INFO, 'Refused by ACLs')
 		return None
 	#
 	# Invoke command-specific handler without further restraint
@@ -588,6 +590,7 @@ def run_command (cmd, kid):
 	}
 	hdl = handler [command]
 	for zone in zones:
+		syslog (LOG_DEBUG, 'DEBUG ZONE TO LOWER: ' + zone + ' :: ' + str (type (zone)))
 		zone = zone.lower ()
 		if zone [-1:] == '.':
 			zone = zone [:-1]

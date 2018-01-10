@@ -19,8 +19,9 @@
 
 
 import time
-import syslog
 from math import ceil
+
+from syslog import *
 
 from localrules import ods_output, local_resolver
 
@@ -50,27 +51,33 @@ PUBLISHER_NONE = 0x0003
 #
 def combine_individual_outcomes (indiv_test_outcomes, publisher):
 	if indiv_test_outcomes is None:
+		syslog (LOG_DEBUG, 'combine_individual_outcomes: indiv_test_outcomes is None')
 		return None
 	publisher = publisher & 0x0003
 	if   publisher == PUBLISHER_SOME:
 		for one in indiv_test_outcomes:
 			# Skip None (for not-found info) as if it was False
 			if one is True:
+				syslog (LOG_DEBUG, 'combine_individual_outcomes: found PUBLISHER_SOME')
 				return True
 		return False
 	elif publisher == PUBLISHER_ALL:
 		for one in indiv_test_outcomes:
 			if not one is True:
 				# Also fails on None (for not-found info)
+				syslog (LOG_DEBUG, 'combine_individual_outcomes: missing PUBLISHER_ALL')
 				return False
 		return True
 	elif publisher == PUBLISHER_NONE:
 		for one in indiv_test_outcomes:
 			if not one is False:
 				# Also fails on None (for not-found info)
+				syslog (LOG_DEBUG, 'combine_individual_outcomes: failing on PUBLISHER_NONE')
 				return False
+		syslog (LOG_DEBUG, 'combine_individual_outcomes: succeeding on PUBLISHER_NONE')
 		return True
 	else:
+		syslog (LOG_DEBUG, 'combine_individual_outcomes: unknown publisher type')
 		return False
 
 
@@ -83,10 +90,13 @@ def list_name_servers (zone, publisher):
 	if   publisher == PUBLISHER_OPENDNSSEC:
 		return [ ods_output ]
 	elif publisher == PUBLISHER_AUTHORITATIVES:
-		rss = local_resolver.query (
-				name.from_text (zone),
-				rdtype=rdatatype.NS).rrset
-		return [ str (rs) for rs in rss ]
+		try:
+			rss = local_resolver.query (
+					name.from_text (zone),
+					rdtype=rdatatype.NS).rrset
+			return [ str (rs) for rs in rss ]
+		except resolver.NXDOMAIN:
+			return None
 	elif publisher == PUBLISHER_PARENTS:
 		if not '.' in zone:
 			return None
@@ -174,7 +184,7 @@ def collective_query (zone, rrtype, name_servers, answerproc=None):
 			if response is None:
 				retval.append (None)
 			else:
-				print 'Answer is:', response.answer
+				syslog (LOG_INFO, 'Answer is: ' + str (response.answer))
 				if answerproc is None:
 					answerproc = lambda x: x
 				retval.append (answerproc (response.answer))
@@ -202,7 +212,9 @@ def rrset_is_nonempty_signed (ans):
 #
 def test_for_signed_dnskey (zone, publisher):
 	nss = list_name_servers (zone, publisher)
+	syslog (LOG_DEBUG, 'test_for_signed_dnskey, nss = ' + str (nss))
 	rrs = collective_query (zone, rdatatype.DNSKEY, nss, rrset_is_nonempty_signed)
+	syslog (LOG_DEBUG, 'test_for_signed_dnskey, rrs = ' + str (rrs))
 	return combine_individual_outcomes (rrs, publisher)
 
 
@@ -223,7 +235,7 @@ def dnskey_ttl (zone, publisher):
 		try:
 			return ans [0].ttl
 		except:
-			syslog.syslog (syslog.LOG_ERR, 'Failed to fetch TTL on DNSKEY for ' + zone + '; assuming 1 day')
+			syslog (LOG_ERR, 'Failed to fetch TTL on DNSKEY for ' + zone + '; assuming 1 day')
 			return 86400
 	nss = list_name_servers (zone, publisher)
 	rrs = collective_query (zone, rdatatype.DNSKEY, nss, ttl_of_rrset)
@@ -245,7 +257,7 @@ def ds_ttl (zone, publisher=PUBLISHER_PARENTS):
 		try:
 			return ans [0].ttl
 		except:
-			syslog.syslog (syslog.LOG_ERR, 'Failed to fetch TTL on DS for ' + zone + '; assuming 1 day')
+			syslog (LOG_ERR, 'Failed to fetch TTL on DS for ' + zone + '; assuming 1 day')
 			return 86400
 	nss = list_name_servers (zone, publisher)
 	rrs = collective_query (zone, rdatatype.DS, nss, ttl_of_rrset)
@@ -281,12 +293,12 @@ def negative_caching_ttl (zone, publisher):
 			return max (resp)
 		except:
 			# In case of doubt, err on the safe side
-			syslog.syslog (syslog.LOG_ERR, 'Failed to fetch negative caching time from SOA for ' + zone + '; assuming 1 day')
+			syslog (LOG_ERR, 'Failed to fetch negative caching time from SOA for ' + zone + '; assuming 1 day')
 			return 86400
 	nss = list_name_servers (zone, publisher)
 	rrs = collective_query (zone, rdatatype.SOA, nss, soatime)
 	if rrs is None or len (rrs) == 0 or None in rrs:
-		syslog.syslog (syslog.LOG_ERR, 'Irregularities in negative caching time for ' + zone + '; assuming 1 day')
+		syslog (LOG_ERR, 'Irregularities in negative caching time for ' + zone + '; assuming 1 day')
 		nctime = 86400
 	else:
 		nctime = max (rrs)

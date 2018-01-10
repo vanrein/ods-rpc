@@ -5,10 +5,12 @@
 # From: Rick van Rein <rick@openfortress.nl>
 
 
+import os
 import sys
 import time
 
-import syslog
+from syslog import *
+import signal
 
 import json
 
@@ -28,22 +30,22 @@ class WebAPI (BaseHTTPServer.BaseHTTPRequestHandler):
 	def do_POST (self):
 		ok = True
 		try:
-			#DEBUG# print 'Received POST'
-			#DEBUG# print 'Content-type:', self.headers ['Content-type']
+			syslog (LOG_DEBUG, 'Received POST')
+			syslog (LOG_DEBUG, 'Content-type: ' + str (self.headers ['Content-type']))
 			ok = ok and self.headers ['Content-type'] == 'application/json'
-			#DEBUG# print 'Content-length:', self.headers ['Content-length']
+			syslog (LOG_DEBUG, 'Content-length: ' +  str (self.headers ['Content-length']))
 			contlen = int (self.headers ['Content-length'])
 			content = self.rfile.read (contlen)
 		except Exception, e:
-			print 'EXCEPTION:', e
+			syslog (LOG_ERR, 'EXCEPTION: ' + str (e))
 		# at this point, "ok" signifies correct reception w/o validation
 		resp = None
-		print 'CONTENT =', content
+		syslog (LOG_INFO, 'CONTENT = ' + str (content))
 		cmd = json.loads (content)
 		if ok:
-			print 'COMMAND =', cmd
+			syslog (LOG_INFO, 'COMMAND = ' + str (cmd))
 			resp = run_command (cmd, 'nobody')
-			print 'RESPONSE =', resp
+			syslog (LOG_INFO, 'RESPONSE = ' + str (resp))
 		ok = ok and resp is not None
 		if ok:
 			response = json.dumps (resp)
@@ -56,30 +58,53 @@ class WebAPI (BaseHTTPServer.BaseHTTPRequestHandler):
 
 
 #
+# Fork to the background
+#
+pid = os.fork ()
+if pid == -1:
+	syslog (LOG_ERR, 'ERROR: Failed to fork background process')
+	sys.exit (1)
+elif pid != 0:
+	open ('/var/run/ods-webapi.pid', 'w').write (str (pid))
+	sys.exit (0)
+os.setsid ()
+
+#
+# Capture KILL responses
+#
+loop_forever = True
+def handle_SIGTERM (kill_signum, frame):
+	global loop_forever
+	loop_forever = False
+	if srv:
+		srv.server_close ()
+	syslog (LOG_INFO, 'Terminating service')
+	sys.exit (0)
+signal.signal (signal.SIGTERM, handle_SIGTERM)
+
+#
 # Open the syslog interface with our program name
 #
-syslog.openlog ('ods-webapi-unprotected',
-		syslog.LOG_PID | syslog.LOG_PERROR,
-		syslog.LOG_DAEMON)
+openlog ('ods-webapi-unprotected',
+		# LOG_PID | LOG_PERROR,
+		LOG_PID,
+		LOG_DAEMON)
 
 #
 # The HTTP service main loop
 #
 retry = time.time () + 60
 srv = None
-while True:
+while loop_forever:
 	try:
 		srv = SocketServer.TCPServer (('adleman.surfdomeinen.nl', 8998), WebAPI)
-		print 'Connections welcomed'
+		syslog (LOG_INFO, 'Connections welcomed')
 		srv.serve_forever ()
 	except IOError, ioe:
 		if time.time () < retry:
 			if ioe.errno in [48,98]:
-				sys.stdout.write ('Found socket locked...')
-				sys.stdout.flush ()
+				syslog (LOG_WARNING, 'Found socket locked...')
 				time.sleep (5)
-				sys.stdout.write (' retrying\n')
-				sys.stdout.flush ()
 				continue
 		raise
 	break
