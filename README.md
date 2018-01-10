@@ -136,14 +136,15 @@ zones `example.com` and `john.example.org`.
 
 ## JSON format of DNSSEC Responses
 
-A DNSSEC Respsonse is a dictionary with a number of zone lists, where
+A DNSSEC Response is a dictionary with a number of zone lists, where
 the list name indicates how processing went.  The `ok` list indicates
 those changes that went through fine, the `invalid` list indicates zones
 that have their `invalid` flag raised, the `badstate` list indicates zones
 that are in an unsuitable state for the requested command, `error`
-indicates other errors with the requested zone action.  Any of these lists may
-be absent, which is equivalent to an empty list.  All zones listed in the
-corresponding DNSSEC Request occur in precisely one list.
+indicates other errors with the requested zone action, and is often used
+considered as a "false" response that is transient in nature.  Any of these
+lists may be absent, which is equivalent to an empty list.  All zones listed
+in the corresponding DNSSEC Request occur in precisely one list.
 
     {
         "ok": [
@@ -206,7 +207,7 @@ appears in all authoritative name servers.
 Aim for state changes until `assert_signed` holds.  This command is used
 in a polling fashion, and the server will each time attempt to make the
 necessary state changes.  Until it validates, this command returns
-error conditions.
+the `error` condition.
 
 Precondition: True
 
@@ -256,7 +257,7 @@ Postcondition: Dito; the zone can now be notified as "signed" to the user.
 Aim for state changes until `assert_chained` holds.  This command is used
 in a polling fashion, and the server will each time attempt to make the
 necessary state changes.  Until it validates, this command returns
-error conditions.
+the `error` condition.
 
 Precondition: True
 
@@ -292,7 +293,7 @@ Postcondition: Dito.  Plus, nobody has reason to require that the zone is signed
 Aim for state changes until `assert_unchained` holds.  This command is used
 in a polling fashion, and the server will each time attempt to make the
 necessary state changes.  Until it validates, this command returns
-error conditions.
+the `error` condition.
 
 Precondition: True
 
@@ -334,7 +335,7 @@ Postcondition: The `signing` flag is cleared, as is `chaining`.
 Aim for state changes until `assert_unsigned` holds.  This command is used
 in a polling fashion, and the server will each time attempt to make the
 necessary state changes.  Until it validates, this command returns
-error conditions.
+the `error` condition.
 
 Precondition: True
 
