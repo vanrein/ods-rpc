@@ -2,12 +2,16 @@
 #
 # ods-wepapi -- A HTTP wrapper around a management interface for OpenDNSSEC.
 #
+# This version is -unprotected in the sense of not using JOSE signatures.
+#
 # From: Rick van Rein <rick@openfortress.nl>
 
 
 import os
 import sys
 import time
+import pwd
+import grp
 
 from syslog import *
 import signal
@@ -56,6 +60,15 @@ class WebAPI (BaseHTTPServer.BaseHTTPRequestHandler):
 		else:
 			self.send_response (400)
 
+	def log_success (self, fmt, *args):
+		syslog (LOG_INFO, fmt % args)
+
+	def log_error (self, fmg, *args):
+		syslog (LOG_ERR, fmt % args)
+
+ 	def log_message (self, fmt, *args):
+		syslog (LOG_NOTICE, fmt % args)
+
 
 #
 # Fork to the background
@@ -68,6 +81,9 @@ elif pid != 0:
 	open ('/var/run/ods-webapi.pid', 'w').write (str (pid))
 	sys.exit (0)
 os.setsid ()
+os.close (0)
+os.close (1)
+os.close (2)
 
 #
 # Capture KILL responses
@@ -85,7 +101,7 @@ signal.signal (signal.SIGTERM, handle_SIGTERM)
 #
 # Open the syslog interface with our program name
 #
-openlog ('ods-webapi-unprotected',
+openlog ('ods-webapi',
 		# LOG_PID | LOG_PERROR,
 		LOG_PID,
 		LOG_DAEMON)
@@ -97,7 +113,13 @@ retry = time.time () + 60
 srv = None
 while loop_forever:
 	try:
-		srv = SocketServer.TCPServer (('adleman.surfdomeinen.nl', 8998), WebAPI)
+		srv = SocketServer.TCPServer (('whitfield.surfdomeinen.nl', 8998), WebAPI)
+		if os.getuid () == 0:
+			uid = pwd.getpwnam ('odsrpc').pw_uid
+			gid = grp.getgrnam ('odsrpc').gr_gid
+			os.setgroups ([])
+			os.setgid (gid)
+			os.setuid (uid)
 		syslog (LOG_INFO, 'Connections welcomed')
 		srv.serve_forever ()
 	except IOError, ioe:

@@ -26,6 +26,7 @@ A zone has a number of flags attached:
 * `signed` is the starting time from which the zone is signed; setup during `assert_signed` and cleared during `sign_stop`;
 * `chaining` indicates that the intention exists to maintain a chain from the parent; set during `chain_start` and cleared during `chain_stop`;
 * `chained` is the starting time from which the zone is chained from the parent; setup during `assert_chained` and cleared during `chain_stop`;
+* `waiveds` is an overriding flag that is never cleaned up automatically, to waive the presence of suited DS records in the parent during testing;
 * `dsttl` is the DS TTL found in parent zone; setup just before the chain is broken in `chain_stop` and cleared during `assert_unsigned`;
 * `dnskeyttl` is the DNSKEY TTL found in the signed zone; setup just before stopping DNSSEC during `sign_stop` and cleared during `assert_unsigned`;
 * `invalid` describes what is wrong with the zone that blocks its further processing; raised whenever something unexpected happens to the zone and only cleared through operator intervention.

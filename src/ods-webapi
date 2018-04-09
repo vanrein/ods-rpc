@@ -8,6 +8,8 @@
 import os
 import sys
 import time
+import pwd
+import grp
 
 import base64
 import json
@@ -41,7 +43,7 @@ def b64json (b64):
 # The web server that accepts commands and relays them to the generic API.
 #
 class WebAPI (BaseHTTPServer.BaseHTTPRequestHandler):
- 
+
 	def do_POST (self):
 		ok = True
 		try:
@@ -122,6 +124,15 @@ class WebAPI (BaseHTTPServer.BaseHTTPRequestHandler):
 		else:
 			self.send_response (400)
 
+	def log_success (self, fmt, *args):
+		syslog (LOG_INFO, fmt % args)
+
+	def log_error (self, fmg, *args):
+		syslog (LOG_ERR, fmt % args)
+
+ 	def log_message (self, fmt, *args):
+		syslog (LOG_NOTICE, fmt % args)
+
 #
 # Fork to the background
 #
@@ -133,6 +144,9 @@ elif pid != 0:
 	open ('/var/run/ods-webapi.pid', 'w').write (str (pid))
 	sys.exit (0)
 os.setsid ()
+os.close (0)
+os.close (1)
+os.close (2)
 
 #
 # Capture KILL responses
@@ -163,6 +177,12 @@ srv = None
 while loop_forever:
 	try:
 		srv = SocketServer.TCPServer (('localhost', 8000), WebAPI)
+		if os.getuid () == 0:
+			uid = pwd.getpwnam ('odsrpc').pw_uid
+			gid = grp.getgrnam ('odsrpc').gr_gid
+			os.setgroups ([])
+			os.setgid (gid)
+			os.setuid (uid)
 		syslog (LOG_INFO, 'Connections welcomed')
 		srv.serve_forever ()
 	except IOError, ioe:

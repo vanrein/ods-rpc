@@ -97,6 +97,8 @@ def list_name_servers (zone, publisher):
 			return [ str (rs) for rs in rss ]
 		except resolver.NXDOMAIN:
 			return None
+		except resolver.NoAnswer:
+			return None
 	elif publisher == PUBLISHER_PARENTS:
 		if not '.' in zone:
 			return None
@@ -107,6 +109,8 @@ def list_name_servers (zone, publisher):
 					rdtype=rdatatype.NS).rrset
 			return [ str (rs) for rs in rrs ]
 		except resolver.NXDOMAIN:
+			return None
+		except resolver.NoAnswer:
 			return None
 	else:
 		return None
@@ -134,12 +138,16 @@ def collective_query (zone, rrtype, name_servers, answerproc=None):
 				nsas.append (str (nsa))
 		except resolver.NXDOMAIN:
 			pass
+		except resolver.NoAnswer:
+			pass
 		try:
 			for nsa in local_resolver.query (
 					name.from_text (ns),
 					rdtype=rdatatype.A):
 				nsas.append (str (nsa))
 		except resolver.NXDOMAIN:
+			pass
+		except resolver.NoAnswer:
 			pass
 		if len (nsas) > 0:
 			request = message.make_query (
@@ -296,6 +304,8 @@ def negative_caching_ttl (zone, publisher):
 			syslog (LOG_ERR, 'Failed to fetch negative caching time from SOA for ' + zone + '; assuming 1 day')
 			return 86400
 	nss = list_name_servers (zone, publisher)
+	if publisher == PUBLISHER_PARENTS:
+		(child,zone) = zone.split ('.', 1)
 	rrs = collective_query (zone, rdatatype.SOA, nss, soatime)
 	if rrs is None or len (rrs) == 0 or None in rrs:
 		syslog (LOG_ERR, 'Irregularities in negative caching time for ' + zone + '; assuming 1 day')

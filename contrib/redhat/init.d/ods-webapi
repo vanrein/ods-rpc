@@ -27,7 +27,7 @@
 
 PROG=ods-webapi
 LOCK_FILE=/var/lock/subsys/$PROG
-PROG_FILE=/usr/local/bin/ods-webapi
+PROG_FILE=/usr/local/sbin/ods-webapi
 PID_FILE=/var/run/ods-webapi.pid
 
 start() {

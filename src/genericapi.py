@@ -66,13 +66,13 @@ def flagged (zone, flagname, value=None):
 	except:
 		retval = False
 	if value is not None and retval != value:
-		syslog (LOG_INFO, 'FLAG ' + flagname + ' IS ' + str (retval) + ' :: ' + str (type (retval)) + ' AND SHOULD BE ' + str (value) + ' :: ' + str (type (value)))
+		syslog (LOG_INFO, 'FLAG ' + flagname + ' IS ' + str (retval) + ' :: ' + str (type (retval)) + ' AND SHOULD BE ' + str (value) + ' :: ' + str (type (value)) + ' for zone ' + zone)
 		# It is abnormal for this to happen
-		syslog (LOG_ERR, 'Failed to set ' + flagname + ' flag to ' + str (value))
+		syslog (LOG_ERR, 'Failed to set ' + flagname + ' flag to ' + str (value) + ' for zone ' + zone)
 		if not flagged (zone, 'invalid', value='Failed to set ' + flagname + ' flag to ' + str (value)):
-			syslog (LOG_CRIT, 'In addition, failed to set error flag to True (FATAL)')
+			syslog (LOG_CRIT, 'In addition, failed to set error flag to True for zone ' + zone + ' (FATAL)')
 			sys.exit (1)
-	syslog (LOG_INFO, 'RETURNING ' + str (retval) + ' FOR ' + flagname)
+	syslog (LOG_INFO, 'RETURNING ' + str (retval) + ' FOR ' + flagname + ' ON ' + zone)
 	return retval
 
 def flagged_signing (zone, value=None):
@@ -86,6 +86,9 @@ def flagged_chaining (zone, value=None):
 
 def flagged_chained (zone, value=None):
 	return flagged (zone, 'chained', value)
+
+def flagged_waiveds (zone):
+	return flagged (zone, 'waiveds')
 
 def flagged_unchained (zone, value=None):
 	return flagged (zone, 'unchained', value)
@@ -101,6 +104,26 @@ def flagged_dnskeyttl (zone, value=None):
 
 def flagged_dsttl (zone, value=None):
 	return flagged (zone, 'dsttl', value)
+
+def passed (zone, flagname):
+	value = flagged (zone, flagname)
+	try:
+		fromtm = int (str (value))
+		return time.time () >= fromtm
+	except:
+		return False
+
+def passed_signed (zone):
+	return passed (zone, 'signed')
+
+def passed_chained (zone):
+	return passed (zone, 'chained')
+
+def passed_unchained (zone):
+	return passed (zone, 'unchained')
+
+def passed_unsigned (zone):
+	return passed (zone, 'unsigned')
 
 
 # Symbolic names for result lists of zones
@@ -118,7 +141,8 @@ RES_BADSTATE = 'badstate'
 # Note that hyphens are permitted only between letters/digits.
 # Note that there must be at least two labels.
 # Note that a trailing dot is not permitted.
-dnsre = re.compile ('^[0-9a-z]+(-[0-9a-z]+)*(\.[0-9a-z]+(-[0-9a-z])*)+$')
+#TODO# Hacked uppercase in here for Alfa-college.nl
+dnsre = re.compile ('^[0-9a-zA-Z]+(-[0-9a-zA-Z]+)*(\.[0-9a-zA-Z]+(-[0-9a-zA-Z])*)+$')
 
 
 #
@@ -168,14 +192,15 @@ def do_assert_signed (zone, kid):
 		# flagged_invalid (zone, value='Flag signed failed to load as an integer')
 		# return RES_INVALID
 		asserted_fromtm = None
-		syslog (LOG_INFO, 'NO ASSERTED-FROM TIME IS signed FLAG FOR ' + zone + 'YET')
+		syslog (LOG_INFO, 'NO ASSERTED-FROM TIME IN signed FLAG FOR ' + zone + ' YET')
 	#
 	# Consider the case that no signatures may have been found before;
 	# this will check DNS and store a now-plus-TTL in the 'signed' flag
 	if asserted_fromtm is None:
 		if dnslogic.test_for_signed_dnskey (
 				zone,
-				dnslogic.PUBLISHER_AUTHORITATIVES |
+				#deadlock# dnslogic.PUBLISHER_AUTHORITATIVES |
+				dnslogic.PUBLISHER_OPENDNSSEC |
 				dnslogic.PUBLISHER_ALL):
 			ass1ttl = dnslogic.dnskey_ttl (
 					zone,
@@ -185,7 +210,20 @@ def do_assert_signed (zone, kid):
 					dnslogic.PUBLISHER_OPENDNSSEC)
 			asserted_fromtm = dnslogic.ttl2endtime (
 					max (ass1ttl, ass2ttl))
-			syslog (LOG_INFO, 'COMPUTED ASSERTED-FROM TIME TO BE ' + str (asserted_fromtm) + ' BASED ON ', str (ass1ttl) + ' AND ' + str (ass2ttl) + ' FOR ' + zone)
+			#
+			# Override semantical promise that what we see is
+			# signed to the rest of the world.  This semantical
+			# version is possible when all DNS passes through
+			# OpenDNSSEC (NULL signing alg) or when the client
+			# prepares the zone beforehand; neither applies in
+			# our case so we were running into a deadlock (see
+			# above) and had to limit the semantics to just say
+			# that OpenDNSSEC has signed it.  Cache TTL has no
+			# real value anymore either, in this case.  So here
+			# we go overriding it:
+			#
+			asserted_fromtm = int (time.time ())
+			syslog (LOG_INFO, 'COMPUTED ASSERTED-FROM TIME TO BE ' + str (asserted_fromtm) + ' BASED ON ' + str (ass1ttl) + ' AND ' + str (ass2ttl) + ' FOR ' + zone)
 			if asserted_fromtm is not None:
 				flagged_signed (zone, value=str (asserted_fromtm))
 			else:
@@ -238,14 +276,17 @@ def do_assert_chained (zone, kid):
 		syslog (LOG_INFO, 'LOADED CHAINED ASSERTED-FROM TIME ' + str (asserted_fromtm))
 	except:
 		# flagged_invalid (zone, value='Flag chained failed to load as an integer')
-		syslog (LOG_INFO, 'NO CHAINED ASSERTED-FROM TIME YET')
+		syslog (LOG_INFO, 'NO CHAINED ASSERTED-FROM TIME YET FOR ' + zone)
 		asserted_fromtm = None
 	#
 	# The DS records may be absent, which is a sign that we need to
 	# back off and retry later; this can happen when another process
 	# handles the submission of DS with delays
 	if not dnslogic.have_ds (zone):
-		return RES_ERROR
+		if flagged_waiveds (zone):
+			syslog (LOG_WARNING, 'HACK IN PLACE: WAIVEDS FLAGGED FOR ' + zone)
+		else:
+			return RES_ERROR
 	#
 	# Consider the case that no chaining records may have been found yet;
 	# this will check DNS and store a now-plus-TTL in the 'signed' flag
@@ -414,13 +455,16 @@ def do_assert_unsigned (zone, kid):
 def do_goto_signed (zone, kid):
 	rv = RES_OK
 	syslog (LOG_INFO, 'goto_signed ' + zone)
-	if rv == RES_OK and flagged_signed (zone):
-		if flagged_chaining (zone):
-			syslog (LOG_INFO, 'goto_signed --> gosub_unchained')
-			rv = do_goto_unchained (zone)
+	if rv == RES_OK and passed_signed (zone):
+		if flagged_chaining (zone) or flagged_chained (zone):
+			# syslog (LOG_INFO, 'goto_signed --> gosub_unchained')
+			# rv = do_goto_unchained (zone, kid)
+			syslog( LOG_INFO, 'goto_signed --> client error, already chained/chaining, invalidating zone')
+			flagged_invalid (zone, value='Attempting goto_signed on ' + zone + ' which already progressed to chaining')
+			rv = RES_INVALID
 		else:
 			syslog (LOG_INFO, 'goto_signed --> assert_unchained')
-			rv = do_assert_unchained (zone)
+			rv = do_assert_unchained (zone, kid)
 	if rv == RES_OK and not flagged_signing (zone) and not flagged_signed (zone):
 		#USELESS# syslog (LOG_INFO, 'goto_signed --> sign_start')
 		#USELESS# rv = do_sign_start (zone, kid)
@@ -435,13 +479,9 @@ def do_goto_signed (zone, kid):
 def do_goto_chained (zone, kid):
 	rv = RES_OK
 	syslog (LOG_INFO, 'goto_chained ' + zone)
-	if rv == RES_OK:
-		if not flagged_signed (zone):
-			syslog (LOG_INFO, 'goto_chained --> gosub_signed')
-			rv = do_goto_signed (zone, kid)
-		else:
-			syslog (LOG_INFO, 'goto_chained --> assert_signed')
-			rv = do_assert_signed (zone, kid)
+	if rv == RES_OK and not passed_signed (zone):
+		syslog (LOG_INFO, 'goto_chained --> gosub_signed')
+		rv = do_goto_signed (zone, kid)
 	if rv == RES_OK and flagged_signing (zone) and not flagged_chaining (zone):
 		syslog (LOG_INFO, 'goto_chained --> chain_start')
 		rv = do_chain_start (zone, kid)
@@ -454,14 +494,10 @@ def do_goto_chained (zone, kid):
 def do_goto_unchained (zone, kid):
 	rv = RES_OK
 	syslog (LOG_INFO, 'goto_unchained ' + zone)
-	if rv == RES_OK and flagged_chaining (zone):
-		if not flagged_chained (zone):
-			syslog (LOG_INFO, 'goto_unchained --> gosub_chained')
-			rv = do_goto_chained (zone, kid)
-		else:
-			syslog (LOG_INFO, 'goto_unchained --> assert_chained')
-			rv = do_assert_chained (zone, kid)
-	if rv == RES_OK and flagged_chaining (zone) and flagged_chained (zone):
+	if rv == RES_OK and flagged_chaining (zone) and not passed_chained (zone):
+		syslog (LOG_INFO, 'goto_unchained --> gosub_chained')
+		rv = do_goto_chained (zone, kid)
+	if rv == RES_OK and flagged_chaining (zone) and passed_chained (zone):
 		syslog (LOG_INFO, 'goto_unchained --> chain_stop')
 		rv = do_chain_stop (zone, kid)
 	if rv == RES_OK and not flagged_chaining (zone):
@@ -474,7 +510,11 @@ def do_goto_unsigned (zone, kid):
 	rv = RES_OK
 	syslog (LOG_INFO, 'goto_unsigned ' + zone)
 	if rv == RES_OK and flagged_signed (zone):
-		if flagged_chained (zone):
+		if not passed_signed (zone):
+			# Complete halfway-done signing before returning
+			syslog (LOG_INFO, 'goto_unsigned --> gosub_signed')
+			rv = do_goto_signed (zone, kid)
+		elif flagged_chained (zone):
 			syslog (LOG_INFO, 'goto_unsigned --> gosub_unchained')
 			rv = do_goto_unchained (zone, kid)
 		else:
@@ -502,10 +542,7 @@ def do_goto_unsigned (zone, kid):
 
 def do_drop_dead (zone, kid):
 	syslog (LOG_INFO, 'drop_dead ' + zone)
-	if backend.unmanage_zone (zone) != 0:
-		syslog (LOG_ERR, 'Failed to delete zone ' + zone + ' from OpenDNSSEC')
-		syslog (LOG_INFO, 'drop_dead := RES_ERROR')
-		return RES_ERROR
+	backend.unmanage_zone (zone)
 	flagged_signing   (zone, value=False)
 	flagged_signed    (zone, value=False)
 	flagged_chaining  (zone, value=False)
@@ -591,7 +628,7 @@ def run_command (cmd, kid):
 	hdl = handler [command]
 	for zone in zones:
 		syslog (LOG_DEBUG, 'DEBUG ZONE TO LOWER: ' + zone + ' :: ' + str (type (zone)))
-		zone = zone.lower ()
+		#WORKAROUND# zone = zone.lower ()
 		if zone [-1:] == '.':
 			zone = zone [:-1]
 		if not dnsre.match (zone):
