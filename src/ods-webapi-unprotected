@@ -113,7 +113,7 @@ retry = time.time () + 60
 srv = None
 while loop_forever:
 	try:
-		srv = SocketServer.TCPServer (('whitfield.surfdomeinen.nl', 8998), WebAPI)
+		srv = SocketServer.TCPServer (('menezes.surfdomeinen.nl', 8998), WebAPI)
 		if os.getuid () == 0:
 			uid = pwd.getpwnam ('odsrpc').pw_uid
 			gid = grp.getgrnam ('odsrpc').gr_gid

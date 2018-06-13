@@ -42,7 +42,7 @@ print 'Content:', content
 #
 # Send the request over HTTP, method POST, and harvest the response
 #
-http = httplib.HTTPConnection ('adleman.surfdomeinen.nl', 8998)
+http = httplib.HTTPConnection ('menezes.surfdomeinen.nl', 8998)
 http.request ('POST', '/', content, { 'Content-type': 'application/json' })
 htresp = http.getresponse ()
 print 'Status: ', htresp.status, htresp.reason

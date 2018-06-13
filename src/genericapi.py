@@ -1,4 +1,4 @@
-# genericapi.py -- The command interface for the OpenDNSSEC API
+# genericapi.py -- The command interface for the OpenDNSSEC RPC API
 #
 # This is a general command interface -- it processes a JSON-formatted
 # DNSSEC Request and produces a JSON-formatted DNSSEC Request.  Keys and
@@ -69,7 +69,7 @@ def flagged (zone, flagname, value=None):
 		syslog (LOG_INFO, 'FLAG ' + flagname + ' IS ' + str (retval) + ' :: ' + str (type (retval)) + ' AND SHOULD BE ' + str (value) + ' :: ' + str (type (value)) + ' for zone ' + zone)
 		# It is abnormal for this to happen
 		syslog (LOG_ERR, 'Failed to set ' + flagname + ' flag to ' + str (value) + ' for zone ' + zone)
-		if not flagged (zone, 'invalid', value='Failed to set ' + flagname + ' flag to ' + str (value)):
+		if flagname != 'invalid' and not flagged (zone, 'invalid', value='Failed to set ' + flagname + ' flag to ' + str (value)):
 			syslog (LOG_CRIT, 'In addition, failed to set error flag to True for zone ' + zone + ' (FATAL)')
 			sys.exit (1)
 	syslog (LOG_INFO, 'RETURNING ' + str (retval) + ' FOR ' + flagname + ' ON ' + zone)
@@ -168,7 +168,7 @@ def do_sign_approve (zone, kid):
 	if not localrules.sign_approve (zone):
 		return RES_ERROR
 	if backend.manage_zone (zone) != 0:
-		syslog (LOG_ERR, 'Failed to add zone ' + zone + ' to OpenDNSSEC')
+		syslog (LOG_ERR, 'Failed to add zone ' + zone + ' to OpenDNSSEC RPC')
 		return RES_ERROR
 	if flagged_signing (zone, value=True):
 		return RES_OK
@@ -227,7 +227,7 @@ def do_assert_signed (zone, kid):
 			if asserted_fromtm is not None:
 				flagged_signed (zone, value=str (asserted_fromtm))
 			else:
-				syslog (LOG_ERR, 'Failed to determine endtime in OpenDNSSEC during assert_signed on ' + zone)
+				syslog (LOG_ERR, 'Failed to determine endtime in OpenDNSSEC RPC during assert_signed on ' + zone)
 				return RES_ERROR
 		else:
 			syslog (LOG_INFO, 'STILL FOUND NO DNSKEY RECORDS FOR ' + zone)
@@ -388,7 +388,7 @@ def do_sign_stop (zone, kid):
 	if not localrules.sign_stop (zone):
 		return RES_ERROR
 	if backend.unmanage_zone (zone) != 0:
-		syslog (LOG_ERR, 'Failed to remove zone ' + zone + ' from OpenDNSSEC')
+		syslog (LOG_ERR, 'Failed to remove zone ' + zone + ' from OpenDNSSEC RPC')
 		return RES_ERROR
 	# Retract the basis of certainty for assert_signed()
 	if not flagged_signed (zone, value=False):
@@ -628,7 +628,7 @@ def run_command (cmd, kid):
 	hdl = handler [command]
 	for zone in zones:
 		syslog (LOG_DEBUG, 'DEBUG ZONE TO LOWER: ' + zone + ' :: ' + str (type (zone)))
-		#WORKAROUND# zone = zone.lower ()
+		zone = zone.lower ()
 		if zone [-1:] == '.':
 			zone = zone [:-1]
 		if not dnsre.match (zone):

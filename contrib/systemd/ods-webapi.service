@@ -1,0 +1,14 @@
+[Unit]
+Description=Web API for ods-rpc
+After=rabbitmq-server.service
+Conflicts=ods-webapi-unprotected.service
+
+[Install]
+
+[Service]
+Type = forking
+PIDFile = /var/run/ods-webapi.pid
+User = odsrpc
+Group = odsrpc
+ExecStart = @PREFIX@/bin/ods-webapi
+

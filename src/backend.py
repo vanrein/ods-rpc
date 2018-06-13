@@ -8,6 +8,7 @@
 # From: Rick van Rein <rick@openfortress.nl>
 
 
-from backksm import *
+# from backksm import *
 # from backp11 import *
+from backrabbitmq import *
 
