@@ -141,7 +141,7 @@ if pid == -1:
 	syslog (LOG_ERR, 'ERROR: Failed to fork background process')
 	sys.exit (1)
 elif pid != 0:
-	open ('/var/run/ods-webapi.pid', 'w').write (str (pid))
+	open ('/home/odsrpc/ods-webapi.pid', 'w').write (str (pid))
 	sys.exit (0)
 os.setsid ()
 os.close (0)

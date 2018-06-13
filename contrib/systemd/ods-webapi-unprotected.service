@@ -7,8 +7,8 @@ Conflicts=ods-webapi.service
 
 [Service]
 Type = forking
-PIDFile = /var/run/ods-webapi.pid
+PIDFile = /home/odsrpc/ods-webapi.pid
 User = odsrpc
 Group = odsrpc
+Environment = PYTHONPATH=@PREFIX@/lib/ods-rpc
 ExecStart = @PREFIX@/bin/ods-webapi-unprotected
-
