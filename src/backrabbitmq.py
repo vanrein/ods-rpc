@@ -11,6 +11,13 @@
 # addition and removal, because that is done via rsync zone file
 # updates (including additions and removals of zone files).
 #
+# The rabbitdnssec library from RabbitDNSSEC is used here.  This is
+# done to be able to share configuration variables and thus to avoid
+# the need for double configurations and the management errors that
+# would come from it.  Note that the RPC directory is still set in
+# two places; it does not only impact this backend, and so it would
+# burden non-RabbitMQ generic code with the RabbitDNSSEC library.
+#
 # The routines return 0 on success, nonzero on failure.
 #
 # From: Rick van Rein <rick@openfortress.nl>
@@ -24,55 +31,30 @@ import ssl
 import pika
 
 
-
-#
-# BEGIN SETTINGS
-#
-
-signer_machine = socket.gethostname ().split ('.') [0]
-routing_key = 'key_ops'
-host = 'localhost'
-port = 5671
-wrap_tls = True
-username = 'odsrpc'
-password = 'TODO'
-vhost = 'MyNiche'
-exchange_name = signer_machine + '_signer'
-conf_tls = {
-        'ssl_version': ssl.PROTOCOL_TLSv1_2,
-        'ca_certs':   '/etc/ssl/certs/mynicheCA.pem',
-        'certfile':   '/etc/ssl/certs/' + signer_machine + '.pem',
-        'keyfile':    '/root/private/'  + signer_machine + '.pem',
-        'server_side': False,
-}
-
-#
-# END SETTINGS
-#
+import rabbitdnssec
+from rabbitdnssec import log_debug, log_info, log_notice, log_warning, log_error, log_critical
 
 
-creds = pika.PlainCredentials (username, password)
+cfg = rabbitdnssec.my_config ()
+# When used with RabbitDNSSEC, this should always be 'key_ops':
+routing_key = cfg.get ('routing_key', 'key_ops')
+username = cfg ['username']
+exchange_name = rabbitdnssec.my_exchange ()
 
-cnxparm = pika.ConnectionParameters (
-        host=host,
-        port=port,
-        virtual_host=vhost,
-        ssl=wrap_tls,
-        ssl_options=conf_tls,
-        credentials=creds
-)
-print 'Connection parameters:', cnxparm
+
+creds   = rabbitdnssec.my_credentials (ovr_username=username)
+cnxparm = rabbitdnssec.my_connectionparameters (
 cnx = None
 chan = None
 try:
         cnx = pika.BlockingConnection (cnxparm)
         chan = cnx.channel ()
-        print 'Ready to start sending to RabbitMQ'
+	log_info ('Ready to start sending to RabbitMQ')
 except pika.exceptions.AMQPChannelError, e:
-        print 'AMQP Channel Error:', e
+	log_debug ('AMQP Channel Error:', e)
         sys.exit (1)
 except pika.exceptions.AMQPError, e:
-        print 'AMQP Error:', e
+	log_error ('AMQP Error:', e)
         sys.exit (1)
 
 # Confirm delivery with the return value from chan.basic_publish()
@@ -85,21 +67,21 @@ chan.confirm_delivery ()
 def manage_zone (zone):
 	cmd = 'ADDKEY ' + zone
 	try:
-		print 'DEBUG: Sending to exchange', exchange_name, 'routing key', routing_key, 'body', cmd
+		log_debug ('Sending to exchange', exchange_name, 'routing_key', routing_key, 'body', cmd)
 		ok = chan.basic_publish (exchange=exchange_name,
                                         routing_key=routing_key,
                                         body=cmd,
 					mandatory=True)
-		print ok
+		log_debug ('Send success is', ok)
 		retval = 0 if ok else 1
 	except pika.exceptions.AMQPChannelError, e:
-		print 'AMQP Channel Error:', e
+		log_error ('AMQP Channel Error:', e)
 		retval = 1
 	except pika.exceptions.AMQPError, e:
-		print 'AMQP Error:', e
+		log_error ('AMQP Error:', e)
 		retval = 1
 	except Exception, e:
-		print 'Exception during AMQP send:', e, 'for zone', zone, 'during ADDKEY'
+		log_error ('Exception during AMQP send:', e, 'for zone', zone, 'during ADDKEY')
 		retval = 1
 	return retval
 
@@ -109,21 +91,21 @@ def manage_zone (zone):
 def unmanage_zone (zone):
 	cmd = 'DELKEY ' + zone
 	try:
-		print 'DEBUG: Sending to exchange', exchange_name, 'routing key', routing_key, 'body', cmd
+		log_debug ('Sending to exchange', exchange_name, 'routing_key', routing_key, 'body', cmd)
 		ok = chan.basic_publish (exchange=exchange_name,
                                         routing_key=routing_key,
                                         body=cmd,
 					mandatory=True)
-		print ok
+		log_debug ('Send success is', ok)
 		retval = 0 if ok else 1
 	except pika.exceptions.AMQPChannelError, e:
-		print 'AMQP Channel Error:', e
+		log_error ('AMQP Channel Error:', e)
 		retval = 1
 	except pika.exceptions.AMQPError, e:
-		print 'AMQP Error:', e
+		log_error ('AMQP Error:', e)
 		retval = 1
 	except Exception, e:
-		print 'Exception during AMQP send:', e, 'for zone', zone, 'during DELKEY'
+		log_error ('Exception during AMQP send:', e, 'for zone', zone, 'during DELKEY')
 		retval = 1
 	return retval
 
