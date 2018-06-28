@@ -11,6 +11,7 @@
 import sys
 import time
 
+import socket
 import httplib
 
 import base64
@@ -67,7 +68,7 @@ print 'Content:', content
 #
 # Send the request over HTTP, method POST, and harvest the response
 #
-http = httplib.HTTPConnection ('localhost', 8000)
+http = httplib.HTTPConnection (socket.gethostbyname (), 8998)
 http.request ('POST', '/', content, { 'Content-type': 'application/jose' })
 htresp = http.getresponse ()
 print 'Status: ', htresp.status, htresp.reason
