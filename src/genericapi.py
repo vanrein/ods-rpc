@@ -32,10 +32,27 @@ if not os.path.isdir (flagdir):
 	syslog (LOG_CRIT, 'Missing control directory: ' + str (flagdir) + ' (FATAL)')
 	sys.exit (1)
 
+
 # The flagging system; zone name plus flag name; file absense is False
 def flagged (zone, flagname, value=None):
 	error = False
-	flagfile = flagdir + os.sep + zone + os.extsep + flagname
+	flaglong = zone + os.extsep + flagname
+	flagfile = flagdir + os.sep + flaglong
+	try:
+		oldval = open (flagfile, 'r').read ()
+		if oldval == '':
+			oldval = True
+		elif oldval [-1:] == '\n':
+			oldval = oldval [:-1]
+		else:
+			#TODO# error is not really used
+			error = 'Illegal old value'
+	except IOError, ioe:
+		if ioe.errno == 2:
+			oldval = False
+		else:
+			#TODO# error is not really used
+			error = str (ioe)
 	if value is not None:
 		if value is not False:
 			try:
@@ -65,13 +82,21 @@ def flagged (zone, flagname, value=None):
 			retval = True
 	except:
 		retval = False
-	if value is not None and retval != value:
-		syslog (LOG_INFO, 'FLAG ' + flagname + ' IS ' + str (retval) + ' :: ' + str (type (retval)) + ' AND SHOULD BE ' + str (value) + ' :: ' + str (type (value)) + ' for zone ' + zone)
+	if not error:
+		if value is not None and retval != value:
+			#TODO# error is not used
+			error = 'Disk did not reproduce the flag value as written'
+			retval = False
+	syslog (LOG_INFO, 'FLAG ' + flagname + ' IS ' + str (retval) + ' :: ' + str (type (retval)) + ' AND SHOULD BE ' + str (value) + ' :: ' + str (type (value)) + ' for zone ' + zone)
+	if error:
 		# It is abnormal for this to happen
-		syslog (LOG_ERR, 'Failed to set ' + flagname + ' flag to ' + str (value) + ' for zone ' + zone)
+		syslog (LOG_ERR, 'Failed to set ' + flagname + ' flag to ' + str (value) + ' for zone ' + zone + ', cause:', error)
 		if flagname != 'invalid' and not flagged (zone, 'invalid', value='Failed to set ' + flagname + ' flag to ' + str (value)):
 			syslog (LOG_CRIT, 'In addition, failed to set error flag to True for zone ' + zone + ' (FATAL)')
 			sys.exit (1)
+	if value != oldval:
+		if not backend.cluster_update (flaglong, value):
+			syslog (LOG_ERR, 'Failed to update cluster about flag', flagname, 'change from', oldval, 'to', newval)
 	syslog (LOG_INFO, 'RETURNING ' + str (retval) + ' FOR ' + flagname + ' ON ' + zone)
 	return retval
 

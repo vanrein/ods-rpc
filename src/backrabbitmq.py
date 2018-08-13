@@ -26,7 +26,10 @@
 import os
 import sys
 import socket
+import time
 import ssl
+
+import threading
 
 import pika
 
@@ -35,15 +38,18 @@ import rabbitdnssec
 from rabbitdnssec import log_debug, log_info, log_notice, log_warning, log_error, log_critical
 
 
-cfg = rabbitdnssec.my_config ()
+cfg = rabbitdnssec.my_config ('ods-rpc')
 # When used with RabbitDNSSEC, this should always be 'key_ops':
 routing_key = cfg.get ('routing_key', 'key_ops')
+cluster_key = cfg.get ('cluster_key', '')  # '' means no clustering
 username = cfg ['username']
+rpcdir = cfg.get ('rpc_dir', '/var/opendnssec/rpc')
 exchange_name = rabbitdnssec.my_exchange ()
+cluster_queue = rabbitdnssec.my_queue (cluster_key)
 
 
 creds   = rabbitdnssec.my_credentials (ovr_username=username)
-cnxparm = rabbitdnssec.my_connectionparameters (
+cnxparm = rabbitdnssec.my_connectionparameters (creds)
 cnx = None
 chan = None
 try:
@@ -108,6 +114,81 @@ def unmanage_zone (zone):
 		log_error ('Exception during AMQP send:', e, 'for zone', zone, 'during DELKEY')
 		retval = 1
 	return retval
+
+#
+# API routine: notify other cluster nodes, if any, about a new flag state
+#
+def cluster_update (zone_flag, value):
+	if cluster_key == '':
+		# No action towards a cluster
+		return True
+	now = int (time.time ())
+	if value is not None:
+		cmd = str (now) + ' SET '   + zone_flag + ' ' + value
+	else:
+		cmd = str (now) + ' CLEAR ' + zone_flag + ' '
+	try:
+		log_debug ('Sending to exchange', exchange_name, 'cluster_key', cluster_key, 'body', cmd)
+		ok = chan.basic_publish (exchange=exchange_name,
+                                        routing_key=cluster_key,
+                                        body=cmd,
+					mandatory=True)
+		log_debug ('Send success is', ok)
+		retval = ok
+	except pika.exceptions.AMQPChannelError, e:
+		log_error ('AMQP Channel Error:', e)
+		retval = False
+	except pika.exceptions.AMQPError, e:
+		log_error ('AMQP Error:', e)
+		retval = False
+	except Exception, e:
+		log_error ('Exception during AMQP send:', e, 'for zone', zone, 'during ADDKEY')
+		retval = False
+	return retval
+
+
+# Process updates from other cluster nodes
+#
+cluster_start = int (time.time ())
+#
+def process_cluster_msg (chan, msg, props, body):
+	log_debug ('Processing cluster message', body)
+	try:
+		(cmd,time_str,zone_flag,value) = body.split (' ',3)
+		time_int = int (time_str)
+		flag_path = rpcdir + '/' + os.sep + zone_flag
+		if cmd == 'CLEAR':
+			if os.stat (rpcdir).st_mtime < time_str:
+				os.unlink (flag_path)
+				log_debug ('Removed RPC flag', zone_flag)
+		elif cmd == 'SET':
+			#TODO# Check timestamp
+			if os.stat (flag_path).st_mtime < time_str:
+				open (flag_path, 'w').write (value)
+				log_debug ('Set RPC flag', zone_flag, 'to', value)
+		else:
+			raise Exception ('Unknown command')
+	except Exception,e:
+		log_error ('Failed to process cluster message', body, 'due to', str (e))
+#
+class ClusterRecipient (threading.Thread):
+	#
+	def __init__ (self, chan):
+		self.chan = chan
+		threading.Thread.__init__ (self)
+	#
+	def run (self):
+		self.chan.basic_consume (process_cluster_msg, queue=cluster_queue)
+#
+if cluster_key != '':
+	while True:
+		(msg,props,body) = chan.basic_get (queue=cluster_queue)
+		if msg is None:
+			break
+		process_cluster_msg (chan, msg, props, body)
+	cluster_recipient = ClusterRecipient (chan)
+	cluster_recipient.start ()
+
 
 
 # Not here: The client will want the connection open
