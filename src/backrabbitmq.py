@@ -169,8 +169,8 @@ def process_cluster_msg (chan, msg, props, body):
 			#TODO# Check timestamp
 			try:
 				go4it = os.stat (flag_path).st_mtime < time_str
-			except IOError, ioe:
-				go4it = ioe.errno == 2
+			except OSError, ose:
+				go4it = ose.errno == 2
 			if go4it:
 				open (flag_path, 'w').write (value)
 				log_debug ('Set RPC flag', zone_flag, 'to', value)
