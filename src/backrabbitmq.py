@@ -199,6 +199,7 @@ class ClusterRecipient (threading.Thread):
 			log_error ('AMQP Error:', e)
 			sys.exit (1)
 		threading.Thread.__init__ (self)
+		self.setDaemon (True)
 	#
 	def run (self):
 		log_debug ('Starting background cluster message processor')
