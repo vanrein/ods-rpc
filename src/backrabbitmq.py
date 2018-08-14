@@ -158,7 +158,7 @@ cluster_start = int (time.time ())
 def process_cluster_msg (chan, msg, props, body):
 	log_debug ('Processing cluster message', body)
 	try:
-		(cmd,time_str,zone_flag,value) = body.split (' ',3)
+		(time_str,cmd,zone_flag,value) = body.split (' ',3)
 		time_int = int (time_str)
 		flag_path = rpcdir + '/' + os.sep + zone_flag
 		if cmd == 'CLEAR':
