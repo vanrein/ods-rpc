@@ -167,7 +167,11 @@ def process_cluster_msg (chan, msg, props, body):
 				log_debug ('Removed RPC flag', zone_flag)
 		elif cmd == 'SET':
 			#TODO# Check timestamp
-			if os.stat (flag_path).st_mtime < time_str:
+			try:
+				go4it = os.stat (flag_path).st_mtime < time_str
+			except IOError, ioe:
+				go4it = ioe.errno == 2
+			if go4it:
 				open (flag_path, 'w').write (value)
 				log_debug ('Set RPC flag', zone_flag, 'to', value)
 		else:
