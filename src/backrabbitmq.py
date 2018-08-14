@@ -176,7 +176,7 @@ def process_cluster_msg (chan, msg, props, body):
 				log_debug ('Set RPC flag', zone_flag, 'to', value)
 		else:
 			raise Exception ('Unknown command')
-		chan.basic_ack (delivery_tag=mth.delivery_tag)
+		chan.basic_ack (delivery_tag=msg.delivery_tag)
 		return True
 	except Exception,e:
 		log_error ('Failed to process cluster message', body, 'due to', str (e))
