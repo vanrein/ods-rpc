@@ -1,6 +1,6 @@
 [Unit]
 Description=Web API for ods-rpc (plain HTTP)
-After=rabbitmq-server.service
+After=rabbitmq-server.service await-ecryptfs.service
 Conflicts=ods-webapi.service
 
 [Install]
@@ -10,5 +10,5 @@ Type = forking
 PIDFile = /home/odsrpc/ods-webapi.pid
 User = odsrpc
 Group = odsrpc
-Environment = PYTHONPATH=@PREFIX@/lib/ods-rpc
+Environment = PYTHONPATH=@PREFIX@/lib/ods-rpc:@PREFIX@/lib
 ExecStart = @PREFIX@/bin/ods-webapi-unprotected

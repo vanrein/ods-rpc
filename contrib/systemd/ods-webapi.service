@@ -1,6 +1,6 @@
 [Unit]
 Description=Web API for ods-rpc
-After=rabbitmq-server.service
+After=rabbitmq-server.service await-ecryptfs.service
 Conflicts=ods-webapi-unprotected.service
 
 [Install]

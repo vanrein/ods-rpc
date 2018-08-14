@@ -23,7 +23,6 @@ import BaseHTTPServer
 import SocketServer
 
 
-from genericapi import run_command
 from keyconfig import keys
 
 
@@ -173,6 +172,7 @@ openlog ('ods-webapi',
 #
 # The HTTP service main loop
 #
+from genericapi import run_command
 retry = time.time () + 60
 srv = None
 while loop_forever:

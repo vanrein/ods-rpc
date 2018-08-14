@@ -55,7 +55,7 @@ chan = None
 try:
         cnx = pika.BlockingConnection (cnxparm)
         chan = cnx.channel ()
-	log_info ('Ready to start sending to RabbitMQ')
+	log_info ('Prepared to start sending to RabbitMQ')
 except pika.exceptions.AMQPChannelError, e:
 	log_debug ('AMQP Channel Error:', e)
         sys.exit (1)
@@ -119,14 +119,18 @@ def unmanage_zone (zone):
 # API routine: notify other cluster nodes, if any, about a new flag state
 #
 def cluster_update (zone_flag, value):
+	log_debug ('cluster_update (' + str (zone_flag) + ', ' + str (value) + ')')
 	if cluster_key == '':
 		# No action towards a cluster
 		return True
 	now = int (time.time ())
-	if value is not None:
-		cmd = str (now) + ' SET '   + zone_flag + ' ' + value
-	else:
+	if value is False or value is None:
 		cmd = str (now) + ' CLEAR ' + zone_flag + ' '
+	elif value is True:
+		cmd = str (now) + ' SET '   + zone_flag + ' '
+	else:
+		cmd = str (now) + ' SET '   + zone_flag + ' ' + value
+	log_debug ('cluster_update command is "' + cmd + '"')
 	try:
 		log_debug ('Sending to exchange', exchange_name, 'cluster_key', cluster_key, 'body', cmd)
 		ok = chan.basic_publish (exchange=exchange_name,
@@ -173,22 +177,38 @@ def process_cluster_msg (chan, msg, props, body):
 #
 class ClusterRecipient (threading.Thread):
 	#
-	def __init__ (self, chan):
-		self.chan = chan
+	def __init__ (self):
+		# BlockConnection is not thread-safe, so we open our own
+		self.cnx = None
+		self.chan = None
+		try:
+			self.cnx = pika.BlockingConnection (cnxparm)
+			self.chan = self.cnx.channel ()
+			log_info ('Prepared to start reading from RabbitMQ')
+		except pika.exceptions.AMQPChannelError, e:
+			log_debug ('AMQP Channel Error:', e)
+			sys.exit (1)
+		except pika.exceptions.AMQPError, e:
+			log_error ('AMQP Error:', e)
+			sys.exit (1)
 		threading.Thread.__init__ (self)
 	#
 	def run (self):
-		self.chan.basic_consume (process_cluster_msg, queue=cluster_queue)
+		log_debug ('Starting background cluster message processor')
+		self.chan.basic_consume (process_cluster_msg, cluster_queue)
+		self.chan.start_consuming ()
+		log_debug ('Stopped  background cluster message processor')
 #
 if cluster_key != '':
+	log_debug ('Starting to process initial cluster messages')
 	while True:
 		(msg,props,body) = chan.basic_get (queue=cluster_queue)
 		if msg is None:
 			break
 		process_cluster_msg (chan, msg, props, body)
-	cluster_recipient = ClusterRecipient (chan)
+	log_debug ('Finished processing initial cluster messages')
+	cluster_recipient = ClusterRecipient ()
 	cluster_recipient.start ()
-
 
 
 # Not here: The client will want the connection open
@@ -199,4 +219,6 @@ if cluster_key != '':
 # 	cnx.close ()
 # cnx = None
 # 
+
+log_debug ('RabbitMQ backend is ready for action')
 

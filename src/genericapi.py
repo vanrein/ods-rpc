@@ -94,7 +94,7 @@ def flagged (zone, flagname, value=None):
 		if flagname != 'invalid' and not flagged (zone, 'invalid', value='Failed to set ' + flagname + ' flag to ' + str (value)):
 			syslog (LOG_CRIT, 'In addition, failed to set error flag to True for zone ' + zone + ' (FATAL)')
 			sys.exit (1)
-	if value != oldval:
+	if value is not None:
 		if not backend.cluster_update (flaglong, value):
 			syslog (LOG_ERR, 'Failed to update cluster about flag', flagname, 'change from', oldval, 'to', newval)
 	syslog (LOG_INFO, 'RETURNING ' + str (retval) + ' FOR ' + flagname + ' ON ' + zone)
