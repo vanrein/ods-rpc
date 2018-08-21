@@ -219,14 +219,13 @@ if cluster_key != '':
 	cluster_recipient.start ()
 
 
-# Not here: The client will want the connection open
+# The thread will hold its own connection; close the one-shot connection
 #
-# if chan is not None:
-# 	chan = None
-# if cnx is not None:
-# 	cnx.close ()
-# cnx = None
-# 
+if chan is not None:
+	chan = None
+if cnx is not None:
+	cnx.close ()
+cnx = None
 
 log_debug ('RabbitMQ backend is ready for action')
 
