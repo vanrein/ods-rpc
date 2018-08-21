@@ -49,7 +49,7 @@ cluster_queue = rabbitdnssec.my_queue (cluster_key)
 
 
 creds   = rabbitdnssec.my_credentials (ovr_username=username)
-cnxparm = rabbitdnssec.my_connectionparameters (creds)
+cnxparm = rabbitdnssec.my_connectionparameters (creds, blocked_connection_timeout=0)
 cnx = None
 chan = None
 try:
@@ -219,13 +219,14 @@ if cluster_key != '':
 	cluster_recipient.start ()
 
 
-# The thread will hold its own connection; close the one-shot connection
+# Not here: The client will want the connection open
 #
-if chan is not None:
-	chan = None
-if cnx is not None:
-	cnx.close ()
-cnx = None
+# if chan is not None:
+# 	chan = None
+# if cnx is not None:
+# 	cnx.close ()
+# cnx = None
+# 
 
 log_debug ('RabbitMQ backend is ready for action')
 
