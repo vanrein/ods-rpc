@@ -41,8 +41,13 @@ class WebAPI (BaseHTTPServer.BaseHTTPRequestHandler):
 			syslog (LOG_ERR, 'EXCEPTION: ' + str (e))
 		# at this point, "ok" signifies correct reception w/o validation
 		resp = None
-		syslog (LOG_INFO, 'CONTENT = ' + str (content))
-		cmd = json.loads (content)
+		try:
+			if ok:
+				cmd = json.loads (content)
+				syslog (LOG_INFO, 'CONTENT = ' + str (content))
+		except:
+			syslog (LOG_ERR, 'Failed to parse header')
+			ok = False
 		if ok:
 			syslog (LOG_INFO, 'COMMAND = ' + str (cmd))
 			resp = run_command (cmd, 'nobody')

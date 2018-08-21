@@ -69,7 +69,12 @@ class WebAPI (BaseHTTPServer.BaseHTTPRequestHandler):
 				signature,
 			)
 			syslog (LOG_DEBUG, 'Signed data: ' + str (signeddata))
-			josehdrs = b64json (header)
+			try:
+				if ok:
+					josehdrs = b64json (header)
+			except:
+				syslog (LOG_ERR, 'Failed to parse header')
+				ok = False
 			syslog (LOG_DEBUG, 'Headers: ' + str (josehdrs))
 			syslog (LOG_DEBUG, 'Header ["kid"]: ' + str (josehdrs ['kid']))
 			jwks = [ keys [k]
