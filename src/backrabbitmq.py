@@ -52,26 +52,29 @@ creds   = rabbitdnssec.my_credentials (ovr_username=username)
 cnxparm = rabbitdnssec.my_connectionparameters (creds, blocked_connection_timeout=0)
 cnx = None
 chan = None
-try:
-        cnx = pika.BlockingConnection (cnxparm)
-        chan = cnx.channel ()
-	log_info ('Prepared to start sending to RabbitMQ')
-except pika.exceptions.AMQPChannelError, e:
-	log_debug ('AMQP Channel Error:', e)
-        sys.exit (1)
-except pika.exceptions.AMQPError, e:
-	log_error ('AMQP Error:', e)
-        sys.exit (1)
 
-# Confirm delivery with the return value from chan.basic_publish()
-#
-chan.confirm_delivery ()
+def have_channel ():
+	global creds, cnxparm, cnx, chan
+	if chan is None or not chan.is_open ():
+		try:
+			cnx = pika.BlockingConnection (cnxparm)
+			chan = cnx.channel ()
+			chan.confirm_delivery ()
+			log_info ('Prepared to start sending to RabbitMQ')
+		except pika.exceptions.AMQPChannelError, e:
+			log_debug ('AMQP Channel Error:', e)
+			sys.exit (1)
+		except pika.exceptions.AMQPError, e:
+			log_error ('AMQP Error:', e)
+			sys.exit (1)
+	return chan
 
 #
 # API routine: add a zone to keyed management, return zero on success
 #
 def manage_zone (zone):
 	cmd = 'ADDKEY ' + zone
+	chan = have_channel ()
 	try:
 		log_debug ('Sending to exchange', exchange_name, 'routing_key', routing_key, 'body', cmd)
 		ok = chan.basic_publish (exchange=exchange_name,
@@ -96,6 +99,7 @@ def manage_zone (zone):
 #
 def unmanage_zone (zone):
 	cmd = 'DELKEY ' + zone
+	chan = have_channel ()
 	try:
 		log_debug ('Sending to exchange', exchange_name, 'routing_key', routing_key, 'body', cmd)
 		ok = chan.basic_publish (exchange=exchange_name,
@@ -119,6 +123,7 @@ def unmanage_zone (zone):
 # API routine: notify other cluster nodes, if any, about a new flag state
 #
 def cluster_update (zone_flag, value):
+	chan = have_channel ()
 	log_debug ('cluster_update (' + str (zone_flag) + ', ' + str (value) + ')')
 	if cluster_key == '':
 		# No action towards a cluster
@@ -208,6 +213,7 @@ class ClusterRecipient (threading.Thread):
 		log_debug ('Stopped  background cluster message processor')
 #
 if cluster_key != '':
+	chan = have_channel ()
 	log_debug ('Starting to process initial cluster messages')
 	while True:
 		(msg,props,body) = chan.basic_get (queue=cluster_queue)
