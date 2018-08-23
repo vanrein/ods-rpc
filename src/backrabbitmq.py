@@ -55,7 +55,7 @@ chan = None
 
 def have_channel ():
 	global creds, cnxparm, cnx, chan
-	if chan is None or not chan.is_open ():
+	if chan is None or not chan.is_open:
 		try:
 			cnx = pika.BlockingConnection (cnxparm)
 			chan = cnx.channel ()
