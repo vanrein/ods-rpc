@@ -87,7 +87,9 @@ def flagged (zone, flagname, value=None):
 			#TODO# error is not used
 			error = 'Disk did not reproduce the flag value as written'
 			retval = False
-	syslog (LOG_INFO, 'FLAG ' + flagname + ' IS ' + str (retval) + ' :: ' + str (type (retval)) + ' AND SHOULD BE ' + str (value) + ' :: ' + str (type (value)) + ' for zone ' + zone)
+	if value is not None:
+		# We have set a value; did it change accordingly?
+		syslog (LOG_INFO, 'FLAG ' + flagname + ' IS ' + str (retval) + ' :: ' + str (type (retval)) + ' AND SHOULD BE ' + str (value) + ' :: ' + str (type (value)) + ' for zone ' + zone)
 	if error:
 		# It is abnormal for this to happen
 		syslog (LOG_ERR, 'Failed to set ' + flagname + ' flag to ' + str (value) + ' for zone ' + zone + ', cause:', error)
