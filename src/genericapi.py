@@ -47,6 +47,7 @@ def flagged (zone, flagname, value=None):
 		else:
 			#TODO# error is not really used
 			error = 'Illegal old value'
+			oldval = False
 	except IOError, ioe:
 		if ioe.errno == 2:
 			oldval = False
@@ -98,7 +99,7 @@ def flagged (zone, flagname, value=None):
 			sys.exit (1)
 	if value is not None:
 		if not backend.cluster_update (flaglong, value):
-			syslog (LOG_ERR, 'Failed to update cluster about flag', flagname, 'change from', oldval, 'to', newval)
+			syslog (LOG_ERR, 'Failed to update cluster about flag', flagname, 'change from', oldval, 'to', value)
 	syslog (LOG_INFO, 'RETURNING ' + str (retval) + ' FOR ' + flagname + ' ON ' + zone)
 	return retval
 
