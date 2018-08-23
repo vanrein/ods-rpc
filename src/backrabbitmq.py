@@ -134,7 +134,8 @@ def cluster_update (zone_flag, value):
 	elif value is True:
 		cmd = str (now) + ' SET '   + zone_flag + ' '
 	else:
-		cmd = str (now) + ' SET '   + zone_flag + ' ' + value
+		# String values are distinct from True by an added newline
+		cmd = str (now) + ' SET '   + zone_flag + ' ' + str (value) + '\n'
 	log_debug ('cluster_update command is "' + cmd + '"')
 	try:
 		log_debug ('Sending to exchange', exchange_name, 'cluster_key', cluster_key, 'body', cmd)
@@ -177,13 +178,7 @@ def process_cluster_msg (chan, msg, props, body):
 			except OSError, ose:
 				go4it = ose.errno == 2
 			if go4it:
-				if value == '':
-					# True is an empty string
-					valstr = ''
-				else:
-					# Strings receive additional newline
-					valstr = value + '\n'
-				open (flag_path, 'w').write (valstr)
+				open (flag_path, 'w').write (value)
 				log_debug ('Set RPC flag', zone_flag, 'to', value)
 		else:
 			raise Exception ('Unknown command')
