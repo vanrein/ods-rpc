@@ -92,6 +92,10 @@ def manage_zone (zone):
 	except Exception, e:
 		log_error ('Exception during AMQP send:', e, 'for zone', zone, 'during ADDKEY')
 		retval = 1
+	finally:
+		chan = None
+		cnx.close ()
+		cnx = None
 	return retval
 
 #
@@ -117,17 +121,21 @@ def unmanage_zone (zone):
 	except Exception, e:
 		log_error ('Exception during AMQP send:', e, 'for zone', zone, 'during DELKEY')
 		retval = 1
+	finally:
+		chan = None
+		cnx.close ()
+		cnx = None
 	return retval
 
 #
 # API routine: notify other cluster nodes, if any, about a new flag state
 #
 def cluster_update (zone_flag, value):
-	chan = have_channel ()
-	log_debug ('cluster_update (' + str (zone_flag) + ', ' + str (value) + ')')
 	if cluster_key == '':
 		# No action towards a cluster
 		return True
+	chan = have_channel ()
+	log_debug ('cluster_update (' + str (zone_flag) + ', ' + str (value) + ')')
 	now = int (time.time ())
 	if value is False or value is None:
 		cmd = str (now) + ' CLEAR ' + zone_flag + ' '
@@ -154,6 +162,10 @@ def cluster_update (zone_flag, value):
 	except Exception, e:
 		log_error ('Exception during AMQP send:', e, 'for zone', zone, 'during ADDKEY')
 		retval = False
+	finally:
+		chan = None
+		cnx.close ()
+		cnx = None
 	return retval
 
 
@@ -226,14 +238,23 @@ if cluster_key != '':
 	cluster_recipient.start ()
 
 
-# Not here: The client will want the connection open
 #
-# if chan is not None:
-# 	chan = None
-# if cnx is not None:
-# 	cnx.close ()
-# cnx = None
-# 
+# We always close the channel and connection for AMQP.
+# The reason is that is_open does not provide reliable results,
+# nor does it work to tell PIKA to veto the timeout.  Our
+# software does not pass long-term control to PIKA, so it
+# cannot always respond to polling messages, which results
+# in the PIKA connection going down after a time of waiting
+# for ods-rpc commands.
+#
+# THIS IS DUE TO EXPERIENCED BUGS IN PIKA, IT IS IMPERFECT.
+#
+if chan is not None:
+	chan = None
+if cnx is not None:
+	cnx.close ()
+cnx = None
+
 
 log_debug ('RabbitMQ backend is ready for action')
 
