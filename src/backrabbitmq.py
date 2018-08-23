@@ -73,6 +73,7 @@ def have_channel ():
 # API routine: add a zone to keyed management, return zero on success
 #
 def manage_zone (zone):
+	global cnx, chan
 	cmd = 'ADDKEY ' + zone
 	chan = have_channel ()
 	try:
@@ -102,6 +103,7 @@ def manage_zone (zone):
 # API routine: remove a zone from keyed management, return zero on success
 #
 def unmanage_zone (zone):
+	global cnx, chan
 	cmd = 'DELKEY ' + zone
 	chan = have_channel ()
 	try:
@@ -134,6 +136,7 @@ def cluster_update (zone_flag, value):
 	if cluster_key == '':
 		# No action towards a cluster
 		return True
+	global cnx, chan
 	chan = have_channel ()
 	log_debug ('cluster_update (' + str (zone_flag) + ', ' + str (value) + ')')
 	now = int (time.time ())
