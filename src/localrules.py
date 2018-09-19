@@ -97,7 +97,3 @@ def assert_unsigned (zone):
 	# No impact on the local implementation
 	return True
 
-def update_signed (zone):
-	# No impact on the local implementation
-	return True
-
