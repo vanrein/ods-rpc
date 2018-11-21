@@ -170,7 +170,7 @@ RES_BADSTATE = 'badstate'
 # Note that there must be at least two labels.
 # Note that a trailing dot is not permitted.
 #TODO# Hacked uppercase in here for Alfa-college.nl
-dnsre = re.compile ('^[0-9a-zA-Z]+(-[0-9a-zA-Z]+)*(\.[0-9a-zA-Z]+(-[0-9a-zA-Z])*)+$')
+dnsre = re.compile ('^[0-9a-zA-Z]+(-[0-9a-zA-Z]+)*(\.[0-9a-zA-Z]+(-[0-9a-zA-Z]+)*)+$')
 
 
 #
