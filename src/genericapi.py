@@ -582,23 +582,6 @@ def do_drop_dead (zone, kid):
 	syslog (LOG_INFO, 'drop_dead := RES_OK')
 	return RES_OK
 
-#
-# The update_signed command can be called on any zone which is being signed.
-# Use it to invoke the command of the same name in the localrules module, where
-# you can set it up to do anything you like.  A default action that is suggested
-# to incorporate (at least) is to have the zone signed freshly, with
-#
-#   ods-signer sign <zone>
-#
-
-def do_update_signed (zone, kid):
-	if not flagged_signed (zone):
-		return RES_BADSTATE
-	if not localrules.update_signed (zone):
-		return RES_ERROR
-	else:
-		return RES_OK
-
 
 #
 # Map command names to the procedures that apply them to individual zones
@@ -619,7 +602,6 @@ handler ['goto_chained'    ] = do_goto_chained
 handler ['goto_unchained'  ] = do_goto_unchained
 handler ['goto_unsigned'   ] = do_goto_unsigned
 handler ['drop_dead'       ] = do_drop_dead
-handler ['update_signed'   ] = do_update_signed
 
 
 #
